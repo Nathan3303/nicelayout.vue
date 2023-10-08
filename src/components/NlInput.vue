@@ -19,7 +19,7 @@
             @blur="blurHandler"
             @change="changeHandler" />
         <slot name="suffix">{{ suffix }}</slot>
-        <i class="nl-input__button iconfont icon-clear" v-show="modelValue" @click="clearHandler">Delete</i>
+        <i class="nl-input__button iconfont icon-clear" v-show="clearable && modelValue" @click="clearHandler">Delete</i>
     </div>
 </template>
 
@@ -121,6 +121,10 @@ const props = defineProps({
      * @description input readonly state
      */
     readonly: Boolean,
+    /**
+     * @description input clearable state
+     */
+    clearable: Boolean,
     /**
      * @description input width
      */
@@ -265,7 +269,7 @@ function wrapperClickHandler(e) {
 
     & > .nl-input__button {
         flex: none;
-        scale: 0.96;
+        /* scale: 0.96; */
 
         &:hover {
             color: rgba(255, 39, 39, 0.7);
