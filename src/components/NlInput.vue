@@ -99,10 +99,6 @@ const props = defineProps({
      */
     maxlength: Number,
     /**
-     * @description input minlength
-     */
-    minlength: Number,
-    /**
      * @description input name
      */
     name: String,
