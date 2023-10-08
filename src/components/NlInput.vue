@@ -164,7 +164,6 @@ const emit = defineEmits([
 /**
  * Define refs
  */
-const wrapper = ref();
 const input = ref();
 const isFocused = ref(false); // Focus flag
 const widthStyle = ref(parseWidthAndHeight(props.width));
@@ -238,6 +237,15 @@ function wrapperClickHandler(e) {
 
 <style scoped>
 .nl-input {
+    --background-color: transparent;
+    --border-color: #cccccc;
+
+    --focused-background-color: transparent;
+    --focused-border-color: #6d94dd;
+    --focused-shadow-color: #6d94dd;
+
+    --disabled-background-color: #f0f0f0;
+
     transition: all 0.16s ease;
     box-sizing: border-box;
 
@@ -267,13 +275,6 @@ function wrapperClickHandler(e) {
 }
 
 .nl-input--default {
-    --background-color: transparent;
-    --border-color: #6d94dd;
-
-    --focused-background-color: transparent;
-    --focused-border-color: #6d94dd;
-    --focused-shadow-color: #6d94dd;
-
     min-width: 96px;
     width: v-bind(widthStyle);
     height: v-bind(heightStyle);
@@ -317,6 +318,8 @@ function wrapperClickHandler(e) {
 }
 
 .nl-input--disabled {
+    background-color: var(--disabled-background-color);
+
     cursor: not-allowed;
 
     &:deep(*) {

@@ -25,7 +25,8 @@ const inputValue = ref("");
                 prefix="^"
                 suffix="$"
                 :maxlength="22"
-                :minlength="10" />
+                :minlength="10"
+                disabled />
             <nl-textarea :value="textareaValue" placeholder="Input something" />
         </nl-div>
     </div>
