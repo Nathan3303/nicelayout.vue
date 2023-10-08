@@ -10,7 +10,6 @@
             :placeholder="placeholder"
             :name="name"
             :maxlength="maxlength"
-            :minlength="minlength"
             :autocomplete="autocomplete"
             :disabled="disabled"
             :readonly="!disabled && readonly"
@@ -19,7 +18,10 @@
             @blur="blurHandler"
             @change="changeHandler" />
         <slot name="suffix">{{ suffix }}</slot>
-        <i class="nl-input__button iconfont icon-clear" v-show="clearable && modelValue" @click="clearHandler">Delete</i>
+        <i class="nl-input__button iconfont icon-clear" v-show="clearable && modelValue" @click.stop="clearHandler">Del</i>
+        <i class="nl-input__button" v-show="type === 'password' && showPassword && modelValue" @click.stop="showPasswordHandler"
+            >Show</i
+        >
     </div>
 </template>
 
@@ -122,6 +124,10 @@ const props = defineProps({
      */
     clearable: Boolean,
     /**
+     * @description show password button state (Effective when input type is password)
+     */
+    showPassword: Boolean,
+    /**
      * @description input width
      */
     width: {
@@ -223,6 +229,15 @@ function clearHandler() {
     input.value.value = "";
     emit("update:modelValue", "");
     nextTick(() => input.value.focus());
+}
+
+/**
+ * Handle nl-input show password event
+ */
+function showPasswordHandler(e) {
+    const isShowed = input.value.type === "text";
+    input.value.type = isShowed ? "password" : "text";
+    e.target.innerHTML = isShowed ? "Show" : "Unshow";
 }
 
 /**

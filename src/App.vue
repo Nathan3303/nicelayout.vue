@@ -19,6 +19,7 @@ const inputValue = ref("");
     <div id="app">
         <nl-div :gap="24">
             <nl-input
+                type="password"
                 width="100%"
                 placeholder="Input something"
                 v-model="inputValue"
@@ -27,6 +28,7 @@ const inputValue = ref("");
                 :maxlength="22"
                 :minlength="10"
                 clearable
+                show-password
             />
             <nl-textarea :value="textareaValue" placeholder="Input something" />
         </nl-div>
