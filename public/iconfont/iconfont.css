@@ -1,0 +1,223 @@
+@font-face {
+  font-family: "iconfont"; /* Project id 4165854 */
+  src: url('iconfont.woff2?t=1696778948153') format('woff2'),
+       url('iconfont.woff?t=1696778948153') format('woff'),
+       url('iconfont.ttf?t=1696778948153') format('truetype');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-eye:before {
+  content: "\e8bf";
+}
+
+.icon-clear2:before {
+  content: "\e64e";
+}
+
+.icon-clear:before {
+  content: "\e8ba";
+}
+
+.icon-tag:before {
+  content: "\e752";
+}
+
+.icon-more-vertical:before {
+  content: "\e9cf";
+}
+
+.icon-heart:before {
+  content: "\e8ab";
+}
+
+.icon-edit:before {
+  content: "\e8ac";
+}
+
+.icon-help:before {
+  content: "\e8ad";
+}
+
+.icon-checked:before {
+  content: "\e8ae";
+}
+
+.icon-more:before {
+  content: "\e8af";
+}
+
+.icon-share:before {
+  content: "\e8b0";
+}
+
+.icon-calendar:before {
+  content: "\e8b4";
+}
+
+.icon-daily-check:before {
+  content: "\e8b5";
+}
+
+.icon-filter:before {
+  content: "\e8b6";
+}
+
+.icon-shanchu:before {
+  content: "\e8b7";
+}
+
+.icon-setting:before {
+  content: "\e8b8";
+}
+
+.icon-search:before {
+  content: "\e8b9";
+}
+
+.icon-unchecked:before {
+  content: "\e8bb";
+}
+
+.icon-ring:before {
+  content: "\e8be";
+}
+
+.icon-plus-circle:before {
+  content: "\e8c0";
+}
+
+.icon-heart-fill:before {
+  content: "\e8c3";
+}
+
+.icon-checked-fill:before {
+  content: "\e8c4";
+}
+
+.icon-completed:before {
+  content: "\e601";
+}
+
+.icon-file:before {
+  content: "\e739";
+}
+
+.icon-invoices:before {
+  content: "\e657";
+}
+
+.icon-add:before {
+  content: "\e62a";
+}
+
+.icon-detail:before {
+  content: "\e64f";
+}
+
+.icon-mail:before {
+  content: "\e6c8";
+}
+
+.icon-tasks:before {
+  content: "\e6ef";
+}
+
+.icon-theme:before {
+  content: "\e618";
+}
+
+.icon-logout:before {
+  content: "\e955";
+}
+
+.icon-point-small:before {
+  content: "\e614";
+}
+
+.icon-point:before {
+  content: "\e642";
+}
+
+.icon-project:before {
+  content: "\e61e";
+}
+
+.icon-fold2:before {
+  content: "\e7a4";
+}
+
+.icon-fold:before {
+  content: "\e6ce";
+}
+
+.icon-delete:before {
+  content: "\e617";
+}
+
+.icon-target:before {
+  content: "\e62f";
+}
+
+.icon-give-up:before {
+  content: "\e63a";
+}
+
+.icon-view:before {
+  content: "\e628";
+}
+
+.icon-view-off:before {
+  content: "\e629";
+}
+
+.icon-priority:before {
+  content: "\e660";
+}
+
+.icon-plus:before {
+  content: "\e640";
+}
+
+.icon-todo-list:before {
+  content: "\e638";
+}
+
+.icon-arrow-right:before {
+  content: "\e9ce";
+}
+
+.icon-arrow-left:before {
+  content: "\e64c";
+}
+
+.icon-add-circle:before {
+  content: "\e781";
+}
+
+.icon-overview:before {
+  content: "\e62e";
+}
+
+.icon-todo-logo:before {
+  content: "\e9cb";
+}
+
+.icon-arrow-down:before {
+  content: "\e9cc";
+}
+
+.icon-double-check-fill:before {
+  content: "\e67b";
+}
+
+.icon-check-fill:before {
+  content: "\e67c";
+}
+

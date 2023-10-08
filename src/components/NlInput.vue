@@ -1,5 +1,5 @@
 <template>
-    <div ref="wrapper" class="nl-input" :class="NlInputClasses" @click="wrapperClickHandler">
+    <div class="nl-input" :class="NlInputClasses" @click="wrapperClickHandler">
         <i v-if="icon" class="nl-input__icon iconfont" :class="icon"></i>
         <slot v-else name="icon"></slot>
         <slot name="prefix">{{ prefix }}</slot>
@@ -18,10 +18,13 @@
             @blur="blurHandler"
             @change="changeHandler" />
         <slot name="suffix">{{ suffix }}</slot>
-        <i class="nl-input__button iconfont icon-clear" v-show="clearable && modelValue" @click.stop="clearHandler">Del</i>
-        <i class="nl-input__button" v-show="type === 'password' && showPassword && modelValue" @click.stop="showPasswordHandler"
-            >Show</i
-        >
+        <div class="nl-input__button-group">
+            <i class="nl-input__button iconfont icon-clear2" v-show="clearable && modelValue" @click.stop="clearHandler"></i>
+            <i
+                class="nl-input__button iconfont icon-eye"
+                v-show="type === 'password' && showPassword && modelValue"
+                @click.stop="showPasswordHandler"></i>
+        </div>
     </div>
 </template>
 
@@ -234,10 +237,9 @@ function clearHandler() {
 /**
  * Handle nl-input show password event
  */
-function showPasswordHandler(e) {
+function showPasswordHandler() {
     const isShowed = input.value.type === "text";
     input.value.type = isShowed ? "password" : "text";
-    e.target.innerHTML = isShowed ? "Show" : "Unshow";
 }
 
 /**
@@ -245,7 +247,7 @@ function showPasswordHandler(e) {
  * @description When wrapper div was clicked, make inner input element on focus
  * @param {object} e The click event object
  */
-function wrapperClickHandler(e) {
+function wrapperClickHandler() {
     if (!isFocused.value) input.value.focus();
 }
 </script>
@@ -261,29 +263,59 @@ function wrapperClickHandler(e) {
 
     --disabled-background-color: #f0f0f0;
 
+    --button-size: 22px;
+    --button-color: #8d8d8d;
+    --button-border-color: #cccccc;
+
+    --hovered-button-color: #ff2727b3;
+    --hovered-button-border-color: #ff2727b3;
+
     transition: all 0.16s ease;
     box-sizing: border-box;
 
     display: flex;
     align-items: center;
+    justify-content: start;
     gap: 8px;
 
     position: relative;
 
     user-select: none;
+    overflow: hidden;
 
     & > input {
+        min-width: 24px;
         height: 100%;
         flex: 1 1 auto;
         outline: none;
+
+        &::-ms-reveal {
+            display: none;
+        }
+
+        &::-ms-clear {
+            display: none;
+        }
     }
 
-    & > .nl-input__button {
-        flex: none;
-        /* scale: 0.96; */
+    & > .nl-input__button-group {
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        gap: 4px;
 
-        &:hover {
-            color: rgba(255, 39, 39, 0.7);
+        & > .nl-input__button {
+            transition: all 0.16s ease;
+            box-sizing: border-box;
+
+            scale: 0.78;
+            min-width: var(--button-size);
+            height: var(--button-size);
+            line-height: calc(var(--button-size) - 1px);
+
+            border-radius: var(--button-size);
+            font-size: 13px;
+            text-align: center;
             cursor: pointer;
         }
     }
@@ -294,14 +326,13 @@ function wrapperClickHandler(e) {
     width: v-bind(widthStyle);
     height: v-bind(heightStyle);
     line-height: v-bind(heightStyle);
-    padding: 8px;
+    padding: 6px 8px;
 
     border: 1px solid var(--border-color);
     background: var(--background-color);
 
     font-size: 16px;
     font-family: "Consolas";
-    /* cursor: text; */
 
     & > input {
         padding: 0;
@@ -311,9 +342,14 @@ function wrapperClickHandler(e) {
         font-family: inherit;
     }
 
-    & > .nl-input__button {
-        color: #6f6f6f;
-        font-size: 12px !important;
+    & .nl-input__button {
+        border: 1px solid var(--button-border-color);
+        color: var(--button-color);
+
+        &:hover {
+            color: var(--hovered-button-color);
+            border-color: var(--hovered-button-border-color);
+        }
     }
 }
 

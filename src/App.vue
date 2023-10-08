@@ -17,14 +17,15 @@ const inputValue = ref("");
 
 <template>
     <div id="app">
-        <nl-div :gap="24">
+        <nl-div direction="vertical" :gap="24">
             <nl-input
-                type="password"
+                type="text"
                 width="100%"
-                placeholder="Input something"
+                icon="icon-search"
+                placeholder="xxx.xxx.xxx"
                 v-model="inputValue"
-                prefix="^"
-                suffix="$"
+                prefix="Http://"
+                suffix="/"
                 :maxlength="22"
                 :minlength="10"
                 clearable
