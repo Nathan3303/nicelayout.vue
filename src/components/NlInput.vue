@@ -1,7 +1,6 @@
 <template>
     <div class="nl-input" :class="NlInputClasses" @click="wrapperClickHandler">
         <i v-if="icon" class="nl-input__icon iconfont" :class="icon"></i>
-        <slot v-else name="icon"></slot>
         <slot name="prefix">{{ prefix }}</slot>
         <input
             ref="input"
@@ -18,10 +17,15 @@
             @change="changeHandler" />
         <slot name="suffix">{{ suffix }}</slot>
         <div class="nl-input__button-group">
-            <i class="nl-input__button iconfont icon-clear2" v-show="clearable && modelValue" @click.stop="clearHandler"></i>
             <i
-                class="nl-input__button iconfont icon-eye"
-                v-show="type === 'password' && showPassword && modelValue"
+                class="iconfont icon-clear2"
+                v-if="type !== 'file' && clearable"
+                v-show="modelValue"
+                @click.stop="clearHandler"></i>
+            <i
+                class="iconfont icon-eye"
+                v-if="type === 'password' && showPassword"
+                v-show="modelValue"
                 @click.stop="showPasswordHandler"></i>
         </div>
     </div>
@@ -303,7 +307,7 @@ function wrapperClickHandler() {
         justify-content: start;
         gap: 4px;
 
-        & > .nl-input__button {
+        & > i {
             transition: all 0.16s ease;
             box-sizing: border-box;
 
@@ -341,7 +345,7 @@ function wrapperClickHandler() {
         font-family: inherit;
     }
 
-    & .nl-input__button {
+    & > .nl-input__button-group > i {
         border: 1px solid var(--button-border-color);
         color: var(--button-color);
 
