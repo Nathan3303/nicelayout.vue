@@ -16,7 +16,10 @@ const inputValue = ref("");
 
 <template>
     <div id="app">
-        <nl-input :model-value="inputValue" />
+        <nl-input
+            v-model="inputValue"
+            :formatter="(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+            :parser="(value) => value.replace(/\$\s?|(,*)/g, '')" />
     </div>
 </template>
 

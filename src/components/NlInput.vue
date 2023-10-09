@@ -5,7 +5,7 @@
         <input
             ref="input"
             :type="type"
-            :value="modelValue"
+            :value="formatter(modelValue)"
             :placeholder="placeholder"
             :maxlength="maxlength"
             :autocomplete="autocomplete"
@@ -200,8 +200,7 @@ const NlInputClasses = computed(() => {
  * @param {object} e input event object
  */
 function inputHandler(e) {
-    console.log(e.target.value);
-    emit("update:modelValue", e.target.value);
+    emit("update:modelValue", props.parser(e.target.value));
 }
 
 /**
