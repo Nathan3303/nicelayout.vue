@@ -8,7 +8,6 @@
             :type="type"
             :value="modelValue"
             :placeholder="placeholder"
-            :name="name"
             :maxlength="maxlength"
             :autocomplete="autocomplete"
             :disabled="disabled"
@@ -43,11 +42,7 @@ defineOptions({ name: "NlInput" });
  */
 const props = defineProps({
     /**
-     * @description input id
-     */
-    id: String,
-    /**
-     * @description input type
+     * @description Type of input (Native attribute mapping)
      */
     type: {
         type: String,
@@ -55,28 +50,32 @@ const props = defineProps({
         validator: (v) => ["text", "password", "file", "number"].includes(v),
     },
     /**
-     * @description input value (v-model)
+     * @description Model-value of input (two-way value mapping)
      */
-    modelValue: {
-        type: [String, Number],
-        default: "",
-    },
+    modelValue: [String, Number],
     /**
-     * @description input format function
+     * @description Input value formatter (Format value when updated)
      */
     formatter: {
         type: Function,
         default: (value) => value,
     },
     /**
-     * @description input theme
+     * @description Input value parser (Parse value when updated)
+     */
+    parser: {
+        type: Function,
+        default: (value) => value,
+    },
+    /**
+     * @description Theme of input
      */
     theme: {
         type: String,
         default: "default",
     },
     /**
-     * @description input shape
+     * @description Border shape of input (circle, square or no-border)
      */
     shape: {
         type: String,
@@ -84,62 +83,58 @@ const props = defineProps({
         validator: (v) => validateShape(v),
     },
     /**
-     * @description input icon (Only iconfont class so far)
+     * @description Prefix icon of input (Only iconfont so far)
      */
     icon: String,
     /**
-     * @description input prefix text ($___)
+     * @description Prefix text of input
      */
     prefix: String,
     /**
-     * @description input suffix text (___$)
+     * @description Suffix text of input
      */
     suffix: String,
     /**
-     * @description input placeholder
+     * @description Input placeholder
      */
     placeholder: String,
     /**
-     * @description input maxlength
+     * @description Max length of input value (Native attribute mapping)
      */
     maxlength: Number,
     /**
-     * @description input name
-     */
-    name: String,
-    /**
-     * @description input autocomplete
+     * @description Autocomplete state (Native attribute mapping)
      */
     autocomplete: {
         type: String,
         default: "off",
     },
     /**
-     * @description input disabled state
+     * @description Disabled state (Native attribute mapping)
      */
     disabled: Boolean,
     /**
-     * @description input readonly state
+     * @description Readonly state (Native attribute mapping)
      */
     readonly: Boolean,
     /**
-     * @description input clearable state
+     * @description Clearable state (Control delete button)
      */
     clearable: Boolean,
     /**
-     * @description show password button state (Effective when input type is password)
+     * @description Show password state (Effective when input type is password)
      */
     showPassword: Boolean,
     /**
-     * @description input width
+     * @description Input width (Quick set)
      */
     width: {
         type: String,
-        default: "auto",
+        default: "100%",
         validator: (v) => validateWidthAndHeight(v),
     },
     /**
-     * @description input height
+     * @description Input height (Quick set)
      */
     height: {
         type: String,
@@ -153,21 +148,25 @@ const props = defineProps({
  */
 const emit = defineEmits([
     /**
-     * @description when update modelValue
+     * @description Calling up when input value is changed (Model-value)
      */
     "update:modelValue",
     /**
-     * @description when focused
+     * @description Calling up when input was focused
      */
-    "onFocused",
+    "focused",
     /**
-     * @description when blured
+     * @description Calling up when input was blured
      */
-    "onBlured",
+    "blured",
     /**
-     * @description when value changed
+     * @description Calling up when input value was changed
      */
-    "onChanged",
+    "changed",
+    /**
+     * @description Calling up when input was cleared
+     */
+    "cleared",
 ]);
 
 /**
@@ -187,7 +186,7 @@ const NlInputClasses = computed(() => {
     if (props.theme) classArray.push("nl-input--" + props.theme);
     if (props.shape) classArray.push("nl-input--" + props.shape);
     if (props.disabled) classArray.push("nl-input--disabled");
-    if (isFocused.value && !props.disabled) classArray.push("nl-input--focused");
+    if (isFocused.value) classArray.push("nl-input--focused");
     return classArray;
 });
 
@@ -196,7 +195,7 @@ const NlInputClasses = computed(() => {
  * @param {object} e input event object
  */
 function inputHandler(e) {
-    emit("update:modelValue", props.formatter(e.target.value));
+    emit("update:modelValue", value);
 }
 
 /**
@@ -205,7 +204,7 @@ function inputHandler(e) {
  */
 function focusHandler(e) {
     isFocused.value = !props.readonly && true;
-    emit("onFocused", e);
+    emit("focused", e);
 }
 
 /**
@@ -214,7 +213,7 @@ function focusHandler(e) {
  */
 function blurHandler(e) {
     isFocused.value = false;
-    emit("onBlured", e);
+    emit("blured", e);
 }
 
 /**
@@ -222,7 +221,7 @@ function blurHandler(e) {
  * @param {object} e change event object
  */
 function changeHandler(e) {
-    emit("onChanged", e);
+    emit("changed", e);
 }
 
 /**
