@@ -355,8 +355,11 @@ function showPasswordHandler() {
     }
 
     & > .nl-input__word-counter {
+        flex: none;
+        
         font-size: 12px;
         color: #8f8f8f;
+
     }
 }
 
