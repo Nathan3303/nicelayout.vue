@@ -29,11 +29,19 @@
                 v-show="modelValue"
                 @click.stop="showPasswordHandler"></i>
         </div>
+        <div v-if="counter !== 'off'" class="nl-input__word-counter">
+            <span v-if="['word-limit', 'both'].includes(counter)">
+                {{ wordCounter.length }} / {{ wordCounter.maxlength }}
+            </span>
+            <span v-if="['word-left', 'both'].includes(counter)">
+                , left: {{ wordCounter.maxlength - wordCounter.length }}
+            </span>
+        </div>
     </div>
 </template>
 
 <script setup>
-import { ref, nextTick, computed } from "vue";
+import { ref, nextTick, computed, reactive } from "vue";
 import { validateShape, validateWidthAndHeight } from "./validators";
 import { parseWidthAndHeight } from "./parsers";
 
@@ -106,7 +114,7 @@ const props = defineProps({
     /**
      * @description Max length of input value (Native attribute mapping)
      */
-    maxlength: Number,
+    maxlength: [String, Number],
     /**
      * @description Autocomplete state (Native attribute mapping)
      */
@@ -134,6 +142,14 @@ const props = defineProps({
      * @description Lazy state (Control model-value update way)
      */
     lazy: Boolean,
+    /**
+     * @description Word counter controller (show word limit)
+     */
+    counter: {
+        type: String,
+        default: "off",
+        validator: (v) => ["off", "word-limit", "word-left", "both"].includes(v),
+    },
     /**
      * @description Input width (Quick set)
      */
@@ -189,6 +205,10 @@ const input = ref();
 const isFocused = ref(false); // Focus flag
 const widthStyle = ref(parseWidthAndHeight(props.width));
 const heightStyle = ref(parseWidthAndHeight(props.height));
+const wordCounter = reactive({
+    length: props.modelValue.length,
+    maxlength: props.maxlength || "-",
+});
 // console.log(input)
 
 /**
@@ -228,6 +248,7 @@ function blurHandler(e) {
 function inputHandler(e) {
     emit("inputted", e);
     const value = props.parser(e.target.value);
+    wordCounter.length = value.length;
     if (props.lazy) {
         e.target.value = props.formatter(value);
     } else {
@@ -251,6 +272,7 @@ function changeHandler(e) {
  */
 function clearHandler() {
     emit("update:modelValue", "");
+    wordCounter.length = 0;
     nextTick(() => input.value.focus());
 }
 
@@ -330,6 +352,11 @@ function showPasswordHandler() {
             text-align: center;
             cursor: pointer;
         }
+    }
+
+    & > .nl-input__word-counter {
+        font-size: 12px;
+        color: #8f8f8f;
     }
 }
 
