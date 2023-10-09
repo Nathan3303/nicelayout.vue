@@ -11,9 +11,9 @@
             :autocomplete="autocomplete"
             :disabled="disabled"
             :readonly="!disabled && readonly"
-            @input="inputHandler"
             @focus="focusHandler"
             @blur="blurHandler"
+            @input="inputHandler"
             @change="changeHandler"
             @keydown.enter="() => input.blur()" />
         <slot name="suffix">{{ suffix }}</slot>
@@ -131,6 +131,10 @@ const props = defineProps({
      */
     showPassword: Boolean,
     /**
+     * @description Lazy state (Control model-value update way)
+     */
+    lazy: Boolean,
+    /**
      * @description Input width (Quick set)
      */
     width: {
@@ -196,19 +200,11 @@ const NlInputClasses = computed(() => {
 });
 
 /**
- * nl-input input handle function
- * @param {object} e input event object
- */
-function inputHandler(e) {
-    emit("update:modelValue", props.parser(e.target.value));
-}
-
-/**
  * nl-input focus handle function
  * @param {object} e focus event object
  */
 function focusHandler(e) {
-    isFocused.value = !props.readonly && true;
+    isFocused.value = !props.disabled && !props.readonly;
     emit("focused", e);
 }
 
@@ -222,19 +218,27 @@ function blurHandler(e) {
 }
 
 /**
+ * nl-input input handle function
+ * @param {object} e input event object
+ */
+function inputHandler(e) {
+    if (lazy) return;
+    emit("update:modelValue", props.parser(e.target.value));
+}
+
+/**
  * nl-input change handle function
  * @param {object} e change event object
  */
 function changeHandler(e) {
-    // emit("changed", e);
-    console.log(e.target.value);
+    emit("changed", e);
+    emit("update:modelValue", props.parser(e.target.value));
 }
 
 /**
  * Handle nl-input clear event
  */
 function clearHandler() {
-    input.value.value = "";
     emit("update:modelValue", "");
     nextTick(() => input.value.focus());
 }
