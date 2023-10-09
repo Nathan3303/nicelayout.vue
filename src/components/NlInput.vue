@@ -227,11 +227,11 @@ function blurHandler(e) {
  */
 function inputHandler(e) {
     emit("inputted", e);
+    const value = props.parser(e.target.value);
     if (props.lazy) {
-        const value = props.parser(e.target.value);
         e.target.value = props.formatter(value);
     } else {
-        emit("update:modelValue", props.parser(e.target.value));
+        emit("update:modelValue", value);
     }
 }
 
@@ -241,9 +241,8 @@ function inputHandler(e) {
  * @param {object} e Change event object
  */
 function changeHandler(e) {
-    if (!props.lazy) return;
     emit("changed", e);
-    emit("update:modelValue", props.parser(e.target.value));
+    if (props.lazy) emit("update:modelValue", props.parser(e.target.value));
 }
 
 /**
