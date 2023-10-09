@@ -222,7 +222,8 @@ function blurHandler(e) {
  * @param {object} e input event object
  */
 function inputHandler(e) {
-    if (lazy) return;
+    if (props.lazy) return;
+    emit("changed", e);
     emit("update:modelValue", props.parser(e.target.value));
 }
 
@@ -231,6 +232,7 @@ function inputHandler(e) {
  * @param {object} e change event object
  */
 function changeHandler(e) {
+    if (!props.lazy) return;
     emit("changed", e);
     emit("update:modelValue", props.parser(e.target.value));
 }
