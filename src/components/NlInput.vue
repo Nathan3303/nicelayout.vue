@@ -157,23 +157,27 @@ const props = defineProps({
  */
 const emit = defineEmits([
     /**
-     * @description Calling up when input value is changed (Model-value)
+     * @description Calling when input value is changed (Model-value)
      */
     "update:modelValue",
     /**
-     * @description Calling up when input was focused
+     * @description Calling when input was focused
      */
     "focused",
     /**
-     * @description Calling up when input was blured
+     * @description Calling when input was blured
      */
     "blured",
     /**
-     * @description Calling up when input value was changed
+     * @description Calling when input value was inputed
+     */
+    "inputted",
+    /**
+     * @description Calling when input value was changed
      */
     "changed",
     /**
-     * @description Calling up when input was cleared
+     * @description Calling when input was cleared
      */
     "cleared",
 ]);
@@ -200,8 +204,8 @@ const NlInputClasses = computed(() => {
 });
 
 /**
- * nl-input focus handle function
- * @param {object} e focus event object
+ * Input on focus event handler
+ * @param {object} e Focus event object
  */
 function focusHandler(e) {
     isFocused.value = !props.disabled && !props.readonly;
@@ -209,8 +213,8 @@ function focusHandler(e) {
 }
 
 /**
- * nl-input blur handle function
- * @param {object} e blur event object
+ * Input on blur event handler
+ * @param {object} e Blur event object
  */
 function blurHandler(e) {
     isFocused.value = false;
@@ -218,18 +222,23 @@ function blurHandler(e) {
 }
 
 /**
- * nl-input input handle function
- * @param {object} e input event object
+ * Input on input event handler
+ * @param {object} e Input event object
  */
 function inputHandler(e) {
-    if (props.lazy) return;
-    emit("changed", e);
-    emit("update:modelValue", props.parser(e.target.value));
+    emit("inputted", e);
+    if (props.lazy) {
+        const value = props.parser(e.target.value);
+        e.target.value = props.formatter(value);
+    } else {
+        emit("update:modelValue", props.parser(e.target.value));
+    }
 }
 
 /**
- * nl-input change handle function
- * @param {object} e change event object
+ * Input on change event handler
+ * @description This handle function should be executed when props.lazy is true
+ * @param {object} e Change event object
  */
 function changeHandler(e) {
     if (!props.lazy) return;
@@ -238,7 +247,8 @@ function changeHandler(e) {
 }
 
 /**
- * Handle nl-input clear event
+ * Input on clear event handler
+ * @description Click event handler of clear button
  */
 function clearHandler() {
     emit("update:modelValue", "");
@@ -246,7 +256,8 @@ function clearHandler() {
 }
 
 /**
- * Handle nl-input show password event
+ * Input show password event handler
+ * @description Click event handler of show password button
  */
 function showPasswordHandler() {
     const isShowed = input.value.type === "text";
