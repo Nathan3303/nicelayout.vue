@@ -16,7 +16,7 @@ const inputValue = ref("");
 
 <template>
     <div id="app">
-        <nl-input v-model="inputValue" />
+        <nl-input :model-value="inputValue" />
     </div>
 </template>
 

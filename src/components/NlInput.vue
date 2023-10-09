@@ -1,5 +1,5 @@
 <template>
-    <div class="nl-input" :class="NlInputClasses" @click="wrapperClickHandler">
+    <div class="nl-input" :class="NlInputClasses">
         <i v-if="icon" class="nl-input__icon iconfont" :class="icon"></i>
         <slot name="prefix">{{ prefix }}</slot>
         <input
@@ -14,7 +14,8 @@
             @input="inputHandler"
             @focus="focusHandler"
             @blur="blurHandler"
-            @change="changeHandler" />
+            @change="changeHandler"
+            @keydown.enter="() => input.blur()" />
         <slot name="suffix">{{ suffix }}</slot>
         <div class="nl-input__button-group">
             <i
@@ -199,7 +200,8 @@ const NlInputClasses = computed(() => {
  * @param {object} e input event object
  */
 function inputHandler(e) {
-    emit("update:modelValue", value);
+    console.log(e.target.value);
+    emit("update:modelValue", e.target.value);
 }
 
 /**
@@ -225,7 +227,8 @@ function blurHandler(e) {
  * @param {object} e change event object
  */
 function changeHandler(e) {
-    emit("changed", e);
+    // emit("changed", e);
+    console.log(e.target.value);
 }
 
 /**
@@ -243,15 +246,6 @@ function clearHandler() {
 function showPasswordHandler() {
     const isShowed = input.value.type === "text";
     input.value.type = isShowed ? "password" : "text";
-}
-
-/**
- * Wrapper click handler
- * @description When wrapper div was clicked, make inner input element on focus
- * @param {object} e The click event object
- */
-function wrapperClickHandler() {
-    if (!isFocused.value) input.value.focus();
 }
 </script>
 
