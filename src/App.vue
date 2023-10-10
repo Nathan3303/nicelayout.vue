@@ -1,6 +1,7 @@
 <template>
     <div id="app">
-        <nl-textarea v-model="inputValue" placeholder="nl-textarea" counter="word-limit" />
+        <nl-input v-model="inputValue" placeholder="nl-input" />
+        <nl-textarea v-model="textareaValue" placeholder="nl-textarea" disabled />
     </div>
 </template>
 
@@ -18,12 +19,13 @@ import NlInput from "./components/NlInput.vue";
  * Define refs
  */
 const inputValue = ref("");
+const textareaValue = ref("");
 
 /**
  * Watch input value
  */
 watch(
-    () => inputValue.value,
+    () => textareaValue.value,
     (newValue) => console.log(newValue)
 );
 </script>
