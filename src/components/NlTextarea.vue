@@ -1,7 +1,9 @@
 <template>
-    <div class="nl-textarea" :class="NlTextareaClasses">
+    <div class="nl-textarea">
         <textarea
             ref="textarea"
+            :class="NlTextareaClasses"
+            :rows="rows"
             :value="modelValue"
             :placeholder="placeholder"
             :readonly="readonly"
@@ -9,7 +11,13 @@
             @focus="focusHandler"
             @blur="blurHandler"
             @input="inputHandler"></textarea>
-        <textarea class="backend-textarea" ref="backendTextarea" rows="1" :value="modelValue"></textarea>
+        <textarea
+            v-if="autosize"
+            class="backend-textarea"
+            ref="backendTextarea"
+            :value="modelValue"
+            :readonly="readonly"
+            :disabled="disabled"></textarea>
     </div>
 </template>
 
@@ -30,6 +38,21 @@ const props = defineProps({
      */
     modelValue: [String, Number],
     /**
+     * @description text formatter
+     */
+    formatter: {
+        type: Function,
+        default: (v) => v,
+    },
+    /**
+     * @description input placeholder
+     */
+    placeholder: String,
+    /**
+     * @description Textarea rows (Native attribute mappint)
+     */
+    rows: [String, Number],
+    /**
      * @description Theme of textarea
      */
     theme: {
@@ -45,28 +68,28 @@ const props = defineProps({
         validator: (v) => ["square", "no-border"].includes(v),
     },
     /**
-     * @description Textarea diable state
+     * @description Textarea diable state (Native attribute mappint)
      */
     disabled: Boolean,
     /**
-     * @description Textarea readonly state
+     * @description Textarea readonly state (Native attribute mappint)
      */
     readonly: Boolean,
     /**
-     * @description text size
+     * @description Textarea css property resize mapping
      */
-    resize: Boolean,
-    /**
-     * @description text formatter
-     */
-    formatter: {
-        type: Function,
-        default: (v) => v,
+    resize: {
+        type: String,
+        default: "none",
+        validator: (v) => ["none", "both", "vertical", "horizontal"].includes(v),
     },
     /**
-     * @description input placeholder
+     * @description Textarea autosize state
      */
-    placeholder: String,
+    autosize: {
+        type: [Boolean, Object],
+        default: false,
+    },
 });
 
 /**
@@ -148,6 +171,7 @@ function inputHandler(e) {
  * @return {string} css height string for textarea element
  */
 function calculateTextareaHeight() {
+    if (!props.autosize) return;
     textarea.value.style.height = backendTextarea.value.scrollHeight + "px";
 }
 </script>
@@ -163,31 +187,22 @@ function calculateTextareaHeight() {
 
     --disabled-background-color: #f0f0f0;
 
-    /* --button-size: 22px; */
-    /* --button-color: #8d8d8d; */
-    /* --button-border-color: #cccccc; */
-
-    /* --hovered-button-color: #ff2727b3; */
-    /* --hovered-button-border-color: #ff2727b3; */
-
     transition: all 0.16s ease-in;
 
     display: flex;
     flex-direction: column;
     align-items: start;
 
-    overflow: hidden;
+    flex: none;
 
     & > textarea {
         box-sizing: border-box;
-        /* transition: all 0.16s ease-in; */
+        transition: all 0.16s ease-in;
 
         width: 100%;
-        padding: 0;
         margin: 0;
         resize: v-bind(resize);
 
-        border: none;
         outline: none;
         background-color: transparent;
 
@@ -199,6 +214,9 @@ function calculateTextareaHeight() {
 
     & > .backend-textarea {
         opacity: 0;
+        padding: 0;
+        margin: 0;
+        border: none;
         height: 0px;
     }
 }
@@ -206,7 +224,6 @@ function calculateTextareaHeight() {
 .nl-textarea--default {
     box-sizing: border-box;
 
-    width: 100%;
     padding: 8px;
 
     border: 1px solid #ccc;
