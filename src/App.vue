@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <nl-input v-model="inputValue" placeholder="nl-input" />
-        <nl-textarea v-model="textareaValue" placeholder="nl-textarea" rows="12" autosize />
+        <nl-textarea v-model="textareaValue" placeholder="nl-textarea" rows="12" resize />
     </div>
 </template>
 
@@ -24,10 +24,10 @@ const textareaValue = ref("123123");
 /**
  * Watch input value
  */
-watch(
-    () => textareaValue.value,
-    (newValue) => console.log(newValue)
-);
+// watch(
+//     () => textareaValue.value,
+//     (newValue) => console.log(newValue)
+// );
 </script>
 
 <style scoped>

@@ -1,8 +1,7 @@
 <template>
-    <div class="nl-textarea">
+    <div class="nl-textarea" :class="NlTextareaClasses">
         <textarea
             ref="textarea"
-            :class="NlTextareaClasses"
             :rows="rows"
             :value="modelValue"
             :placeholder="placeholder"
@@ -15,6 +14,7 @@
             v-if="autosize"
             class="backend-textarea"
             ref="backendTextarea"
+            :rows="rows"
             :value="modelValue"
             :readonly="readonly"
             :disabled="disabled"></textarea>
@@ -22,7 +22,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, onMounted, nextTick } from "vue";
 
 /**
  * Define options
@@ -79,13 +79,9 @@ const props = defineProps({
      */
     readonly: Boolean,
     /**
-     * @description Textarea css property resize mapping
+     * @description Textarea resize state
      */
-    resize: {
-        type: String,
-        default: "none",
-        validator: (v) => ["none", "both", "vertical", "horizontal"].includes(v),
-    },
+    resize: Boolean,
     /**
      * @description Textarea autosize state
      */
@@ -130,8 +126,11 @@ const isFocused = ref(false);
 // console.log(rawLineHeight.value)
 
 /**
- * Calculate nl-textarea classes
+ * Define computed
  */
+const overflow = computed(() => (props.autosize ? "hidden" : "auto"));
+const minHeight = computed(() => !props.autosize && props.rows * 22 + "px");
+const resize = computed(() => (props.resize ? "vertical" : "none"));
 const NlTextareaClasses = computed(() => {
     let classArray = [];
     if (props.theme) classArray.push("nl-textarea--" + props.theme);
@@ -164,18 +163,12 @@ function blurHandler(e) {
  * @param {object} e inputing event object
  */
 function inputHandler(e) {
-    calculateTextareaHeight();
     emit("update:modelValue", e.target.value);
-}
-
-/**
- * Calculate the height of textarea element
- * @param {object} element native html element object
- * @return {string} css height string for textarea element
- */
-function calculateTextareaHeight() {
-    if (!props.autosize) return;
-    textarea.value.style.height = backendTextarea.value.scrollHeight + "px";
+    if (props.autosize) {
+        nextTick(() => {
+            textarea.value.style.height = backendTextarea.value.scrollHeight + "px";
+        });
+    }
 }
 </script>
 
@@ -194,43 +187,41 @@ function calculateTextareaHeight() {
 
     display: flex;
     flex-direction: column;
-    align-items: start;
-
-    flex: none;
 
     & > textarea {
-        box-sizing: border-box;
-        transition: all 0.16s ease-in;
-
         width: 100%;
+        min-height: v-bind(minHeight);
+        line-height: 22px;
         margin: 0;
+        padding: 0;
         resize: v-bind(resize);
 
+        overflow: v-bind(overflow);
         outline: none;
+        border: none;
         background-color: transparent;
 
         color: inherit;
         font-size: inherit;
+        font-family: inherit;
         word-break: break-all;
-        font-family: "Consolas";
     }
 
     & > .backend-textarea {
         opacity: 0;
-        padding: 0;
-        margin: 0;
-        border: none;
         height: 0px;
     }
 }
 
 .nl-textarea--default {
     box-sizing: border-box;
-
-    padding: 8px;
+    padding: 6px 8px;
 
     border: 1px solid #ccc;
     border-radius: 6px;
+
+    font-size: 16px;
+    font-family: "Consolas";
 }
 
 .nl-textarea--no-border {
@@ -247,6 +238,7 @@ function calculateTextareaHeight() {
     background-color: var(--disabled-background-color);
 
     cursor: not-allowed;
+    user-select: none !important;
 
     &:deep(*) {
         color: #969696;
