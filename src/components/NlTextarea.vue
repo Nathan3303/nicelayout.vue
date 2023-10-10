@@ -5,10 +5,9 @@
             :value="modelValue"
             :placeholder="placeholder"
             :readonly="readonly"
-            :title="title"
             @blur="blurHandler"
             @input="inputHandler"></textarea>
-        <textarea class="hidden-textarea" ref="backendTextarea" rows="1" :value="modelValue"></textarea>
+        <textarea class="backend-textarea" ref="backendTextarea" rows="1" :value="modelValue"></textarea>
     </div>
 </template>
 
@@ -54,10 +53,6 @@ const props = defineProps({
      * @description input placeholder
      */
     placeholder: String,
-    /**
-     * @description input title
-     */
-    title: String,
 });
 
 /**
@@ -69,9 +64,21 @@ const emit = defineEmits([
      */
     "update:modelValue",
     /**
+     * @description Calling when textarea was focused
+     */
+    "focused",
+    /**
      * @description Calling when textarea was blured
      */
     "blured",
+    /**
+     * @description Calling when textarea value was inputed
+     */
+    "inputted",
+    /**
+     * @description Calling when textarea value was changed
+     */
+    "changed",
 ]);
 
 /**
@@ -121,7 +128,6 @@ onMounted(() => {
     flex-direction: column;
     align-items: start;
 
-    position: relative;
     overflow: hidden;
 
     & > textarea {
@@ -129,7 +135,6 @@ onMounted(() => {
         width: 100%;
         padding: 0;
         margin: 0;
-        overflow: hidden;
         resize: v-bind(resize);
 
         border: none;
@@ -141,10 +146,10 @@ onMounted(() => {
         word-break: break-all;
         font-family: "Consolas";
 
-        /* transition: all .16s ease-in; */
+        transition: all 0.16s ease-in;
     }
 
-    & > .hidden-textarea {
+    & > .backend-textarea {
         opacity: 0;
         height: 0px;
     }
@@ -152,9 +157,11 @@ onMounted(() => {
 
 .nl-textarea--default {
     box-sizing: border-box;
+
     width: 100%;
+    padding: 8px;
+
     border: 1px solid #ccc;
-    padding: 6px;
     border-radius: 6px;
 }
 </style>
