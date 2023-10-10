@@ -51,7 +51,10 @@ const props = defineProps({
     /**
      * @description Textarea rows (Native attribute mappint)
      */
-    rows: [String, Number],
+    rows: {
+        type: [String, Number],
+        default: 1,
+    },
     /**
      * @description Theme of textarea
      */
