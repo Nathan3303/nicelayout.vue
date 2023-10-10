@@ -365,6 +365,7 @@ function showPasswordHandler() {
 
         font-size: 12px;
         color: #8f8f8f;
+        user-select: none;
     }
 }
 

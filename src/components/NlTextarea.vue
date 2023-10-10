@@ -12,19 +12,16 @@
             @blur="blurHandler"
             @input="inputHandler"></textarea>
         <textarea
-            v-if="autosize"
+            v-if="autosize && !props.disabled && !props.readonly"
             class="backend-textarea"
             ref="backendTextarea"
-            :rows="rows"
-            :value="modelValue"
-            :readonly="readonly"
-            :disabled="disabled"></textarea>
+            :value="modelValue"></textarea>
         <div v-if="wordCounterText" class="nl-textarea__word-counter">{{ wordCounterText }}</div>
     </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted, nextTick } from "vue";
+import { ref, computed, nextTick } from "vue";
 
 /**
  * Define options
@@ -144,7 +141,7 @@ const textLength = ref(props.modelValue?.length || 0);
  * Define computed
  */
 const overflow = computed(() => (props.autosize ? "hidden" : "auto"));
-const minHeight = computed(() => !props.autosize && props.rows * 22 + "px");
+const minHeight = computed(() => props.rows * 22 + "px");
 const resize = computed(() => (props.resize ? "vertical" : "none"));
 const NlTextareaClasses = computed(() => {
     let classArray = [];
@@ -236,17 +233,20 @@ function inputHandler(e) {
 
     & > .backend-textarea {
         opacity: 0;
-        height: 0px;
+        height: 0px !important;
+        min-height: 0px !important;
     }
 
     & > .nl-textarea__word-counter {
         flex: none;
         position: absolute;
         right: 18px;
-        bottom: 12px;
+        bottom: 10px;
 
+        background: white;
         font-size: 12px;
         color: #8f8f8f;
+        user-select: none;
     }
 }
 
