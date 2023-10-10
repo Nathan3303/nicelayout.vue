@@ -29,19 +29,12 @@
                 v-show="modelValue"
                 @click.stop="showPasswordHandler"></i>
         </div>
-        <div v-if="counter !== 'off'" class="nl-input__word-counter">
-            <span v-if="['word-limit', 'both'].includes(counter)">
-                {{ wordCounter.length }} / {{ wordCounter.maxlength }}
-            </span>
-            <span v-if="['word-left', 'both'].includes(counter)">
-                , left: {{ wordCounter.maxlength - wordCounter.length }}
-            </span>
-        </div>
+        <div v-if="wordCounterText" class="nl-input__word-counter">{{ wordCounterText }}</div>
     </div>
 </template>
 
 <script setup>
-import { ref, nextTick, computed, reactive } from "vue";
+import { ref, nextTick, computed } from "vue";
 import { validateShape, validateWidthAndHeight } from "./validators";
 import { parseWidthAndHeight } from "./parsers";
 
@@ -114,7 +107,10 @@ const props = defineProps({
     /**
      * @description Max length of input value (Native attribute mapping)
      */
-    maxlength: [String, Number],
+    maxlength: {
+        type: [String, Number],
+        default: -1,
+    },
     /**
      * @description Autocomplete state (Native attribute mapping)
      */
@@ -203,12 +199,9 @@ const emit = defineEmits([
  */
 const input = ref();
 const isFocused = ref(false); // Focus flag
+const textLength = ref(props.modelValue?.length || 0);
 const widthStyle = ref(parseWidthAndHeight(props.width));
 const heightStyle = ref(parseWidthAndHeight(props.height));
-const wordCounter = reactive({
-    length: props.modelValue.length,
-    maxlength: props.maxlength || "-",
-});
 // console.log(input)
 
 /**
@@ -221,6 +214,19 @@ const NlInputClasses = computed(() => {
     if (props.disabled) classArray.push("nl-input--disabled");
     if (isFocused.value) classArray.push("nl-input--focused");
     return classArray;
+});
+
+/**
+ * Input word counter text
+ */
+const wordCounterText = computed(() => {
+    if (props.counter === "off") return false;
+    let result = "";
+    const maxlength = props.maxlength !== -1 && parseInt(props.maxlength);
+    if (props.counter !== "word-left") result += `${textLength.value} / ${maxlength || "-"}`;
+    if (props.counter === "both") result += " , ";
+    if (props.counter !== "word-limit") result += maxlength ? maxlength - textLength.value : "-";
+    return result;
 });
 
 /**
@@ -248,7 +254,7 @@ function blurHandler(e) {
 function inputHandler(e) {
     emit("inputted", e);
     const value = props.parser(e.target.value);
-    wordCounter.length = value.length;
+    textLength.value = value.length;
     if (props.lazy) {
         e.target.value = props.formatter(value);
     } else {
@@ -272,7 +278,7 @@ function changeHandler(e) {
  */
 function clearHandler() {
     emit("update:modelValue", "");
-    wordCounter.length = 0;
+    textLength.value = 0;
     nextTick(() => input.value.focus());
 }
 
@@ -356,10 +362,9 @@ function showPasswordHandler() {
 
     & > .nl-input__word-counter {
         flex: none;
-        
+
         font-size: 12px;
         color: #8f8f8f;
-
     }
 }
 
