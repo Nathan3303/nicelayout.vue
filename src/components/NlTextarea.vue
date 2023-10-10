@@ -1,14 +1,14 @@
 <template>
-    <div class="nl-edit-text" :class="`nl-edit-text--${theme}`">
+    <div class="nl-textarea" :class="`nl-textarea--${theme}`">
         <textarea
             ref="textarea"
-            v-model="content"
+            :value="modelValue"
             :placeholder="placeholder"
             :readonly="readonly"
             :title="title"
             @blur="blurHandler"
             @input="inputHandler"></textarea>
-        <textarea class="hidden-textarea" ref="backendTextarea" rows="1" v-model="content"></textarea>
+        <textarea class="hidden-textarea" ref="backendTextarea" rows="1" :value="modelValue"></textarea>
     </div>
 </template>
 
@@ -25,16 +25,16 @@ defineOptions({ name: "NlTextarea" });
  */
 const props = defineProps({
     /**
-     * @description nl-edit-text theme
+     * @description Model-value of textarea (two-way value mapping)
+     */
+    modelValue: [String, Number],
+    /**
+     * @description Theme of textarea
      */
     theme: {
         type: String,
         default: "default",
     },
-    /**
-     * @description displayed text
-     */
-    value: String,
     /**
      * @description readonly state
      */
@@ -65,7 +65,11 @@ const props = defineProps({
  */
 const emit = defineEmits([
     /**
-     * @description when input was blured
+     * @description Calling when textarea value is changed (Model-value)
+     */
+    "update:modelValue",
+    /**
+     * @description Calling when textarea was blured
      */
     "blured",
 ]);
@@ -75,7 +79,6 @@ const emit = defineEmits([
  */
 const textarea = ref();
 const backendTextarea = ref();
-const content = ref(props.value);
 // console.log(rawLineHeight.value)
 
 /**
@@ -92,6 +95,7 @@ function blurHandler(e) {
  */
 function inputHandler(e) {
     calculateTextareaHeight();
+    emit("update:modelValue", e.target.value);
 }
 
 /**
@@ -112,7 +116,7 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.nl-edit-text {
+.nl-textarea {
     display: flex;
     flex-direction: column;
     align-items: start;
@@ -146,7 +150,7 @@ onMounted(() => {
     }
 }
 
-.nl-edit-text--default {
+.nl-textarea--default {
     box-sizing: border-box;
     width: 100%;
     border: 1px solid #ccc;

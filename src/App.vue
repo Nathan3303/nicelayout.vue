@@ -1,5 +1,11 @@
+<template>
+    <div id="app">
+        <nl-textarea v-model="inputValue" placeholder="nl-textarea" counter="word-limit" />
+    </div>
+</template>
+
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 
 /**
  * Import components
@@ -12,18 +18,15 @@ import NlInput from "./components/NlInput.vue";
  * Define refs
  */
 const inputValue = ref("");
-</script>
 
-<template>
-    <div id="app">
-        <nl-input v-model="inputValue" maxlength="24"/>
-        <nl-textarea
-            :value="inputValue"
-            placeholder="nl-textarea"
-            counter="word-limit"
-        />
-    </div>
-</template>
+/**
+ * Watch input value
+ */
+watch(
+    () => inputValue.value,
+    (newValue) => console.log(newValue)
+);
+</script>
 
 <style scoped>
 #app {
