@@ -7,6 +7,7 @@
             :placeholder="placeholder"
             :readonly="readonly"
             :disabled="disabled"
+            :maxlength="maxlength"
             @focus="focusHandler"
             @blur="blurHandler"
             @input="inputHandler"></textarea>
@@ -18,6 +19,7 @@
             :value="modelValue"
             :readonly="readonly"
             :disabled="disabled"></textarea>
+        <div v-if="wordCounterText" class="nl-textarea__word-counter">{{ wordCounterText }}</div>
     </div>
 </template>
 
@@ -89,6 +91,18 @@ const props = defineProps({
         type: [Boolean, Object],
         default: false,
     },
+    /**
+     * @description Max length of textarea value
+     */
+    maxlength: [String, Number],
+    /**
+     * @description Word counter controller (show word limit)
+     */
+    counter: {
+        type: String,
+        default: "off",
+        validator: (v) => ["off", "word-limit", "word-left", "both"].includes(v),
+    },
 });
 
 /**
@@ -123,6 +137,7 @@ const emit = defineEmits([
 const textarea = ref();
 const backendTextarea = ref();
 const isFocused = ref(false);
+const textLength = ref(props.modelValue?.length || 0);
 // console.log(rawLineHeight.value)
 
 /**
@@ -138,6 +153,15 @@ const NlTextareaClasses = computed(() => {
     if (props.disabled) classArray.push("nl-textarea--disabled");
     if (isFocused.value) classArray.push("nl-textarea--focused");
     return classArray;
+});
+const wordCounterText = computed(() => {
+    if (props.counter === "off") return false;
+    let result = "";
+    const maxlength = props.maxlength !== -1 && parseInt(props.maxlength);
+    if (props.counter !== "word-left") result += `${textLength.value} / ${maxlength || "-"}`;
+    if (props.counter === "both") result += " , ";
+    if (props.counter !== "word-limit") result += maxlength ? maxlength - textLength.value : "-";
+    return result;
 });
 
 /**
@@ -164,6 +188,7 @@ function blurHandler(e) {
  */
 function inputHandler(e) {
     emit("update:modelValue", e.target.value);
+    textLength.value = e.target.textLength;
     if (props.autosize) {
         nextTick(() => {
             textarea.value.style.height = backendTextarea.value.scrollHeight + "px";
@@ -188,6 +213,8 @@ function inputHandler(e) {
     display: flex;
     flex-direction: column;
 
+    position: relative;
+
     & > textarea {
         width: 100%;
         min-height: v-bind(minHeight);
@@ -210,6 +237,16 @@ function inputHandler(e) {
     & > .backend-textarea {
         opacity: 0;
         height: 0px;
+    }
+
+    & > .nl-textarea__word-counter {
+        flex: none;
+        position: absolute;
+        right: 18px;
+        bottom: 12px;
+
+        font-size: 12px;
+        color: #8f8f8f;
     }
 }
 
