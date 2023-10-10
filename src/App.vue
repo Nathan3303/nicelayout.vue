@@ -1,21 +1,39 @@
+<template>
+    <div id="app">
+        <nl-input v-model="inputValue" placeholder="nl-input" />
+        <nl-textarea v-model="textareaValue" placeholder="nl-textarea" rows="12" maxlength="240" autosize resize counter="both" />
+    </div>
+</template>
+
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 
 /**
  * Import components
  */
+// import NlDiv from "./components/NlDiv.vue";
 import NlTextarea from "./components/NlTextarea.vue";
+import NlInput from "./components/NlInput.vue";
 
 /**
  * Define refs
  */
-const textareaValue = ref("");
+const inputValue = ref("");
+const textareaValue = ref("123123");
+
+/**
+ * Watch input value
+ */
+// watch(
+//     () => textareaValue.value,
+//     (newValue) => console.log(newValue)
+// );
 </script>
 
-<template>
-    <div id="app">
-        <nl-textarea :size="18" :value="textareaValue" placeholder="Input something"></nl-textarea>
-    </div>
-</template>
-
-<style scoped></style>
+<style scoped>
+#app {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+</style>

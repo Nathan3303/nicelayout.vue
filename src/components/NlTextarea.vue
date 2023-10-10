@@ -1,19 +1,27 @@
 <template>
-    <div class="nl-edit-text" :class="`nl-edit-text--${theme}`">
+    <div class="nl-textarea" :class="NlTextareaClasses">
         <textarea
             ref="textarea"
-            v-model="content"
+            :rows="rows"
+            :value="modelValue"
             :placeholder="placeholder"
             :readonly="readonly"
-            :title="title"
+            :disabled="disabled"
+            :maxlength="maxlength"
+            @focus="focusHandler"
             @blur="blurHandler"
             @input="inputHandler"></textarea>
-        <textarea class="hidden-textarea" ref="backendTextarea" rows="1" v-model="content"></textarea>
+        <textarea
+            v-if="autosize && !props.disabled && !props.readonly"
+            class="backend-textarea"
+            ref="backendTextarea"
+            :value="modelValue"></textarea>
+        <div v-if="wordCounterText" class="nl-textarea__word-counter">{{ wordCounterText }}</div>
     </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, computed, nextTick } from "vue";
 
 /**
  * Define options
@@ -25,24 +33,9 @@ defineOptions({ name: "NlTextarea" });
  */
 const props = defineProps({
     /**
-     * @description nl-edit-text theme
+     * @description Model-value of textarea (two-way value mapping)
      */
-    theme: {
-        type: String,
-        default: "default",
-    },
-    /**
-     * @description displayed text
-     */
-    value: String,
-    /**
-     * @description readonly state
-     */
-    readonly: Boolean,
-    /**
-     * @description text size
-     */
-    resize: Boolean,
+    modelValue: [String, Number],
     /**
      * @description text formatter
      */
@@ -55,9 +48,58 @@ const props = defineProps({
      */
     placeholder: String,
     /**
-     * @description input title
+     * @description Textarea rows (Native attribute mappint)
      */
-    title: String,
+    rows: {
+        type: [String, Number],
+        default: 1,
+    },
+    /**
+     * @description Theme of textarea
+     */
+    theme: {
+        type: String,
+        default: "default",
+    },
+    /**
+     * @description Shape of textarea
+     */
+    shape: {
+        type: String,
+        default: "square",
+        validator: (v) => ["square", "no-border"].includes(v),
+    },
+    /**
+     * @description Textarea diable state (Native attribute mappint)
+     */
+    disabled: Boolean,
+    /**
+     * @description Textarea readonly state (Native attribute mappint)
+     */
+    readonly: Boolean,
+    /**
+     * @description Textarea resize state
+     */
+    resize: Boolean,
+    /**
+     * @description Textarea autosize state
+     */
+    autosize: {
+        type: [Boolean, Object],
+        default: false,
+    },
+    /**
+     * @description Max length of textarea value
+     */
+    maxlength: [String, Number],
+    /**
+     * @description Word counter controller (show word limit)
+     */
+    counter: {
+        type: String,
+        default: "off",
+        validator: (v) => ["off", "word-limit", "word-left", "both"].includes(v),
+    },
 });
 
 /**
@@ -65,9 +107,25 @@ const props = defineProps({
  */
 const emit = defineEmits([
     /**
-     * @description when input was blured
+     * @description Calling when textarea value is changed (Model-value)
+     */
+    "update:modelValue",
+    /**
+     * @description Calling when textarea was focused
+     */
+    "focused",
+    /**
+     * @description Calling when textarea was blured
      */
     "blured",
+    /**
+     * @description Calling when textarea value was inputed
+     */
+    "inputted",
+    /**
+     * @description Calling when textarea value was changed
+     */
+    "changed",
 ]);
 
 /**
@@ -75,15 +133,50 @@ const emit = defineEmits([
  */
 const textarea = ref();
 const backendTextarea = ref();
-const content = ref(props.value);
+const isFocused = ref(false);
+const textLength = ref(props.modelValue?.length || 0);
 // console.log(rawLineHeight.value)
+
+/**
+ * Define computed
+ */
+const overflow = computed(() => (props.autosize ? "hidden" : "auto"));
+const minHeight = computed(() => props.rows * 22 + "px");
+const resize = computed(() => (props.resize ? "vertical" : "none"));
+const NlTextareaClasses = computed(() => {
+    let classArray = [];
+    if (props.theme) classArray.push("nl-textarea--" + props.theme);
+    if (props.shape) classArray.push("nl-textarea--" + props.shape);
+    if (props.disabled) classArray.push("nl-textarea--disabled");
+    if (isFocused.value) classArray.push("nl-textarea--focused");
+    return classArray;
+});
+const wordCounterText = computed(() => {
+    if (props.counter === "off") return false;
+    let result = "";
+    const maxlength = props.maxlength !== -1 && parseInt(props.maxlength);
+    if (props.counter !== "word-left") result += `${textLength.value} / ${maxlength || "-"}`;
+    if (props.counter === "both") result += " , ";
+    if (props.counter !== "word-limit") result += maxlength ? maxlength - textLength.value : "-";
+    return result;
+});
+
+/**
+ * Textarea on focus event handler
+ * @param {object} e Focus event object
+ */
+function focusHandler(e) {
+    isFocused.value = !props.disabled && !props.readonly;
+    emit("focused", e);
+}
 
 /**
  * Handling function for the textarea was blured.
  * @param {object} e blur event object
  */
 function blurHandler(e) {
-    emit("blured", props.formatter(e.target.value));
+    isFocused.value = false;
+    emit("blured", e);
 }
 
 /**
@@ -91,66 +184,102 @@ function blurHandler(e) {
  * @param {object} e inputing event object
  */
 function inputHandler(e) {
-    calculateTextareaHeight();
+    emit("update:modelValue", e.target.value);
+    textLength.value = e.target.textLength;
+    if (props.autosize) {
+        nextTick(() => {
+            textarea.value.style.height = backendTextarea.value.scrollHeight + "px";
+        });
+    }
 }
-
-/**
- * Calculate the height of textarea element
- * @param {object} element native html element object
- * @return {string} css height string for textarea element
- */
-function calculateTextareaHeight() {
-    textarea.value.style.height = backendTextarea.value.scrollHeight + "px";
-}
-
-/**
- * Handle something when the component just mounted
- */
-onMounted(() => {
-    calculateTextareaHeight();
-});
 </script>
 
 <style scoped>
-.nl-edit-text {
+.nl-textarea {
+    --background-color: transparent;
+    --border-color: #cccccc;
+
+    --focused-background-color: transparent;
+    --focused-border-color: #6d94dd;
+    --focused-shadow-color: #6d94dd;
+
+    --disabled-background-color: #f0f0f0;
+
+    transition: all 0.16s ease-in;
+
     display: flex;
     flex-direction: column;
-    align-items: start;
 
     position: relative;
-    overflow: hidden;
 
     & > textarea {
-        box-sizing: border-box;
         width: 100%;
-        padding: 0;
+        min-height: v-bind(minHeight);
+        line-height: 22px;
         margin: 0;
-        overflow: hidden;
+        padding: 0;
         resize: v-bind(resize);
 
-        border: none;
+        overflow: v-bind(overflow);
         outline: none;
+        border: none;
         background-color: transparent;
 
         color: inherit;
         font-size: inherit;
+        font-family: inherit;
         word-break: break-all;
-        font-family: "Consolas";
-
-        /* transition: all .16s ease-in; */
     }
 
-    & > .hidden-textarea {
+    & > .backend-textarea {
         opacity: 0;
-        height: 0px;
+        height: 0px !important;
+        min-height: 0px !important;
+    }
+
+    & > .nl-textarea__word-counter {
+        flex: none;
+        position: absolute;
+        right: 18px;
+        bottom: 10px;
+
+        background: white;
+        font-size: 12px;
+        color: #8f8f8f;
+        user-select: none;
     }
 }
 
-.nl-edit-text--default {
+.nl-textarea--default {
     box-sizing: border-box;
-    width: 100%;
+    padding: 6px 8px;
+
     border: 1px solid #ccc;
-    padding: 6px;
     border-radius: 6px;
+
+    font-size: 16px;
+    font-family: "Consolas";
+}
+
+.nl-textarea--no-border {
+    border: none !important;
+}
+
+.nl-textarea--focused {
+    background-color: var(--focused-background-color);
+    border: 1px solid var(--focused-border-color);
+    box-shadow: 0 0 4px 1px var(--focused-shadow-color);
+}
+
+.nl-textarea--disabled {
+    background-color: var(--disabled-background-color);
+
+    cursor: not-allowed;
+    user-select: none !important;
+
+    &:deep(*) {
+        color: #969696;
+        cursor: not-allowed;
+    }
 }
 </style>

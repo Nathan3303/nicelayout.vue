@@ -1,304 +1,402 @@
 <template>
-    <div ref="wrapper" class="nl-input" :class="NlInputClasses" @click="wrapperClickHandler">
-        <!-- nl-input__icon -->
+    <div class="nl-input" :class="NlInputClasses">
         <i v-if="icon" class="nl-input__icon iconfont" :class="icon"></i>
-        <slot v-else name="icon"></slot>
-        <!-- nl-input__prefix -->
         <slot name="prefix">{{ prefix }}</slot>
-        <!-- nl-input__input -->
         <input
             ref="input"
             :type="type"
+            :value="formatter(modelValue)"
             :placeholder="placeholder"
-            :name="name"
             :maxlength="maxlength"
-            :minlength="minlength"
-            :value="modelValue"
             :autocomplete="autocomplete"
             :disabled="disabled"
             :readonly="!disabled && readonly"
-            @input="inputHandler"
             @focus="focusHandler"
             @blur="blurHandler"
+            @input="inputHandler"
             @change="changeHandler"
-        />
-        <!-- nl-input__suffix -->
+            @keydown.enter="() => input.blur()" />
         <slot name="suffix">{{ suffix }}</slot>
-        <!-- nl-input__clear-buttons -->
-        <i
-            class="nl-input__button iconfont icon-clear"
-            v-show="modelValue"
-            @click="clearHandler"
-        ></i>
+        <div class="nl-input__button-group">
+            <i
+                class="iconfont icon-clear2"
+                v-if="type !== 'file' && clearable"
+                v-show="modelValue"
+                @click.stop="clearHandler"></i>
+            <i
+                class="iconfont icon-eye"
+                v-if="type === 'password' && showPassword"
+                v-show="modelValue"
+                @click.stop="showPasswordHandler"></i>
+        </div>
+        <div v-if="wordCounterText" class="nl-input__word-counter">{{ wordCounterText }}</div>
     </div>
 </template>
 
 <script setup>
-import { ref, nextTick, computed } from 'vue'
-import { validateShape, validateWidthAndHeight } from './validators'
-import { parseWidthAndHeight } from './parsers'
+import { ref, nextTick, computed } from "vue";
+import { validateShape, validateWidthAndHeight } from "./validators";
+import { parseWidthAndHeight } from "./parsers";
 
 /**
  * Define options
  */
-defineOptions({ name: 'NlInput' })
+defineOptions({ name: "NlInput" });
 
 /**
  * Define props
  */
 const props = defineProps({
     /**
-     * @description input id
-     */
-    id: String,
-    /**
-     * @description input theme
-     */
-    theme: {
-        type: String,
-        default: 'default'
-    },
-    /**
-     * @description input shape
-     */
-    shape: {
-        type: String,
-        default: 'circle',
-        validator: (v) => validateShape(v)
-    },
-    /**
-     * @description input type
+     * @description Type of input (Native attribute mapping)
      */
     type: {
         type: String,
-        default: 'text',
-        validator: (v) => ['text', 'password', 'file', 'number'].includes(v)
+        default: "text",
+        validator: (v) => ["text", "password", "file", "number"].includes(v),
     },
     /**
-     * @description input label
+     * @description Model-value of input (two-way value mapping)
      */
-    label: String,
+    modelValue: [String, Number],
     /**
-     * @description input icon (Only iconfont class)
-     */
-    icon: String,
-    /**
-     * @description input prefix
-     */
-    prefix: String,
-    /**
-     * @description input suffix
-     */
-    suffix: String,
-    /**
-     * @description input placeholder
-     */
-    placeholder: String,
-    /**
-     * @description input maxlength
-     */
-    maxlength: Number,
-    /**
-     * @description input minlength
-     */
-    minlength: Number,
-    /**
-     * @description input value (v-model)
-     */
-    modelValue: {
-        type: [String, Number],
-        default: ''
-    },
-    /**
-     * @description input name
-     */
-    name: String,
-    /**
-     * @description input autocomplete
-     */
-    autocomplete: {
-        type: String,
-        default: 'off'
-    },
-    /**
-     * @description input disabled state
-     */
-    disabled: Boolean,
-    /**
-     * @description input readonly state
-     */
-    readonly: Boolean,
-    /**
-     * @description input format function
+     * @description Input value formatter (Format value when updated)
      */
     formatter: {
         type: Function,
-        default: (value) => value
+        default: (value) => value,
     },
     /**
-     * @description input width
+     * @description Input value parser (Parse value when updated)
+     */
+    parser: {
+        type: Function,
+        default: (value) => value,
+    },
+    /**
+     * @description Theme of input
+     */
+    theme: {
+        type: String,
+        default: "default",
+    },
+    /**
+     * @description Border shape of input (circle, square or no-border)
+     */
+    shape: {
+        type: String,
+        default: "square",
+        validator: (v) => validateShape(v),
+    },
+    /**
+     * @description Prefix icon of input (Only iconfont so far)
+     */
+    icon: String,
+    /**
+     * @description Prefix text of input
+     */
+    prefix: String,
+    /**
+     * @description Suffix text of input
+     */
+    suffix: String,
+    /**
+     * @description Input placeholder
+     */
+    placeholder: String,
+    /**
+     * @description Max length of input value (Native attribute mapping)
+     */
+    maxlength: {
+        type: [String, Number],
+        default: -1,
+    },
+    /**
+     * @description Autocomplete state (Native attribute mapping)
+     */
+    autocomplete: {
+        type: String,
+        default: "off",
+    },
+    /**
+     * @description Disabled state (Native attribute mapping)
+     */
+    disabled: Boolean,
+    /**
+     * @description Readonly state (Native attribute mapping)
+     */
+    readonly: Boolean,
+    /**
+     * @description Clearable state (Control delete button)
+     */
+    clearable: Boolean,
+    /**
+     * @description Show password state (Effective when input type is password)
+     */
+    showPassword: Boolean,
+    /**
+     * @description Lazy state (Control model-value update way)
+     */
+    lazy: Boolean,
+    /**
+     * @description Word counter controller (show word limit)
+     */
+    counter: {
+        type: String,
+        default: "off",
+        validator: (v) => ["off", "word-limit", "word-left", "both"].includes(v),
+    },
+    /**
+     * @description Input width (Quick set)
      */
     width: {
         type: String,
-        default: 'auto',
-        validator: (v) => validateWidthAndHeight(v)
+        default: "100%",
+        validator: (v) => validateWidthAndHeight(v),
     },
     /**
-     * @description input height
+     * @description Input height (Quick set)
      */
     height: {
         type: String,
-        default: '36px',
-        validator: (v) => validateWidthAndHeight(v)
-    }
-})
+        default: "36px",
+        validator: (v) => validateWidthAndHeight(v),
+    },
+});
 
 /**
  * Define emit
  */
 const emit = defineEmits([
     /**
-     * @description when update modelValue
+     * @description Calling when input value is changed (Model-value)
      */
-    'update:modelValue',
+    "update:modelValue",
     /**
-     * @description when focused
+     * @description Calling when input was focused
      */
-    'onFocused',
+    "focused",
     /**
-     * @description when blured
+     * @description Calling when input was blured
      */
-    'onBlured',
+    "blured",
     /**
-     * @description when value changed
+     * @description Calling when input value was inputed
      */
-    'onChanged'
-])
+    "inputted",
+    /**
+     * @description Calling when input value was changed
+     */
+    "changed",
+    /**
+     * @description Calling when input was cleared
+     */
+    "cleared",
+]);
 
 /**
  * Define refs
  */
-const wrapper = ref()
-const input = ref()
-const isFocused = ref(false) // Focus flag
-const widthStyle = ref(parseWidthAndHeight(props.width))
-const heightStyle = ref(parseWidthAndHeight(props.height))
+const input = ref();
+const isFocused = ref(false); // Focus flag
+const textLength = ref(props.modelValue?.length || 0);
+const widthStyle = ref(parseWidthAndHeight(props.width));
+const heightStyle = ref(parseWidthAndHeight(props.height));
 // console.log(input)
 
 /**
  * Calculate nl-input classes
  */
 const NlInputClasses = computed(() => {
-    let classArray = []
-    if (props.theme) classArray.push('nl-input--' + props.theme)
-    if (props.shape) classArray.push('nl-input--' + props.shape)
-    if (props.disabled) classArray.push('nl-input--disabled')
-    if (isFocused.value && !props.disabled) classArray.push('nl-input--focused')
-    return classArray
-})
+    let classArray = [];
+    if (props.theme) classArray.push("nl-input--" + props.theme);
+    if (props.shape) classArray.push("nl-input--" + props.shape);
+    if (props.disabled) classArray.push("nl-input--disabled");
+    if (isFocused.value) classArray.push("nl-input--focused");
+    return classArray;
+});
 
 /**
- * nl-input input handle function
- * @param {object} e input event object
+ * Input word counter text
  */
-function inputHandler(e) {
-    emit('update:modelValue', e.target.value)
-}
+const wordCounterText = computed(() => {
+    if (props.counter === "off") return false;
+    let result = "";
+    const maxlength = props.maxlength !== -1 && parseInt(props.maxlength);
+    if (props.counter !== "word-left") result += `${textLength.value} / ${maxlength || "-"}`;
+    if (props.counter === "both") result += " , ";
+    if (props.counter !== "word-limit") result += maxlength ? maxlength - textLength.value : "-";
+    return result;
+});
 
 /**
- * nl-input focus handle function
- * @param {object} e focus event object
+ * Input on focus event handler
+ * @param {object} e Focus event object
  */
 function focusHandler(e) {
-    isFocused.value = true
-    emit('onFocused', e)
+    isFocused.value = !props.disabled && !props.readonly;
+    emit("focused", e);
 }
 
 /**
- * nl-input blur handle function
- * @param {object} e blur event object
+ * Input on blur event handler
+ * @param {object} e Blur event object
  */
 function blurHandler(e) {
-    isFocused.value = false
-    emit('onBlured', e)
+    isFocused.value = false;
+    emit("blured", e);
 }
 
 /**
- * nl-input change handle function
- * @param {object} e change event object
+ * Input on input event handler
+ * @param {object} e Input event object
+ */
+function inputHandler(e) {
+    emit("inputted", e);
+    const value = props.parser(e.target.value);
+    textLength.value = value.length;
+    if (props.lazy) {
+        e.target.value = props.formatter(value);
+    } else {
+        emit("update:modelValue", value);
+    }
+}
+
+/**
+ * Input on change event handler
+ * @description This handle function should be executed when props.lazy is true
+ * @param {object} e Change event object
  */
 function changeHandler(e) {
-    emit('onChanged', e)
+    emit("changed", e);
+    if (props.lazy) emit("update:modelValue", props.parser(e.target.value));
 }
 
 /**
- * Handle nl-input clear event
+ * Input on clear event handler
+ * @description Click event handler of clear button
  */
 function clearHandler() {
-    input.value.value = ''
-    emit('update:modelValue', '')
-    nextTick(() => input.value.focus())
+    emit("update:modelValue", "");
+    textLength.value = 0;
+    nextTick(() => input.value.focus());
 }
 
 /**
- * Wrapper click handler
- * @description When wrapper div was clicked, make inner input element on focus
- * @param {object} e The click event object
+ * Input show password event handler
+ * @description Click event handler of show password button
  */
-function wrapperClickHandler(e) {
-    if (!isFocused.value) input.value.focus()
+function showPasswordHandler() {
+    const isShowed = input.value.type === "text";
+    input.value.type = isShowed ? "password" : "text";
 }
 </script>
 
 <style scoped>
-.nl-input--default {
-    --primary-bg-color: transparent;
-    --focus-bg-color: white;
-    --border-color: #bacfbc;
+.nl-input {
+    --background-color: transparent;
+    --border-color: #cccccc;
 
-    transition: all 0.3s ease;
+    --focused-background-color: transparent;
+    --focused-border-color: #6d94dd;
+    --focused-shadow-color: #6d94dd;
+
+    --disabled-background-color: #f0f0f0;
+
+    --button-size: 22px;
+    --button-color: #8d8d8d;
+    --button-border-color: #cccccc;
+
+    --hovered-button-color: #ff2727b3;
+    --hovered-button-border-color: #ff2727b3;
+
+    transition: all 0.16s ease;
     box-sizing: border-box;
 
     display: flex;
     align-items: center;
+    justify-content: start;
     gap: 8px;
 
+    position: relative;
+
+    user-select: none;
+    overflow: hidden;
+
+    & > input {
+        min-width: 24px;
+        height: 100%;
+        flex: 1 1 auto;
+        outline: none;
+
+        &::-ms-reveal {
+            display: none;
+        }
+
+        &::-ms-clear {
+            display: none;
+        }
+    }
+
+    & > .nl-input__button-group {
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        gap: 4px;
+
+        & > i {
+            transition: all 0.16s ease;
+            box-sizing: border-box;
+
+            scale: 0.78;
+            min-width: var(--button-size);
+            height: var(--button-size);
+            line-height: calc(var(--button-size) - 1px);
+
+            border-radius: var(--button-size);
+            font-size: 13px;
+            text-align: center;
+            cursor: pointer;
+        }
+    }
+
+    & > .nl-input__word-counter {
+        flex: none;
+
+        font-size: 12px;
+        color: #8f8f8f;
+        user-select: none;
+    }
+}
+
+.nl-input--default {
     min-width: 96px;
     width: v-bind(widthStyle);
     height: v-bind(heightStyle);
     line-height: v-bind(heightStyle);
-    padding: 0 calc(v-bind(heightStyle) / 3);
-    position: relative;
+    padding: 6px 8px;
 
     border: 1px solid var(--border-color);
-    background: var(--primary-bg-color);
+    background: var(--background-color);
 
-    font-size: 15px;
-    user-select: none;
+    font-size: 16px;
+    font-family: "Consolas";
 
     & > input {
-        flex: 1 1 auto;
-        min-width: 64px;
-        height: 100%;
         padding: 0;
         border: none;
-        outline: none;
         background: none;
-        font-size: 13px;
-        cursor: default;
+        font-size: inherit;
+        font-family: inherit;
     }
 
-    & > .nl-input__button {
-        flex: none;
-        scale: 0.86;
-
-        color: #6f6f6f;
-        font-size: 12px !important;
-        line-height: initial;
+    & > .nl-input__button-group > i {
+        border: 1px solid var(--button-border-color);
+        color: var(--button-color);
 
         &:hover {
-            color: rgba(255, 39, 39, 0.7);
-            cursor: pointer;
+            color: var(--hovered-button-color);
+            border-color: var(--hovered-button-border-color);
         }
     }
 }
@@ -308,15 +406,23 @@ function wrapperClickHandler(e) {
 }
 
 .nl-input--circle {
+    padding: 0 calc(v-bind(heightStyle) / 3);
     border-radius: v-bind(heightStyle);
 }
 
+.nl-input--no-border {
+    border: none !important;
+}
+
 .nl-input--focused {
-    background-color: white;
-    box-shadow: 0 0 3px 1px var(--border-color);
+    background-color: var(--focused-background-color);
+    border: 1px solid var(--focused-border-color);
+    box-shadow: 0 0 4px 1px var(--focused-shadow-color);
 }
 
 .nl-input--disabled {
+    background-color: var(--disabled-background-color);
+
     cursor: not-allowed;
 
     &:deep(*) {
