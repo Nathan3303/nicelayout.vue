@@ -409,6 +409,10 @@ function showPasswordHandler() {
     border-radius: v-bind(heightStyle);
 }
 
+.nl-input--no-border {
+    border: none !important;
+}
+
 .nl-input--focused {
     background-color: var(--focused-background-color);
     border: 1px solid var(--focused-border-color);

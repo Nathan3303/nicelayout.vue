@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <nl-input v-model="inputValue" placeholder="nl-input" />
-        <nl-textarea v-model="textareaValue" placeholder="nl-textarea" disabled />
+        <nl-textarea v-model="textareaValue" placeholder="nl-textarea" />
     </div>
 </template>
 
@@ -19,7 +19,7 @@ import NlInput from "./components/NlInput.vue";
  * Define refs
  */
 const inputValue = ref("");
-const textareaValue = ref("");
+const textareaValue = ref("123123");
 
 /**
  * Watch input value

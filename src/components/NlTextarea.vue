@@ -37,6 +37,14 @@ const props = defineProps({
         default: "default",
     },
     /**
+     * @description Shape of textarea
+     */
+    shape: {
+        type: String,
+        default: "square",
+        validator: (v) => ["square", "no-border"].includes(v),
+    },
+    /**
      * @description Textarea diable state
      */
     disabled: Boolean,
@@ -101,7 +109,7 @@ const isFocused = ref(false);
 const NlTextareaClasses = computed(() => {
     let classArray = [];
     if (props.theme) classArray.push("nl-textarea--" + props.theme);
-    // if (props.shape) classArray.push("nl-textarea--" + props.shape);
+    if (props.shape) classArray.push("nl-textarea--" + props.shape);
     if (props.disabled) classArray.push("nl-textarea--disabled");
     if (isFocused.value) classArray.push("nl-textarea--focused");
     return classArray;
@@ -187,7 +195,6 @@ function calculateTextareaHeight() {
         font-size: inherit;
         word-break: break-all;
         font-family: "Consolas";
-
     }
 
     & > .backend-textarea {
@@ -204,6 +211,10 @@ function calculateTextareaHeight() {
 
     border: 1px solid #ccc;
     border-radius: 6px;
+}
+
+.nl-textarea--no-border {
+    border: none !important;
 }
 
 .nl-textarea--focused {
