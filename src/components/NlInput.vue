@@ -194,15 +194,15 @@ const emit = defineEmits([
  * Define refs
  */
 const input = ref();
-const isFocused = ref(false); // Focus flag
+const isFocused = ref(false);
 const textLength = ref(props.modelValue?.length || 0);
-const widthStyle = ref(parseWidthAndHeight(props.width));
-const heightStyle = ref(parseWidthAndHeight(props.height));
 // console.log(input)
 
 /**
- * Calculate nl-input classes
+ * Define computed
  */
+const widthStyle = computed(() => parseWidthAndHeight(props.width));
+const heightStyle = computed(() => parseWidthAndHeight(props.height));
 const NlInputClasses = computed(() => {
     let classArray = [];
     if (props.theme) classArray.push("nl-input--" + props.theme);
@@ -211,10 +211,6 @@ const NlInputClasses = computed(() => {
     if (isFocused.value) classArray.push("nl-input--focused");
     return classArray;
 });
-
-/**
- * Input word counter text
- */
 const wordCounterText = computed(() => {
     if (props.counter === "off") return false;
     let result = "";
@@ -268,9 +264,11 @@ function changeHandler(e) {
  * @description Click event handler of clear button
  */
 function clearHandler() {
+    const inputValue = input.value.value;
     emit("update:modelValue", "");
     textLength.value = 0;
     nextTick(() => input.value.focus());
+    emit("cleared", inputValue);
 }
 
 /**
