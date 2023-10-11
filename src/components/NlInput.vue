@@ -135,10 +135,6 @@ const props = defineProps({
      */
     showPassword: Boolean,
     /**
-     * @description Lazy state (Control model-value update way)
-     */
-    lazy: Boolean,
-    /**
      * @description Word counter controller (show word limit)
      */
     counter: {
@@ -252,14 +248,10 @@ function blurHandler(e) {
  * @param {object} e Input event object
  */
 function inputHandler(e) {
+    const inputValue = props.parser(e.target.value);
+    emit("update:modelValue", inputValue);
+    textLength.value = inputValue.length;
     emit("inputted", e);
-    const value = props.parser(e.target.value);
-    textLength.value = value.length;
-    if (props.lazy) {
-        e.target.value = props.formatter(value);
-    } else {
-        emit("update:modelValue", value);
-    }
 }
 
 /**
@@ -269,7 +261,6 @@ function inputHandler(e) {
  */
 function changeHandler(e) {
     emit("changed", e);
-    if (props.lazy) emit("update:modelValue", props.parser(e.target.value));
 }
 
 /**

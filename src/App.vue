@@ -1,7 +1,15 @@
 <template>
     <div id="app">
         <nl-input v-model="inputValue" placeholder="nl-input" maxlength="24" counter="both" />
-        <nl-textarea v-model="textareaValue" placeholder="nl-textarea" rows="12" maxlength="240" autosize resize counter="both" />
+        <nl-textarea
+            v-model="textareaValue"
+            placeholder="nl-textarea"
+            rows="12"
+            maxlength="240"
+            autosize
+            resize
+            counter="both"
+            lazy />
     </div>
 </template>
 

@@ -10,12 +10,12 @@
             :maxlength="maxlength"
             @focus="focusHandler"
             @blur="blurHandler"
-            @input="inputHandler"></textarea>
+            @input="inputHandler"
+            @change="changeHandler"></textarea>
         <textarea
             v-if="autosize && !props.disabled && !props.readonly"
             class="backend-textarea"
-            ref="backendTextarea"
-            :value="modelValue"></textarea>
+            ref="backendTextarea"></textarea>
         <div v-if="wordCounterText" class="nl-textarea__word-counter">{{ wordCounterText }}</div>
     </div>
 </template>
@@ -186,11 +186,16 @@ function blurHandler(e) {
 function inputHandler(e) {
     emit("update:modelValue", e.target.value);
     textLength.value = e.target.textLength;
-    if (props.autosize) {
-        nextTick(() => {
-            textarea.value.style.height = backendTextarea.value.scrollHeight + "px";
-        });
-    }
+    if (props.autosize) nextTick(() => (textarea.value.style.height = backendTextarea.value.scrollHeight + "px"));
+    emit("inputted", e);
+}
+
+/**
+ * Textarea on change event handler
+ * @param {object} e change event object
+ */
+function changeHandler(e) {
+    emit("changed", e);
 }
 </script>
 
