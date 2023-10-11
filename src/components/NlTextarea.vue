@@ -259,27 +259,27 @@ function inputHandler(e) {
 
     font-size: 16px;
     font-family: "Consolas";
-}
 
-.nl-textarea--no-border {
-    border: none !important;
-}
+    &.nl-textarea--no-border {
+        border: none !important;
+    }
 
-.nl-textarea--focused {
-    background-color: var(--focused-background-color);
-    border: 1px solid var(--focused-border-color);
-    box-shadow: 0 0 4px 1px var(--focused-shadow-color);
-}
+    &.nl-textarea--focused {
+        background-color: var(--focused-background-color);
+        border: 1px solid var(--focused-border-color);
+        box-shadow: 0 0 4px 1px var(--focused-shadow-color);
+    }
 
-.nl-textarea--disabled {
-    background-color: var(--disabled-background-color);
+    &.nl-textarea--disabled {
+        background-color: var(--disabled-background-color);
 
-    cursor: not-allowed;
-    user-select: none !important;
-
-    &:deep(*) {
-        color: #969696;
         cursor: not-allowed;
+        user-select: none !important;
+
+        &:deep(*) {
+            color: #969696;
+            cursor: not-allowed;
+        }
     }
 }
 </style>

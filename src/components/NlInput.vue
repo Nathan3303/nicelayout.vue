@@ -399,35 +399,35 @@ function showPasswordHandler() {
             border-color: var(--hovered-button-border-color);
         }
     }
-}
 
-.nl-input--square {
-    border-radius: 6px;
-}
+    &.nl-input--square {
+        border-radius: 6px;
+    }
 
-.nl-input--circle {
-    padding: 0 calc(v-bind(heightStyle) / 3);
-    border-radius: v-bind(heightStyle);
-}
+    &.nl-input--circle {
+        padding: 0 calc(v-bind(heightStyle) / 3);
+        border-radius: v-bind(heightStyle);
+    }
 
-.nl-input--no-border {
-    border: none !important;
-}
+    &.nl-input--no-border {
+        border: none !important;
+    }
 
-.nl-input--focused {
-    background-color: var(--focused-background-color);
-    border: 1px solid var(--focused-border-color);
-    box-shadow: 0 0 4px 1px var(--focused-shadow-color);
-}
+    &.nl-input--focused {
+        background-color: var(--focused-background-color);
+        border: 1px solid var(--focused-border-color);
+        box-shadow: 0 0 4px 1px var(--focused-shadow-color);
+    }
 
-.nl-input--disabled {
-    background-color: var(--disabled-background-color);
+    &.nl-input--disabled {
+        background-color: var(--disabled-background-color);
 
-    cursor: not-allowed;
-
-    &:deep(*) {
-        color: #969696;
         cursor: not-allowed;
+
+        &:deep(*) {
+            color: #969696;
+            cursor: not-allowed;
+        }
     }
 }
 </style>
