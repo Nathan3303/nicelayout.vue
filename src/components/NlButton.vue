@@ -1,43 +1,40 @@
 <template>
     <button class="nl-button" :class="NlButtonClasses" @click="clickHandler">
-        <!-- nl-button__loading-icon -->
         <i v-if="loading" class="iconfont icon-loading"></i>
-        <!-- nl-button__icon -->
         <i v-else-if="icon" class="iconfont" :class="icon"></i>
-        <!-- nl-button__text -->
-        <span v-if="$slots.default" class="nl-button__text"><slot></slot></span>
-        <!-- nl-button__superior -->
-        <span v-if="superior" class="nl-button__superior">{{ superior }}</span>
+        <span v-if="$slots.default" class="nl-button__text">
+            <slot></slot>
+        </span>
     </button>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
-import { isString } from './utils'
-
+import { ref, computed } from "vue";
+import { validateWidthAndHeight, validateShape } from "./validators";
+import { parseWidthAndHeight } from "./parsers";
 /**
  * Define options
  */
-defineOptions({ name: 'NlButton' })
+defineOptions({ name: "NlButton" });
 
 /**
  * Define props
  */
 const props = defineProps({
     /**
-     * @description button theme
+     * @description Theme of button
      */
     theme: {
         type: String,
-        default: 'default'
+        default: "default",
     },
     /**
-     * @description button shape
+     * @description Shape of button
      */
     shape: {
         type: String,
-        default: 'circle',
-        validator: (v) => ['square', 'circle', 'no-border'].includes(v)
+        default: "square",
+        validator: (v) => validateShape(v),
     },
     /**
      * @description button icon (Only iconfont)
@@ -60,8 +57,8 @@ const props = defineProps({
      */
     width: {
         type: [String, Number],
-        default: 'auto',
-        validator: (v) => (isString(v) ? ['auto', 'max-content', 'min-content'].includes(v) : v)
+        default: "auto",
+        validator: (v) => validateWidthAndHeight(v),
     },
     /**
      * @description button height
@@ -69,26 +66,28 @@ const props = defineProps({
     height: {
         type: [String, Number],
         default: 36,
-        validator: (v) => (isString(v) ? ['auto', 'max-content', 'min-content'].includes(v) : v)
-    }
-})
+        validator: (v) => validateWidthAndHeight(v),
+    },
+});
 
 /**
  * Define emit
  */
 const emit = defineEmits([
     /**
-     * @description when clicked
+     * @description Calling when button was clicked
      */
-    'onClicked'
-])
+    "clicked",
+    /**
+     * @description Calling when button was changed
+     */
+    "changed",
+]);
 
 /**
  * Define refs
  */
-const isLoading = ref(props.loading)
-const widthStyle = ref(isString(props.width) ? props.width : props.width + 'px')
-const heightStyle = ref(isString(props.height) ? props.height : props.height + 'px')
+const isLoading = ref(props.loading);
 // console.log(widthStyle, heightStyle)
 
 /**
@@ -96,21 +95,22 @@ const heightStyle = ref(isString(props.height) ? props.height : props.height + '
  * @param {object} e clicking event object
  */
 function clickHandler(e) {
-    isLoading.value = true
-    emit('onClicked', e)
+    isLoading.value = true;
+    emit("clicked", e);
 }
 
 /**
- * Calculate button classes
+ * Define computed
  */
+const widthStyle = computed(() => parseWidthAndHeight(props.width));
+const heightStyle = computed(() => parseWidthAndHeight(props.height));
 const NlButtonClasses = computed(() => {
-    let classArray = []
-    if (props.theme) classArray.push('nl-button--' + props.theme)
-    if (props.shape) classArray.push('nl-button--' + props.shape)
-    if (props.disabled) classArray.push('nl-button--disabled')
-    // console.log(classArray)
-    return classArray
-})
+    let classArray = [];
+    if (props.theme) classArray.push("nl-button--" + props.theme);
+    if (props.shape) classArray.push("nl-button--" + props.shape);
+    if (props.disabled) classArray.push("nl-button--disabled");
+    return classArray;
+});
 </script>
 
 <style scoped>
@@ -121,7 +121,7 @@ const NlButtonClasses = computed(() => {
     --actived-background-color: var(--header-active-color);
     --actived-icon-color: var(--primary-font-color);
     --superior-bg-color: #ff6d2f;
-    --border-color: #dfdfe6;
+    --border-color: #b9b9b9;
 
     user-select: none;
     box-sizing: border-box;
@@ -152,23 +152,8 @@ const NlButtonClasses = computed(() => {
     }
 
     & > .nl-button__text {
-        font-family: 'Consolas';
+        font-family: "Consolas";
         font-weight: bold;
-    }
-
-    & > .nl-button__superior {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 0px 6px;
-        border-radius: 6px;
-        background: var(--superior-bg-color);
-        color: white;
-        font-size: 12px;
-        scale: 0.86;
-        font-weight: bold;
-        border: 1px solid #e14c0d;
-        font-size: 12px;
     }
 }
 
@@ -184,7 +169,7 @@ const NlButtonClasses = computed(() => {
 
 .nl-button--square {
     border: 1px solid var(--border-color);
-    border-radius: 12px;
+    border-radius: 6px;
 }
 
 .nl-button--circle {

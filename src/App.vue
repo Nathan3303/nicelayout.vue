@@ -1,15 +1,7 @@
 <template>
     <div id="app">
-        <nl-input v-model="inputValue" placeholder="nl-input" maxlength="24" counter="both" />
-        <nl-textarea
-            v-model="textareaValue"
-            placeholder="nl-textarea"
-            rows="12"
-            maxlength="240"
-            autosize
-            resize
-            counter="both"
-            lazy />
+        <nl-button icon="icon-heart">Like</nl-button>
+        <nl-button icon="icon-heart" disabled>Like</nl-button>
     </div>
 </template>
 
@@ -20,8 +12,9 @@ import { ref } from "vue";
  * Import components
  */
 // import NlDiv from "./components/NlDiv.vue";
-import NlTextarea from "./components/NlTextarea.vue";
-import NlInput from "./components/NlInput.vue";
+// import NlTextarea from "./components/NlTextarea.vue";
+// import NlInput from "./components/NlInput.vue";
+import NlButton from "./components/NlButton.vue";
 
 /**
  * Define refs
@@ -41,7 +34,7 @@ const textareaValue = ref("123123");
 <style scoped>
 #app {
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
     gap: 16px;
 }
 </style>
