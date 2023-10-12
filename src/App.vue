@@ -1,5 +1,6 @@
 <template>
     <div id="app">
+        <nl-button @clicked="buttinClicked"> Click {{ num }} </nl-button>
         <nl-button
             :theme="isLiked && 'liked'"
             :icon="isLiked ? `icon-heart-fill` : `icon-heart`"
@@ -8,7 +9,7 @@
             {{ isLiked ? "Unlike" : "Like" }}
         </nl-button>
         <nl-button
-            :theme="isChecked && 'liked'"
+            :theme="isChecked && 'checked'"
             :icon="isChecked ? `icon-checked-fill` : `icon-unchecked`"
             :loading="checkButtonLoadingState"
             @clicked="checkButtonClicked">
@@ -35,13 +36,14 @@ const LikeButtonLoadingState = ref(false);
 const checkButtonLoadingState = ref(false);
 const isLiked = ref(false);
 const isChecked = ref(false);
+const num = ref(0);
 
 function LikeButtonClicked() {
     LikeButtonLoadingState.value = true;
     setTimeout(() => {
         isLiked.value = !isLiked.value;
         LikeButtonLoadingState.value = false;
-    }, 300);
+    }, 1000);
 }
 
 function checkButtonClicked() {
@@ -49,7 +51,11 @@ function checkButtonClicked() {
     setTimeout(() => {
         isChecked.value = !isChecked.value;
         checkButtonLoadingState.value = false;
-    }, 300);
+    }, 1000);
+}
+
+function buttinClicked() {
+    num.value++;
 }
 
 /**
@@ -70,6 +76,11 @@ function checkButtonClicked() {
     & >>> .nl-button--liked {
         border-color: pink;
         background-color: pink;
+    }
+
+    & >>> .nl-button--checked {
+        border-color: rgb(192, 242, 255);
+        background-color: rgb(192, 242, 255);
     }
 }
 </style>

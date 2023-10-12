@@ -25,7 +25,7 @@ const props = defineProps({
     /**
      * @description Theme of button
      */
-    theme: String,
+    theme: [Boolean, String],
     /**
      * @description Shape of button
      */
@@ -68,6 +68,13 @@ const props = defineProps({
     loadingIcon: {
         type: String,
         default: "icon-loading",
+    },
+    /**
+     * @description Button background color
+     */
+    backgroundColor: {
+        type: String,
+        default: "transparent",
     },
 });
 
@@ -159,6 +166,10 @@ watch(
         background-color: var(--hovered-background-color);
     }
 
+    &:active {
+        filter: brightness(1.07)
+    }
+
     & > .nl-button__loading-icon {
         -webkit-animation: rotation 1.2s ease-in-out infinite;
         animation: rotation 1.2s ease-in-out infinite;
@@ -182,12 +193,15 @@ watch(
 }
 
 .nl-button--circle {
+    padding: 0 calc(v-bind(heightStyle) / 3);
     border: 1px solid var(--border-color);
     border-radius: v-bind(heightStyle);
 }
 
 .nl-button--no-border {
+    padding: 0 calc(v-bind(heightStyle) / 4);
     border: none;
+    border-radius: 6px;
 }
 
 .nl-button--disabled {
