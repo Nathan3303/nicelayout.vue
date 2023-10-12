@@ -30,16 +30,10 @@ export function parseWidthAndHeight(value, isGetRaw = false) {
  */
 export function parseTheme(value, prefix) {
     let parseResult = [];
-    if (isString(value)) {
-        parseResult = prefix + "--" + value;
+    if (isString(value) && value !== "") {
+        parseResult.push(prefix + "--" + value);
     } else if (isArray(value)) {
-        value.forEach((item) => {
-            if (item instanceof Function) {
-                parseResult.push(prefix + "--" + item());
-            } else {
-                parseResult.push(prefix + "--" + item);
-            }
-        });
+        value.forEach((item) => item !== "" && parseResult.push(prefix + "--" + item));
     }
-    return result;
+    return parseResult;
 }

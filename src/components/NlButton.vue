@@ -11,7 +11,7 @@
 <script setup>
 import { ref, computed, watch } from "vue";
 import { validateWidthAndHeight, validateShape } from "./validators";
-import { parseWidthAndHeight } from "./parsers";
+import { parseWidthAndHeight, parseTheme } from "./parsers";
 
 /**
  * Define options
@@ -25,7 +25,7 @@ const props = defineProps({
     /**
      * @description Theme of button
      */
-    theme: String,
+    theme: [Array, String],
     /**
      * @description Shape of button
      */
@@ -104,8 +104,8 @@ const widthStyle = computed(() => parseWidthAndHeight(props.width));
 const heightStyle = computed(() => parseWidthAndHeight(props.height));
 const NlButtonClasses = computed(() => {
     let classArray = [];
-    if (props.theme) classArray.push("nl-button--" + props.theme);
-    if (props.shape) classArray.push("nl-button--" + props.shape);
+    classArray = [...parseTheme(props.theme, "nl-button")];
+    classArray.push("nl-button--" + props.shape);
     if (props.disabled) classArray.push("nl-button--disabled");
     return classArray;
 });

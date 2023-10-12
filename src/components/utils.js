@@ -31,7 +31,7 @@ export function isArray(value) {
     return (
         value instanceof Array &&
         value.constructor === Array &&
-        value.isArray() &&
+        value.__proto__ === Array.prototype && 
         Object.prototype.toString.call(value) === "[object Array]"
     );
 }

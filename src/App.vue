@@ -2,14 +2,14 @@
     <div id="app">
         <nl-button @clicked="buttinClicked"> Click {{ num }} </nl-button>
         <nl-button
-            :theme="isLiked ? 'liked' : ''"
+            :theme="[isLiked ? 'liked' : '', 'icon-only']"
             :icon="isLiked ? `icon-heart-fill` : `icon-heart`"
             :loading="LikeButtonLoadingState"
             @clicked="LikeButtonClicked">
             {{ isLiked ? "Unlike" : "Like" }}
         </nl-button>
         <nl-button
-            :theme="[() => (isChecked ? 'checked' : ''), 'icon-only']"
+            :theme="[isChecked ? 'checked' : '', 'icon-only']"
             :icon="isChecked ? `icon-checked-fill` : `icon-unchecked`"
             :loading="checkButtonLoadingState"
             @clicked="checkButtonClicked">
