@@ -11,6 +11,7 @@
 import { computed } from "vue";
 import { validateWidthAndHeight, validateShape } from "./validators";
 import { parseWidthAndHeight } from "./parsers";
+
 /**
  * Define options
  */
