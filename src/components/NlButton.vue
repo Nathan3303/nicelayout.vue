@@ -25,7 +25,10 @@ const props = defineProps({
     /**
      * @description Theme of button
      */
-    theme: [Array, String],
+    theme: {
+        type: [Array, String],
+        default: "default",
+    },
     /**
      * @description Shape of button
      */
@@ -164,8 +167,6 @@ watch(
     --hover-background-color: #f3f3f3;
     --active-background-color: #f3f3f3aa;
 
-    /* transition: all 0.16s ease-in-out; */
-
     display: flex;
     align-items: center;
     justify-content: start;
@@ -180,8 +181,9 @@ watch(
     border: 1px solid var(--border-color);
     border-radius: 6px;
     background-color: var(--background-color);
-    font-family: "Consolas";
+
     color: var(--font-color);
+    font-family: "Consolas";
     user-select: none;
     cursor: pointer;
 
@@ -199,11 +201,6 @@ watch(
         animation: 1.2s ease-in-out 0.16s infinite rotation;
     }
 
-    &.nl-button--round {
-        padding: 0 calc(v-bind(heightStyle) / 3);
-        border-radius: v-bind(heightStyle);
-    }
-
     &.nl-button--no-border {
         border: none;
     }
@@ -212,17 +209,29 @@ watch(
         cursor: not-allowed;
         opacity: 0.8;
         color: #b9b9b9;
+        background-color: var(--hover-background-color);
+    }
+}
+
+.nl-button--default {
+    &.nl-button--round {
+        padding: 0 calc(v-bind(heightStyle) / 3);
+        border-radius: v-bind(heightStyle);
     }
 }
 
 .nl-button--icon-only {
     justify-content: center;
+
     aspect-ratio: 1;
     padding: 0;
-    border-radius: 50%;
 
     & > .nl-button__text {
         display: none;
+    }
+
+    &.nl-button--round {
+        border-radius: 50%;
     }
 }
 </style>

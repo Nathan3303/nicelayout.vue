@@ -3,6 +3,7 @@
         <nl-button @clicked="buttinClicked"> Click {{ num }} </nl-button>
         <nl-button
             :theme="[isLiked ? 'liked' : '', 'icon-only']"
+            shape="round"
             :icon="isLiked ? `icon-heart-fill` : `icon-heart`"
             :loading="LikeButtonLoadingState"
             @clicked="LikeButtonClicked">
@@ -10,13 +11,14 @@
         </nl-button>
         <nl-button
             :theme="[isChecked ? 'checked' : '', 'icon-only']"
+            shape="round"
             :icon="isChecked ? `icon-checked-fill` : `icon-unchecked`"
             :loading="checkButtonLoadingState"
             @clicked="checkButtonClicked">
             {{ isChecked ? "Uncheck" : "check" }}
         </nl-button>
 
-        <nl-button icon="icon-search" theme="icon-only">asdasd</nl-button>
+        <nl-button icon="icon-search" theme="icon-only" shape="round">asdasd</nl-button>
     </div>
 </template>
 
