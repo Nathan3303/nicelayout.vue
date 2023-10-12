@@ -105,7 +105,7 @@ function clickHandler(e) {
     display: flex;
     align-items: center;
     justify-content: start;
-    gap: 8px;
+    gap: 6px;
 
     box-sizing: border-box;
 
@@ -127,7 +127,7 @@ function clickHandler(e) {
 
     & > .nl-button__text {
         font-family: "Consolas";
-        font-weight: bold;
+        /* font-weight: bold; */
     }
 
     &.nl-button--disabled {
