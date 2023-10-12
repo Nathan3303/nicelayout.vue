@@ -1,6 +1,7 @@
 <template>
     <div id="app">
         <nl-button icon="icon-heart"> Like </nl-button>
+        <nl-button icon="icon-heart" loading> Like </nl-button>
         <nl-button icon="icon-heart-fill"> Unlike </nl-button>
     </div>
 </template>

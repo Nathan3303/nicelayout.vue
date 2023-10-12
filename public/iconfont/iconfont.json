@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "15218214",
+      "name": "loading",
+      "font_class": "loading",
+      "unicode": "e646",
+      "unicode_decimal": 58950
+    },
+    {
       "icon_id": "11372728",
       "name": "眼睛",
       "font_class": "eye",

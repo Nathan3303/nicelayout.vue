@@ -1,6 +1,7 @@
 <template>
     <button class="nl-button" :class="NlButtonClasses" @click="clickHandler" :disabled="disabled">
-        <i v-if="icon" class="iconfont" :class="icon"></i>
+        <i v-if="loading" class="nl-button__loading-icon iconfont" :class="loadingIcon"></i>
+        <i v-else-if="icon" class="iconfont" :class="icon"></i>
         <span v-if="$slots.default" class="nl-button__text">
             <slot></slot>
         </span>
@@ -37,7 +38,7 @@ const props = defineProps({
         validator: (v) => validateShape(v),
     },
     /**
-     * @description button icon (Only iconfont)
+     * @description button icon (Only iconfont so far)
      */
     icon: String,
     /**
@@ -59,6 +60,17 @@ const props = defineProps({
         type: [String, Number],
         default: 36,
         validator: (v) => validateWidthAndHeight(v),
+    },
+    /**
+     * @description Button loading state
+     */
+    loading: Boolean,
+    /**
+     * @description Button loading icon (Only iconfont so far)
+     */
+    loadingIcon: {
+        type: String,
+        default: "icon-loading",
     },
 });
 
@@ -111,6 +123,21 @@ function clickHandler(e) {
 
     user-select: none;
     cursor: pointer;
+
+    & > .nl-button__loading-icon {
+        -webkit-animation: rotation 1.2s ease-in-out infinite;
+        animation: rotation 1.2s ease-in-out infinite;
+    }
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 .nl-button--default {
