@@ -1,8 +1,19 @@
 <template>
     <div id="app">
-        <nl-button icon="icon-heart"> Like </nl-button>
-        <nl-button icon="icon-heart" loading> Like </nl-button>
-        <nl-button icon="icon-heart-fill"> Unlike </nl-button>
+        <nl-button
+            :theme="isLiked && 'liked'"
+            :icon="isLiked ? `icon-heart-fill` : `icon-heart`"
+            :loading="LikeButtonLoadingState"
+            @clicked="LikeButtonClicked">
+            {{ isLiked ? "Unlike" : "Like" }}
+        </nl-button>
+        <nl-button
+            :theme="isChecked && 'liked'"
+            :icon="isChecked ? `icon-checked-fill` : `icon-unchecked`"
+            :loading="checkButtonLoadingState"
+            @clicked="checkButtonClicked">
+            {{ isChecked ? "Uncheck" : "check" }}
+        </nl-button>
     </div>
 </template>
 
@@ -20,8 +31,26 @@ import NlButton from "./components/NlButton.vue";
 /**
  * Define refs
  */
-const inputValue = ref("");
-const textareaValue = ref("123123");
+const LikeButtonLoadingState = ref(false);
+const checkButtonLoadingState = ref(false);
+const isLiked = ref(false);
+const isChecked = ref(false);
+
+function LikeButtonClicked() {
+    LikeButtonLoadingState.value = true;
+    setTimeout(() => {
+        isLiked.value = !isLiked.value;
+        LikeButtonLoadingState.value = false;
+    }, 300);
+}
+
+function checkButtonClicked() {
+    checkButtonLoadingState.value = true;
+    setTimeout(() => {
+        isChecked.value = !isChecked.value;
+        checkButtonLoadingState.value = false;
+    }, 300);
+}
 
 /**
  * Watch input value
@@ -37,5 +66,10 @@ const textareaValue = ref("123123");
     display: flex;
     /* flex-direction: column; */
     gap: 16px;
+
+    & >>> .nl-button--liked {
+        border-color: pink;
+        background-color: pink;
+    }
 }
 </style>

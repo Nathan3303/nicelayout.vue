@@ -1,5 +1,5 @@
 <template>
-    <button class="nl-button" :class="NlButtonClasses" @click="clickHandler" :disabled="disabled">
+    <button class="nl-button" ref="button" :class="NlButtonClasses" @click="clickHandler" :disabled="disabled">
         <i v-if="loading" class="nl-button__loading-icon iconfont" :class="loadingIcon"></i>
         <i v-else-if="icon" class="iconfont" :class="icon"></i>
         <span v-if="$slots.default" class="nl-button__text">
@@ -9,7 +9,7 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
+import { ref, computed, watch } from "vue";
 import { validateWidthAndHeight, validateShape } from "./validators";
 import { parseWidthAndHeight } from "./parsers";
 
@@ -25,10 +25,7 @@ const props = defineProps({
     /**
      * @description Theme of button
      */
-    theme: {
-        type: String,
-        default: "default",
-    },
+    theme: String,
     /**
      * @description Shape of button
      */
@@ -82,7 +79,16 @@ const emit = defineEmits([
      * @description Calling when button was clicked
      */
     "clicked",
+    /**
+     * @description Calling when button was changed
+     */
+    "changed",
 ]);
+
+/**
+ * Define refs
+ */
+const button = ref();
 
 /**
  * Define computed
@@ -98,12 +104,28 @@ const NlButtonClasses = computed(() => {
 });
 
 /**
- * nl-button clicking handle function
- * @param {object} e clicking event object
+ * Button click event handler
+ * @param {object} e click event object
  */
 function clickHandler(e) {
     emit("clicked", e);
 }
+
+/**
+ * Button change event handler
+ */
+function changeHandler() {
+    emit("changed", button.value);
+}
+
+/**
+ * Watch button loading state
+ * @description When loading state was changed from true to false, call changeHandler
+ */
+watch(
+    () => props.loading,
+    (newValue, oldValue) => !newValue && newValue === !oldValue && changeHandler()
+);
 </script>
 
 <style scoped>
@@ -114,15 +136,28 @@ function clickHandler(e) {
 
     --hovered-background-color: #f3f3f3;
 
+    transition: all 0.16s ease-in-out;
+
     display: flex;
     align-items: center;
     justify-content: start;
     gap: 6px;
 
+    width: v-bind(widthStyle);
+    height: v-bind(heightStyle);
+    background-color: var(--background-color);
+    flex: none;
+
     box-sizing: border-box;
 
     user-select: none;
     cursor: pointer;
+    font-family: "Consolas";
+    color: var(--font-color);
+
+    &:hover {
+        background-color: var(--hovered-background-color);
+    }
 
     & > .nl-button__loading-icon {
         -webkit-animation: rotation 1.2s ease-in-out infinite;
@@ -140,31 +175,6 @@ function clickHandler(e) {
     }
 }
 
-.nl-button--default {
-    width: v-bind(widthStyle);
-    height: v-bind(heightStyle);
-    background-color: var(--background-color);
-    flex: none;
-
-    color: var(--font-color);
-
-    &:hover {
-        background-color: var(--hovered-background-color);
-    }
-
-    & > .nl-button__text {
-        font-family: "Consolas";
-        /* font-weight: bold; */
-    }
-
-    &.nl-button--disabled {
-        cursor: not-allowed;
-        opacity: 0.8;
-        background-color: #f3f3f3;
-        color: #b9b9b9;
-    }
-}
-
 .nl-button--square {
     padding: 0 calc(v-bind(heightStyle) / 4);
     border: 1px solid var(--border-color);
@@ -178,6 +188,12 @@ function clickHandler(e) {
 
 .nl-button--no-border {
     border: none;
+}
+
+.nl-button--disabled {
+    cursor: not-allowed;
+    opacity: 0.8;
+    color: #b9b9b9;
 }
 
 .nl-button--icon-only {
