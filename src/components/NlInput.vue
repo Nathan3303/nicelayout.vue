@@ -393,7 +393,7 @@ function showPasswordHandler() {
         border-radius: 6px;
     }
 
-    &.nl-input--circle {
+    &.nl-input--round {
         padding: 0 calc(v-bind(heightStyle) / 3);
         border-radius: v-bind(heightStyle);
     }

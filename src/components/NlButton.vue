@@ -199,7 +199,7 @@ watch(
         animation: 1.2s ease-in-out 0.16s infinite rotation;
     }
 
-    &.nl-button--circle {
+    &.nl-button--round {
         padding: 0 calc(v-bind(heightStyle) / 3);
         border-radius: v-bind(heightStyle);
     }

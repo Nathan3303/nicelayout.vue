@@ -125,7 +125,7 @@ function errorHandler(e) {
         }
     }
 
-    &.nl-avatar--circle {
+    &.nl-avatar--round {
         border-radius: 50%;
     }
 
