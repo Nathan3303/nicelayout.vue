@@ -1,24 +1,36 @@
 <template>
     <div id="app">
-        <nl-button @clicked="buttinClicked"> Click {{ num }} </nl-button>
-        <nl-button
-            :theme="[isLiked ? 'liked' : '', 'icon-only']"
-            shape="round"
-            :icon="isLiked ? `icon-heart-fill` : `icon-heart`"
-            :loading="LikeButtonLoadingState"
-            @clicked="LikeButtonClicked">
-            {{ isLiked ? "Unlike" : "Like" }}
-        </nl-button>
-        <nl-button
-            :theme="[isChecked ? 'checked' : '', 'icon-only']"
-            shape="round"
-            :icon="isChecked ? `icon-checked-fill` : `icon-unchecked`"
-            :loading="checkButtonLoadingState"
-            @clicked="checkButtonClicked">
-            {{ isChecked ? "Uncheck" : "check" }}
-        </nl-button>
-
-        <nl-button icon="icon-search" theme="icon-only" shape="round">asdasd</nl-button>
+        <nl-div>
+            <nl-button icon="icon-search">Search</nl-button>
+            <nl-button icon="icon-search" shape="round">Search</nl-button>
+            <nl-button icon="icon-search" theme="icon-only">Search</nl-button>
+            <nl-button icon="icon-search" theme="icon-only" shape="round">Search</nl-button>
+        </nl-div>
+        <nl-div>
+            <nl-button @clicked="buttinClicked"> Click {{ num }} </nl-button>
+            <nl-button @clicked="buttinClicked" shape="round"> Click {{ num }} </nl-button>
+            <nl-button @clicked="buttinClicked" disabled> Click {{ num }} </nl-button>
+        </nl-div>
+        <nl-div>
+            <nl-button loading>Loading</nl-button>
+            <nl-button loading loading-icon="icon-target" shape="round">Loading</nl-button>
+        </nl-div>
+        <nl-div>
+            <nl-button
+                :theme="isLiked ? 'liked' : ''"
+                :icon="isLiked ? `icon-heart-fill` : `icon-heart`"
+                :loading="LikeButtonLoadingState"
+                @clicked="LikeButtonClicked">
+                {{ isLiked ? "Unlike" : "Like" }}
+            </nl-button>
+            <nl-button
+                :theme="[isChecked ? 'checked' : '', 'icon-only']"
+                shape="round"
+                :icon="isChecked ? `icon-checked-fill` : `icon-unchecked`"
+                :loading="checkButtonLoadingState"
+                @clicked="checkButtonClicked">
+            </nl-button>
+        </nl-div>
     </div>
 </template>
 
@@ -28,9 +40,7 @@ import { ref } from "vue";
 /**
  * Import components
  */
-// import NlDiv from "./components/NlDiv.vue";
-// import NlTextarea from "./components/NlTextarea.vue";
-// import NlInput from "./components/NlInput.vue";
+import NlDiv from "./components/NlDiv.vue";
 import NlButton from "./components/NlButton.vue";
 
 /**
@@ -42,6 +52,9 @@ const isLiked = ref(false);
 const isChecked = ref(false);
 const num = ref(0);
 
+/**
+ * Define emit functions
+ */
 function LikeButtonClicked() {
     LikeButtonLoadingState.value = true;
     setTimeout(() => {
@@ -49,7 +62,6 @@ function LikeButtonClicked() {
         LikeButtonLoadingState.value = false;
     }, 1000);
 }
-
 function checkButtonClicked() {
     checkButtonLoadingState.value = true;
     setTimeout(() => {
@@ -57,24 +69,13 @@ function checkButtonClicked() {
         checkButtonLoadingState.value = false;
     }, 1000);
 }
-
-function buttinClicked() {
-    num.value++;
-}
-
-/**
- * Watch input value
- */
-// watch(
-//     () => textareaValue.value,
-//     (newValue) => console.log(newValue)
-// );
+const buttinClicked = () => num.value++;
 </script>
 
 <style scoped>
 #app {
     display: flex;
-    /* flex-direction: column; */
+    flex-direction: column;
     gap: 16px;
 
     & >>> .nl-button--liked {

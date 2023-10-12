@@ -210,6 +210,11 @@ watch(
         opacity: 0.8;
         color: #b9b9b9;
         background-color: var(--hover-background-color);
+
+        &:active {
+            background-color: var(--hover-background-color);
+            filter: none;
+        }
     }
 }
 
