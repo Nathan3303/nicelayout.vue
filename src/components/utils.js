@@ -1,26 +1,39 @@
 /**
- * Check value is string or not
+ * Check value is a String or not
  * @param {any} value
  * @return {boolean}
  */
 export function isString(value) {
     return (
-        (typeof value === 'string' || value instanceof String) &&
-        Object.prototype.toString.call(value) === '[object String]'
-    )
+        (typeof value === "string" || value instanceof String) && Object.prototype.toString.call(value) === "[object String]"
+    );
 }
 
 /**
- * Check value is number or not
+ * Check value is a Number or not
  * @param {any} value
  * @return {boolean}
  */
 export function isNumber(value) {
     return (
-        (typeof value === 'number' || value instanceof Number) &&
+        (typeof value === "number" || value instanceof Number) &&
         Number(value) !== NaN &&
-        Object.prototype.toString.call(value) === '[object Number]'
-    )
+        Object.prototype.toString.call(value) === "[object Number]"
+    );
+}
+
+/**
+ * Check value is a Array or not
+ * @param {any} value
+ * @return {boolean}
+ */
+export function isArray(value) {
+    return (
+        value instanceof Array &&
+        value.constructor === Array &&
+        value.isArray() &&
+        Object.prototype.toString.call(value) === "[object Array]"
+    );
 }
 
 /**
@@ -30,9 +43,9 @@ export function isNumber(value) {
  */
 export function hasPixelSign(value) {
     if (isString(value)) {
-        return value.includes('px')
+        return value.includes("px");
     }
-    return false
+    return false;
 }
 
 /**
@@ -42,7 +55,7 @@ export function hasPixelSign(value) {
  */
 export function hasPercentageSign(value) {
     if (isString(value)) {
-        return value.includes('%')
+        return value.includes("%");
     }
-    return false
+    return false;
 }
