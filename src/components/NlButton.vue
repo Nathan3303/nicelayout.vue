@@ -1,7 +1,6 @@
 <template>
-    <button class="nl-button" :class="NlButtonClasses" @click="clickHandler">
-        <i v-if="loading" class="iconfont icon-loading"></i>
-        <i v-else-if="icon" class="iconfont" :class="icon"></i>
+    <button class="nl-button" :class="NlButtonClasses" @click="clickHandler" :disabled="disabled">
+        <i v-if="icon" class="iconfont" :class="icon"></i>
         <span v-if="$slots.default" class="nl-button__text">
             <slot></slot>
         </span>
@@ -9,7 +8,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { computed } from "vue";
 import { validateWidthAndHeight, validateShape } from "./validators";
 import { parseWidthAndHeight } from "./parsers";
 /**
@@ -41,17 +40,9 @@ const props = defineProps({
      */
     icon: String,
     /**
-     * @description button superior (Number flag)
-     */
-    superior: String,
-    /**
      * @description button disable state
      */
     disabled: Boolean,
-    /**
-     * @description button loading state
-     */
-    loading: Boolean,
     /**
      * @description button width
      */
@@ -78,26 +69,7 @@ const emit = defineEmits([
      * @description Calling when button was clicked
      */
     "clicked",
-    /**
-     * @description Calling when button was changed
-     */
-    "changed",
 ]);
-
-/**
- * Define refs
- */
-const isLoading = ref(props.loading);
-// console.log(widthStyle, heightStyle)
-
-/**
- * nl-button clicking handle function
- * @param {object} e clicking event object
- */
-function clickHandler(e) {
-    isLoading.value = true;
-    emit("clicked", e);
-}
 
 /**
  * Define computed
@@ -111,63 +83,62 @@ const NlButtonClasses = computed(() => {
     if (props.disabled) classArray.push("nl-button--disabled");
     return classArray;
 });
+
+/**
+ * nl-button clicking handle function
+ * @param {object} e clicking event object
+ */
+function clickHandler(e) {
+    emit("clicked", e);
+}
 </script>
 
 <style scoped>
 .nl-button {
-    --font-color: #53516e;
+    --font-color: #555555;
     --background-color: transparent;
-    --icon-color: #83819f;
-    --actived-background-color: var(--header-active-color);
-    --actived-icon-color: var(--primary-font-color);
-    --superior-bg-color: #ff6d2f;
     --border-color: #b9b9b9;
 
-    user-select: none;
-    box-sizing: border-box;
-    cursor: pointer;
-    position: relative;
+    --hovered-background-color: #f3f3f3;
 
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: start;
     gap: 8px;
 
+    box-sizing: border-box;
+
+    user-select: none;
+    cursor: pointer;
+}
+
+.nl-button--default {
     width: v-bind(widthStyle);
     height: v-bind(heightStyle);
-    padding: 0 calc(v-bind(heightStyle) / 2.4);
     background-color: var(--background-color);
     flex: none;
 
-    font-size: 13px;
     color: var(--font-color);
 
-    & > i {
-        color: var(--icon-color);
-    }
-
-    & > .icon-loading {
-        -webkit-animation: rotation 1s ease-in-out infinite;
-        animation: rotation 1s ease-in-out infinite;
+    &:hover {
+        background-color: var(--hovered-background-color);
     }
 
     & > .nl-button__text {
         font-family: "Consolas";
         font-weight: bold;
     }
-}
 
-@keyframes rotation {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
+    &.nl-button--disabled {
+        cursor: not-allowed;
+        opacity: 0.8;
+        background-color: #f3f3f3;
+        color: #b9b9b9;
     }
 }
 
 .nl-button--square {
+    padding: 0 calc(v-bind(heightStyle) / 4);
     border: 1px solid var(--border-color);
     border-radius: 6px;
 }
