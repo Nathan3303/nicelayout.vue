@@ -25,7 +25,7 @@ const props = defineProps({
     /**
      * @description Theme of button
      */
-    theme: [Boolean, String],
+    theme: String,
     /**
      * @description Shape of button
      */
@@ -136,97 +136,82 @@ watch(
 </script>
 
 <style scoped>
+@-webkit-keyframes rotation {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes rotation {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
 .nl-button {
     --font-color: #555555;
     --background-color: transparent;
     --border-color: #b9b9b9;
 
-    --hovered-background-color: #f3f3f3;
+    --hover-background-color: #f3f3f3;
+    --active-background-color: #f3f3f3aa;
 
-    transition: all 0.16s ease-in-out;
+    /* transition: all 0.16s ease-in-out; */
 
     display: flex;
     align-items: center;
     justify-content: start;
     gap: 6px;
 
+    box-sizing: border-box;
     width: v-bind(widthStyle);
     height: v-bind(heightStyle);
-    background-color: var(--background-color);
+    padding: 0 calc(v-bind(heightStyle) / 4);
     flex: none;
 
-    box-sizing: border-box;
-
-    user-select: none;
-    cursor: pointer;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background-color: var(--background-color);
     font-family: "Consolas";
     color: var(--font-color);
+    user-select: none;
+    cursor: pointer;
 
     &:hover {
-        background-color: var(--hovered-background-color);
+        background-color: var(--hover-background-color);
     }
 
     &:active {
-        filter: brightness(1.07)
+        background-color: var(--active-background-color);
+        filter: brightness(0.96);
     }
 
     & > .nl-button__loading-icon {
-        -webkit-animation: rotation 1.2s ease-in-out infinite;
-        animation: rotation 1.2s ease-in-out infinite;
-    }
-}
-
-@keyframes rotation {
-    0% {
-        transform: rotate(0deg);
+        -webkit-animation: 1.2s ease-in-out 0.16s infinite rotation;
+        animation: 1.2s ease-in-out 0.16s infinite rotation;
     }
 
-    100% {
-        transform: rotate(360deg);
+    &.nl-button--circle {
+        padding: 0 calc(v-bind(heightStyle) / 3);
+        border-radius: v-bind(heightStyle);
     }
-}
 
-.nl-button--square {
-    padding: 0 calc(v-bind(heightStyle) / 4);
-    border: 1px solid var(--border-color);
-    border-radius: 6px;
-}
-
-.nl-button--circle {
-    padding: 0 calc(v-bind(heightStyle) / 3);
-    border: 1px solid var(--border-color);
-    border-radius: v-bind(heightStyle);
-}
-
-.nl-button--no-border {
-    padding: 0 calc(v-bind(heightStyle) / 4);
-    border: none;
-    border-radius: 6px;
-}
-
-.nl-button--disabled {
-    cursor: not-allowed;
-    opacity: 0.8;
-    color: #b9b9b9;
-}
-
-.nl-button--icon-only {
-    aspect-ratio: 1;
-    min-width: 32px;
-    min-height: 32px;
-    padding: 0;
-
-    & > i {
-        font-size: 22px;
-        color: #618076;
+    &.nl-button--no-border {
+        border: none;
     }
-}
 
-.nl-button--pure {
-    padding: 0px;
-    /* padding-right: 8px; */
-    border: none;
-    min-height: auto;
-    height: auto;
+    &.nl-button--disabled {
+        cursor: not-allowed;
+        opacity: 0.8;
+        color: #b9b9b9;
+    }
 }
 </style>
