@@ -1,4 +1,4 @@
-import { isString, isNumber } from './utils'
+import { isString, isNumber, isArray } from "./utils";
 
 /**
  * Convert prop size from string type to number type
@@ -7,8 +7,8 @@ import { isString, isNumber } from './utils'
  * @return {string}
  */
 export function parseSize(size, isGetRaw = false) {
-    if (isString(size)) size = { small: 24, normal: 32, medium: 40, large: 48 }[size]
-    return isGetRaw ? size : size + 'px'
+    if (isString(size)) size = { small: 24, normal: 32, medium: 40, large: 48 }[size];
+    return isGetRaw ? size : size + "px";
 }
 
 /**
@@ -18,6 +18,28 @@ export function parseSize(size, isGetRaw = false) {
  * @return {string}
  */
 export function parseWidthAndHeight(value, isGetRaw = false) {
-    if (isGetRaw) return parseInt(value)
-    return isNumber(value) ? `${value}px` : value
+    if (isGetRaw) return parseInt(value);
+    return isNumber(value) ? `${value}px` : value;
+}
+
+/**
+ * Parse theme in props
+ * @description Parse theme array to class array
+ * @param {Array|String} value value of prop theme
+ * @return {Array|String}
+ */
+export function parseTheme(value, prefix) {
+    let parseResult = [];
+    if (isString(value)) {
+        parseResult = prefix + "--" + value;
+    } else if (isArray(value)) {
+        value.forEach((item) => {
+            if (item instanceof Function) {
+                parseResult.push(prefix + "--" + item());
+            } else {
+                parseResult.push(prefix + "--" + item);
+            }
+        });
+    }
+    return result;
 }
