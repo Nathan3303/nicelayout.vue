@@ -9,14 +9,14 @@
             {{ isLiked ? "Unlike" : "Like" }}
         </nl-button>
         <nl-button
-            :theme="isChecked ? 'checked' : ''"
+            :theme="[() => (isChecked ? 'checked' : ''), 'icon-only']"
             :icon="isChecked ? `icon-checked-fill` : `icon-unchecked`"
             :loading="checkButtonLoadingState"
             @clicked="checkButtonClicked">
             {{ isChecked ? "Uncheck" : "check" }}
         </nl-button>
 
-        <nl-button icon="icon-search" theme="round"></nl-button>
+        <nl-button icon="icon-search" theme="icon-only">asdasd</nl-button>
     </div>
 </template>
 

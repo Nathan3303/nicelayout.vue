@@ -214,4 +214,15 @@ watch(
         color: #b9b9b9;
     }
 }
+
+.nl-button--icon-only {
+    justify-content: center;
+    aspect-ratio: 1;
+    padding: 0;
+    border-radius: 50%;
+
+    & > .nl-button__text {
+        display: none;
+    }
+}
 </style>
