@@ -33,7 +33,7 @@ export function parseTheme(value, prefix) {
     if (isString(value) && value !== "") {
         parseResult.push(prefix + "--" + value);
     } else if (isArray(value)) {
-        value.forEach((item) => item !== "" && parseResult.push(prefix + "--" + item));
+        value.forEach((item) => isString(item) && item !== "" && parseResult.push(prefix + "--" + item));
     }
     return parseResult;
 }
