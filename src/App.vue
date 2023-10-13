@@ -31,6 +31,10 @@
                 @clicked="checkButtonClicked">
             </nl-button>
         </nl-div>
+        <nl-div>
+            <nl-button theme="text">Target: 0 / 2</nl-button>
+            <nl-button theme="text" shape="round">Target: 0 / 2</nl-button>
+        </nl-div>
     </div>
 </template>
 
@@ -78,12 +82,12 @@ const buttinClicked = () => num.value++;
     flex-direction: column;
     gap: 16px;
 
-    & >>> .nl-button--liked {
+    &:deep(.nl-button--liked) {
         border-color: pink;
         background-color: pink;
     }
 
-    & >>> .nl-button--checked {
+    &:deep(.nl-button--checked) {
         border-color: rgb(192, 242, 255);
         background-color: rgb(192, 242, 255);
     }

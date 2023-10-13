@@ -169,7 +169,7 @@ watch(
 
     display: flex;
     align-items: center;
-    justify-content: start;
+    justify-content: center;
     gap: 6px;
 
     box-sizing: border-box;
@@ -226,8 +226,6 @@ watch(
 }
 
 .nl-button--icon-only {
-    justify-content: center;
-
     aspect-ratio: 1;
     padding: 0;
 
@@ -237,6 +235,19 @@ watch(
 
     &.nl-button--round {
         border-radius: 50%;
+    }
+}
+
+.nl-button--text {
+    width: auto !important;
+    height: auto !important;
+    line-height: 24px;
+
+    border: none !important;
+
+    &.nl-button--round {
+        padding: 0 10px;
+        border-radius: 24px;
     }
 }
 </style>
