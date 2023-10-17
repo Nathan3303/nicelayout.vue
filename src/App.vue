@@ -4,7 +4,7 @@
         <nl-div>
             <nl-progress type="circle" :percentage="percentage" :scale="0.5" />
             <nl-progress type="circle" :percentage="percentage" />
-            <nl-progress type="circle" :percentage="percentage" :scale="1.2" stroke-width="8px" />
+            <nl-progress type="circle" :percentage="percentage" :scale="1.5" />
         </nl-div>
     </div>
 </template>

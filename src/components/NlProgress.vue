@@ -85,7 +85,7 @@ const props = defineProps({
     scale: {
         type: Number,
         default: 1,
-        validator: (v) => v >= 0,
+        validator: (v) => v >= 0.3,
     },
 });
 
@@ -95,7 +95,7 @@ const props = defineProps({
 const percentage = computed(() => props.percentage + "%");
 const size = computed(() => props.scale * 100 + "px");
 const radius = computed(() => (100 - parseInt(props.strokeWidth) * 2) / 2);
-const strokeWidth = computed(() => parseWidthAndHeight(props.strokeWidth));
+const strokeWidth = computed(() => parseWidthAndHeight(parseInt(props.strokeWidth) / props.scale));
 const strokeDashArray = computed(() => Math.ceil(Math.PI * 2 * radius.value));
 const strokeDashOffset = computed(() => Math.ceil((1 - props.percentage / 100) * strokeDashArray.value));
 const innerTextLeft = computed(() => (props.percentage <= 3 ? `calc(${strokeWidth.value} / 2)` : "none"));
