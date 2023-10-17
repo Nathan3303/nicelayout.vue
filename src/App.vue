@@ -1,7 +1,11 @@
 <template>
     <div id="app">
-        <nl-progress :percentage="percentage" stroke-width="6px" />
-        <nl-progress type="circle" :percentage="percentage" stroke-width="6px" />
+        <nl-progress :percentage="percentage" />
+        <nl-div>
+            <nl-progress type="circle" :percentage="percentage" :scale="0.5" />
+            <nl-progress type="circle" :percentage="percentage" />
+            <nl-progress type="circle" :percentage="percentage" :scale="1.2" stroke-width="8px" />
+        </nl-div>
     </div>
 </template>
 

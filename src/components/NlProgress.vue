@@ -9,14 +9,14 @@
         </div>
         <svg v-else-if="type === 'circle'" class="nl-progress--circle" viewBox="0 0 100 100">
             <defs>
-                <radialGradient id="barGradient" cx="0.5" cy="0.5" r="1" fx="0.5" fy="0">
+                <radialGradient id="barGradient" cx="0.5" cy="0.5" r="1" fx="0.6" fy="0">
                     <stop offset="0%" stop-color="rgb(122, 221, 122)" />
                     <stop offset="30%" stop-color="rgb(122, 221, 122)" />
                     <stop offset="100%" stop-color="blue" />
                 </radialGradient>
             </defs>
-            <circle class="nl-progress__outer-path" r="50" cx="50" cy="50"></circle>
-            <circle class="nl-progress__inner-path" r="50" cx="50" cy="50"></circle>
+            <circle class="nl-progress__outer-path" :r="radius" cx="50" cy="50"></circle>
+            <circle class="nl-progress__inner-path" :r="radius" cx="50" cy="50"></circle>
         </svg>
         <slot v-if="!showInnerText">
             <span class="nl-progress__text">{{ formatter(percentage) }}</span>
@@ -79,14 +79,25 @@ const props = defineProps({
      * @description Inner text display state
      */
     showInnerText: Boolean,
+    /**
+     * @description SVG size scale (Effective when props.type is circle or dashboard)
+     */
+    scale: {
+        type: Number,
+        default: 1,
+        validator: (v) => v >= 0,
+    },
 });
 
 /**
  * Define computed
  */
 const percentage = computed(() => props.percentage + "%");
+const size = computed(() => props.scale * 100 + "px");
+const radius = computed(() => (100 - parseInt(props.strokeWidth) * 2) / 2);
 const strokeWidth = computed(() => parseWidthAndHeight(props.strokeWidth));
-const strokeDashOffset = computed(() => (1 - props.percentage / 100) * 314);
+const strokeDashArray = computed(() => Math.ceil(Math.PI * 2 * radius.value));
+const strokeDashOffset = computed(() => Math.ceil((1 - props.percentage / 100) * strokeDashArray.value));
 const innerTextLeft = computed(() => (props.percentage <= 3 ? `calc(${strokeWidth.value} / 2)` : "none"));
 </script>
 
@@ -133,14 +144,14 @@ const innerTextLeft = computed(() => (props.percentage <= 3 ? `calc(${strokeWidt
     }
 
     & > .nl-progress--circle {
-        width: 200px;
-        height: 200px;
+        width: v-bind(size);
+        height: v-bind(size);
 
         & > circle {
-            stroke-width: calc(v-bind(strokeWidth) / 2);
+            stroke-width: v-bind(strokeWidth);
             fill: transparent;
             transform-origin: center;
-            transform: scale(0.9) rotate(-90deg);
+            transform: rotate(-90deg);
             transition: stroke-dashoffset 0.24s linear;
         }
 
@@ -149,9 +160,8 @@ const innerTextLeft = computed(() => (props.percentage <= 3 ? `calc(${strokeWidt
         }
 
         & > .nl-progress__inner-path {
-            /* fill: url(#barGradient); */
             stroke: url(#barGradient);
-            stroke-dasharray: 314;
+            stroke-dasharray: v-bind(strokeDashArray);
             stroke-dashoffset: v-bind(strokeDashOffset);
             stroke-linecap: round;
         }
