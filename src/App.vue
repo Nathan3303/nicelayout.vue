@@ -1,8 +1,8 @@
 <template>
     <div id="app">
         <nl-div>
-            <nl-button @clicked="increasePercentage">增加百分比</nl-button>
             <nl-button @clicked="decreasePercentage">减小百分比</nl-button>
+            <nl-button @clicked="increasePercentage">增加百分比</nl-button>
         </nl-div>
         <nl-progress :percentage="percentage" />
         <nl-div>

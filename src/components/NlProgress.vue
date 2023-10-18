@@ -90,14 +90,32 @@ const props = defineProps({
 });
 
 /**
+ * Define emit
+ */
+const emit = defineEmits([
+    /**
+     * @description Call when percentage changed
+     */
+    "changed",
+    /**
+     * @description Call when progress was hundred percent
+     */
+    "fulled",
+]);
+
+/**
  * Define computed
  */
-const percentage = computed(() => props.percentage + "%");
-const size = computed(() => props.scale * 100 + "px");
-const radius = computed(() => (100 - parseInt(props.strokeWidth) * 2) / 2);
+const percentage = computed(() => {
+    if (props.percentage < 0) return "0%";
+    if (props.percentage > 100) return "100%";
+    return props.percentage + "%";
+});
+const size = computed(() => `${props.scale * 100}px`);
+const radius = computed(() => 50 - parseInt(props.strokeWidth));
 const strokeWidth = computed(() => parseWidthAndHeight(parseInt(props.strokeWidth) / props.scale));
-const strokeDashArray = computed(() => Math.ceil(Math.PI * 2 * radius.value));
-const strokeDashOffset = computed(() => Math.ceil((1 - props.percentage / 100) * strokeDashArray.value));
+const strokeDashArray = computed(() => Math.ceil(2 * Math.PI * radius.value));
+const strokeDashOffset = computed(() => Math.ceil((1 - parseInt(percentage.value) / 100) * strokeDashArray.value));
 const innerTextLeft = computed(() => (props.percentage <= 3 ? `calc(${strokeWidth.value} / 2)` : "none"));
 </script>
 
