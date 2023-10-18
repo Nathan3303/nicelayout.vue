@@ -1,5 +1,9 @@
 <template>
     <div id="app">
+        <nl-div>
+            <nl-button @clicked="increasePercentage">增加百分比</nl-button>
+            <nl-button @clicked="decreasePercentage">减小百分比</nl-button>
+        </nl-div>
         <nl-progress :percentage="percentage" />
         <nl-div>
             <nl-progress type="circle" :percentage="percentage" :scale="0.5" />
@@ -17,13 +21,17 @@ import { ref } from "vue";
  */
 import NlDiv from "./components/NlDiv.vue";
 import NlProgress from "./components/NlProgress.vue";
+import NlButton from "./components/NlButton.vue";
 
 /**
  * Define refs
  */
 const percentage = ref(0);
 
-setInterval(() => (percentage.value = (percentage.value + 1) % 101), 240);
+// setInterval(() => (percentage.value = (percentage.value + 1) % 101), 240);
+
+const increasePercentage = () => (percentage.value += 10);
+const decreasePercentage = () => (percentage.value -= 10);
 </script>
 
 <style scoped>

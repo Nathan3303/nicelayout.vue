@@ -106,7 +106,7 @@ const innerTextLeft = computed(() => (props.percentage <= 3 ? `calc(${strokeWidt
     display: flex;
     align-items: center;
     justify-content: start;
-    gap: 6px;
+    /* gap: 6px; */
 
     & > .nl-progress--line {
         flex: auto;
@@ -165,6 +165,11 @@ const innerTextLeft = computed(() => (props.percentage <= 3 ? `calc(${strokeWidt
             stroke-dashoffset: v-bind(strokeDashOffset);
             stroke-linecap: round;
         }
+    }
+
+    & > .nl-progress__text {
+        text-align: center;
+        min-width: 48px;
     }
 }
 </style>
