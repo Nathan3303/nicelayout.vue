@@ -35,7 +35,7 @@ export function validateSize(size) {
  * @return {boolean}
  */
 export function validateShape(shape) {
-    return ["square", "round", "no-border", "round-no-border"].includes(shape);
+    return ["square", "round", "no-border", "round-no-border", "no-shape"].includes(shape);
 }
 
 /**
