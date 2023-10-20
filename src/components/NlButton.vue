@@ -165,7 +165,9 @@ watch(
     --border-color: #b9b9b9;
 
     --hover-background-color: #f3f3f3;
-    --active-background-color: #f3f3f3aa;
+    --active-background-color: #f3f3f366;
+
+    transition: all 0.24s ease-out;
 
     display: flex;
     align-items: center;
@@ -187,13 +189,18 @@ watch(
     user-select: none;
     cursor: pointer;
 
+    &:deep(*) {
+        color: inherit;
+        font-size: inherit;
+    }
+
     &:hover {
         background-color: var(--hover-background-color);
     }
 
     &:active {
         background-color: var(--active-background-color);
-        filter: brightness(0.96);
+        filter: brightness(0.9);
     }
 
     & > .nl-button__loading-icon {
@@ -219,7 +226,15 @@ watch(
 }
 
 .nl-button--default {
+    font-size: 12px;
+
     &.nl-button--round {
+        padding: 0 calc(v-bind(heightStyle) / 3);
+        border-radius: v-bind(heightStyle);
+    }
+
+    &.nl-button--round-no-border {
+        border: none;
         padding: 0 calc(v-bind(heightStyle) / 3);
         border-radius: v-bind(heightStyle);
     }
