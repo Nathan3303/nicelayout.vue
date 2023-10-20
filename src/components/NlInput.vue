@@ -36,7 +36,7 @@
 <script setup>
 import { ref, nextTick, computed, watch } from "vue";
 import { validateShape, validateWidthAndHeight } from "./validators";
-import { parseWidthAndHeight } from "./parsers";
+import { parseWidthAndHeight, parseTheme } from "./parsers";
 
 /**
  * Define options
@@ -205,8 +205,8 @@ const widthStyle = computed(() => parseWidthAndHeight(props.width));
 const heightStyle = computed(() => parseWidthAndHeight(props.height));
 const NlInputClasses = computed(() => {
     let classArray = [];
-    if (props.theme) classArray.push("nl-input--" + props.theme);
-    if (props.shape) classArray.push("nl-input--" + props.shape);
+    classArray = [...parseTheme(props.theme, "nl-input")];
+    classArray.push("nl-input--" + props.shape);
     if (props.disabled) classArray.push("nl-input--disabled");
     if (isFocused.value) classArray.push("nl-input--focused");
     return classArray;
