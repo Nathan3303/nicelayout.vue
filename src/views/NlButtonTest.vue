@@ -10,23 +10,27 @@
         <div class="flex">
             <nl-button>Search</nl-button>
             <nl-button icon="icon-search">Search</nl-button>
+            <nl-button icon="icon-search" shape="round"></nl-button>
             <nl-button icon="icon-search" shape="round">
                 Search
                 <i class="iconfont icon-arrow-right"></i>
             </nl-button>
+            <nl-button icon="icon-search" disabled>Search(disabled)</nl-button>
         </div>
         <div class="flex">
-            <nl-button theme="text">theme=text</nl-button>
-            <nl-button theme="text" icon="icon-calendar">theme=text, with-icon</nl-button>
-            <nl-button theme="text" icon="icon-calendar" shape="round">theme=text, with-iconm, round</nl-button>
+            <nl-button theme="text">Text button</nl-button>
+            <nl-button theme="text" icon="icon-calendar">Text button</nl-button>
+            <nl-button theme="text" icon="icon-calendar" shape="round">Text button</nl-button>
+            <nl-button theme="text" icon="icon-calendar" shape="no-shape">Text button</nl-button>
+            <nl-button theme="text" icon="icon-calendar" disabled>Text button</nl-button>
         </div>
         <div class="flex">
-            <nl-button icon="icon-search" disabled>Disabled</nl-button>
-            <nl-button icon="icon-search" shape="round" loading>Loading</nl-button>
+            <nl-button loading>Loading</nl-button>
+            <nl-button loading loading-icon="icon-target">Loading</nl-button>
         </div>
         <div class="flex">
             <nl-button
-                :theme="['default', likeButton.state ? 'liked' : 'unliked']"
+                :theme="likeButton.state ? 'liked' : 'unliked'"
                 :icon="likeButton.state ? 'icon-heart-fill' : 'icon-heart'"
                 :loading="likeButton.loading"
                 @clicked="likeButtonHandler">
@@ -34,7 +38,7 @@
             </nl-button>
             <nl-button
                 shape="round"
-                :theme="['default', likeButton.state ? 'liked' : 'unliked']"
+                :theme="likeButton.state ? 'liked' : 'unliked'"
                 :icon="likeButton.state ? 'icon-heart-fill' : 'icon-heart'"
                 :loading="likeButton.loading"
                 @clicked="likeButtonHandler">
@@ -42,12 +46,14 @@
             </nl-button>
             <nl-button
                 shape="round"
-                :theme="['icon-only', likeButton.state ? 'liked' : 'unliked']"
+                :theme="likeButton.state ? 'liked' : 'unliked'"
                 :icon="likeButton.state ? 'icon-heart-fill' : 'icon-heart'"
                 :loading="likeButton.loading"
                 @clicked="likeButtonHandler">
-                {{ likeButton.state ? "Unlike" : "Like" }}
             </nl-button>
+        </div>
+        <div class="flex">
+            <nl-button theme="icon-only" icon="icon-mail" shape="no-border"></nl-button>
         </div>
     </div>
 </template>

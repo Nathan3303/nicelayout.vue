@@ -1,8 +1,8 @@
 <template>
     <div id="app">
-        <!-- <nl-input-test></nl-input-test> -->
+        <nl-input-test></nl-input-test>
         <!-- <nl-textarea-test></nl-textarea-test> -->
-        <nl-button-test></nl-button-test>
+        <!-- <nl-button-test></nl-button-test> -->
     </div>
 </template>
 
