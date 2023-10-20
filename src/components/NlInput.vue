@@ -282,6 +282,9 @@ function showPasswordHandler() {
 
 /**
  * Watch props.modelValue
+ * @description
+ *  Fix bug of when props.modelValue was changed, textLength reference
+ *  dose not updated, cause the word counter miss re-calculating.
  */
 watch(
     () => props.modelValue,
