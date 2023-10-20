@@ -9,7 +9,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch } from "vue";
+import { computed, watch } from "vue";
 import { validateWidthAndHeight, validateShape } from "./validators";
 import { parseWidthAndHeight, parseTheme } from "./parsers";
 
@@ -182,7 +182,7 @@ watch(
     box-sizing: border-box;
     width: v-bind(width);
     height: v-bind(height);
-    padding: 0 calc(v-bind(height) / 3);
+    padding: 0 calc(v-bind(height) / 3 - 1px);
 
     border: 1px solid var(--border-color);
     background-color: var(--background-color);
@@ -249,6 +249,8 @@ watch(
 /* Built-in themes */
 
 .nl-button--icon-only {
+    --icon-size: 24px;
+
     aspect-ratio: 1;
     padding: 0;
 
