@@ -28,7 +28,7 @@ export function parseWidthAndHeight(value, isGetRaw = false) {
  * @param {Array|String} value value of prop theme
  * @return {Array|String}
  */
-export function parseTheme(value, prefix) {
+export function parseTheme(value, prefix = "") {
     let parseResult = [];
     if (isString(value) && value !== "") {
         parseResult.push(prefix + "--" + value);
