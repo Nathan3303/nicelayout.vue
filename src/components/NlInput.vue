@@ -297,6 +297,10 @@ watch(
     --background-color: transparent;
     --border-color: #cccccc;
 
+    --icon-size: 16px;
+    --icon-color: #cccccc;
+    --icon-weight: normal;
+
     --focused-background-color: transparent;
     --focused-border-color: #6d94dd;
     --focused-shadow-color: #6d94dd;
@@ -323,11 +327,26 @@ watch(
     user-select: none;
     overflow: hidden;
 
+    & > .nl-input__icon {
+        color: var(--icon-color);
+        font-size: var(--icon-size);
+        font-weight: var(--icon-weight);
+    }
+
     & > input {
+        flex: auto;
         min-width: 24px;
         height: 100%;
-        flex: 1 1 auto;
+        padding: 0;
+
         outline: none;
+        border: none;
+        background: none;
+
+        color: inherit;
+        font-size: inherit;
+        font-family: inherit;
+        font-weight: inherit;
 
         &::-ms-reveal {
             display: none;
@@ -335,6 +354,11 @@ watch(
 
         &::-ms-clear {
             display: none;
+        }
+
+        &::placeholder {
+            color: inherit;
+            opacity: 0.48;
         }
     }
 
@@ -381,14 +405,6 @@ watch(
 
     font-size: 16px;
     font-family: "Consolas";
-
-    & > input {
-        padding: 0;
-        border: none;
-        background: none;
-        font-size: inherit;
-        font-family: inherit;
-    }
 
     & > .nl-input__button-group > i {
         border: 1px solid var(--button-border-color);
