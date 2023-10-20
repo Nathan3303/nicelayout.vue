@@ -1,5 +1,5 @@
 <template>
-    <button class="nl-button" ref="button" :class="NlButtonClasses" @click="clickHandler" :disabled="disabled">
+    <button class="nl-button" :class="NlButtonClasses" @click="clickHandler" :disabled="disabled">
         <i v-if="loading" class="nl-button__loading-icon iconfont" :class="loadingIcon"></i>
         <i v-else-if="icon" class="iconfont" :class="icon"></i>
         <span v-if="$slots.default" class="nl-button__text">
@@ -38,29 +38,13 @@ const props = defineProps({
         validator: (v) => validateShape(v),
     },
     /**
-     * @description button icon (Only iconfont so far)
+     * @description Button icon (Only iconfont was supported so far)
      */
     icon: String,
     /**
-     * @description button disable state
+     * @description Button disable state
      */
     disabled: Boolean,
-    /**
-     * @description button width
-     */
-    width: {
-        type: [String, Number],
-        default: "auto",
-        validator: (v) => validateWidthAndHeight(v),
-    },
-    /**
-     * @description button height
-     */
-    height: {
-        type: [String, Number],
-        default: 36,
-        validator: (v) => validateWidthAndHeight(v),
-    },
     /**
      * @description Button loading state
      */
@@ -79,6 +63,22 @@ const props = defineProps({
         type: String,
         default: "transparent",
     },
+    /**
+     * @description Button width
+     */
+    width: {
+        type: [String, Number],
+        default: "auto",
+        validator: (v) => validateWidthAndHeight(v),
+    },
+    /**
+     * @description button height
+     */
+    height: {
+        type: [String, Number],
+        default: 36,
+        validator: (v) => validateWidthAndHeight(v),
+    },
 });
 
 /**
@@ -96,19 +96,13 @@ const emit = defineEmits([
 ]);
 
 /**
- * Define refs
- */
-const button = ref();
-
-/**
  * Define computed
  */
-const widthStyle = computed(() => parseWidthAndHeight(props.width));
-const heightStyle = computed(() => parseWidthAndHeight(props.height));
+const width = computed(() => parseWidthAndHeight(props.width));
+const height = computed(() => parseWidthAndHeight(props.height));
 const NlButtonClasses = computed(() => {
-    let classArray = [];
-    classArray = [...parseTheme(props.theme, "nl-button")];
-    classArray.push("nl-button--" + props.shape);
+    let classArray = [...parseTheme(props.theme, "nl-button")];
+    classArray.push(`nl-button--${props.shape}`);
     if (props.disabled) classArray.push("nl-button--disabled");
     return classArray;
 });
@@ -125,7 +119,7 @@ function clickHandler(e) {
  * Button change event handler
  */
 function changeHandler() {
-    emit("changed", button.value);
+    emit("changed");
 }
 
 /**
@@ -160,38 +154,53 @@ watch(
 }
 
 .nl-button {
-    --font-color: #555555;
-    --background-color: transparent;
     --border-color: #b9b9b9;
+    --background-color: transparent;
 
-    --hover-background-color: #f3f3f3;
-    --active-background-color: #f3f3f366;
+    --font-size: 12px;
+    --font-color: inherit;
+    --font-family: "Consolas";
+    --font-weight: normal;
+
+    --icon-color: var(--font-color);
+    --icon-size: inherit;
+    --icon-weight: normal;
+
+    --hover-background-color: rgb(243, 243, 243);
+    --active-background-color: rgba(243, 243, 243, 0.36);
 
     transition: all 0.24s ease-out;
+    user-select: none;
+    cursor: pointer;
 
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 6px;
 
-    box-sizing: border-box;
-    width: v-bind(widthStyle);
-    height: v-bind(heightStyle);
-    padding: 0 calc(v-bind(heightStyle) / 4);
     flex: none;
+    box-sizing: border-box;
+    width: v-bind(width);
+    height: v-bind(height);
+    padding: 0 calc(v-bind(height) / 3);
 
     border: 1px solid var(--border-color);
-    border-radius: 6px;
     background-color: var(--background-color);
 
     color: var(--font-color);
-    font-family: "Consolas";
-    user-select: none;
-    cursor: pointer;
+    font-size: var(--font-size);
+    font-family: var(--font-family);
 
     &:deep(*) {
         color: inherit;
         font-size: inherit;
+        font-weight: inherit;
+    }
+
+    & > .iconfont {
+        color: var(--icon-color);
+        font-size: var(--icon-size);
+        font-weight: var(--icon-weight);
     }
 
     &:hover {
@@ -200,7 +209,6 @@ watch(
 
     &:active {
         background-color: var(--active-background-color);
-        filter: brightness(0.9);
     }
 
     & > .nl-button__loading-icon {
@@ -208,37 +216,37 @@ watch(
         animation: 1.2s ease-in-out 0.16s infinite rotation;
     }
 
-    &.nl-button--no-border {
-        border: none;
+    &.nl-button--square {
+        border-radius: 6px;
     }
-
-    &.nl-button--disabled {
-        cursor: not-allowed;
-        opacity: 0.8;
-        color: #b9b9b9;
-        background-color: var(--hover-background-color);
-
-        &:active {
-            background-color: var(--hover-background-color);
-            filter: none;
-        }
-    }
-}
-
-.nl-button--default {
-    font-size: 12px;
 
     &.nl-button--round {
-        padding: 0 calc(v-bind(heightStyle) / 3);
-        border-radius: v-bind(heightStyle);
+        border-radius: v-bind(height);
+    }
+
+    &.nl-button--no-border {
+        border: none;
+        border-radius: 6px;
     }
 
     &.nl-button--round-no-border {
         border: none;
-        padding: 0 calc(v-bind(heightStyle) / 3);
-        border-radius: v-bind(heightStyle);
+        border-radius: v-bind(height);
+    }
+
+    &.nl-button--disabled {
+        --font-color: #8e8e8e;
+        --background-color: var(--hover-background-color);
+        cursor: not-allowed;
+        opacity: 0.78;
+
+        &:active {
+            background-color: var(--hover-background-color);
+        }
     }
 }
+
+/* Built-in themes */
 
 .nl-button--icon-only {
     aspect-ratio: 1;
@@ -247,22 +255,19 @@ watch(
     & > .nl-button__text {
         display: none;
     }
-
-    &.nl-button--round {
-        border-radius: 50%;
-    }
 }
 
 .nl-button--text {
-    width: auto !important;
-    height: auto !important;
-    line-height: 24px;
+    width: auto;
+    height: auto;
+    padding: 4px 10px;
+    border: none;
 
-    border: none !important;
-
-    &.nl-button--round {
-        padding: 0 10px;
-        border-radius: 24px;
+    &.nl-button--no-shape {
+        padding: 0;
+        border-radius: none;
+        line-height: none;
+        /* background-color: transparent; */
     }
 }
 </style>
