@@ -23,6 +23,7 @@
 
 <script setup>
 import { ref, computed, nextTick } from "vue";
+import { parseTheme } from "./parsers";
 
 /**
  * Define options
@@ -59,7 +60,7 @@ const props = defineProps({
      * @description Theme of textarea
      */
     theme: {
-        type: String,
+        type: [Array, String],
         default: "default",
     },
     /**
@@ -146,8 +147,8 @@ const minHeight = computed(() => props.rows * 22 + "px");
 const resize = computed(() => (props.resize ? "vertical" : "none"));
 const NlTextareaClasses = computed(() => {
     let classArray = [];
-    if (props.theme) classArray.push("nl-textarea--" + props.theme);
-    if (props.shape) classArray.push("nl-textarea--" + props.shape);
+    classArray = [...parseTheme(props.theme, "nl-textarea")];
+    classArray.push("nl-textarea--" + props.shape);
     if (props.disabled) classArray.push("nl-textarea--disabled");
     if (isFocused.value) classArray.push("nl-textarea--focused");
     return classArray;
