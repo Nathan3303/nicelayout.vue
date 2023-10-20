@@ -15,7 +15,8 @@
         <textarea
             v-if="autosize && !props.disabled && !props.readonly"
             class="backend-textarea"
-            ref="backendTextarea"></textarea>
+            ref="backendTextarea"
+            :value="modelValue"></textarea>
         <div v-if="wordCounterText" class="nl-textarea__word-counter">{{ wordCounterText }}</div>
     </div>
 </template>
