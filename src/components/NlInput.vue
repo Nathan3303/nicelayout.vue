@@ -34,7 +34,7 @@
 </template>
 
 <script setup>
-import { ref, nextTick, computed } from "vue";
+import { ref, nextTick, computed, watch } from "vue";
 import { validateShape, validateWidthAndHeight } from "./validators";
 import { parseWidthAndHeight } from "./parsers";
 
@@ -74,10 +74,10 @@ const props = defineProps({
         default: (value) => value,
     },
     /**
-     * @description Theme of input
+     * @description Theme(s) of input (Allow custom style)
      */
     theme: {
-        type: String,
+        type: [Array, String],
         default: "default",
     },
     /**
@@ -279,6 +279,14 @@ function showPasswordHandler() {
     const isShowed = input.value.type === "text";
     input.value.type = isShowed ? "password" : "text";
 }
+
+/**
+ * Watch props.modelValue
+ */
+watch(
+    () => props.modelValue,
+    () => (textLength.value = props.modelValue.length)
+);
 </script>
 
 <style scoped>
@@ -363,7 +371,7 @@ function showPasswordHandler() {
     width: v-bind(widthStyle);
     height: v-bind(heightStyle);
     line-height: v-bind(heightStyle);
-    padding: 6px 8px;
+    padding: 6px 12px;
 
     border: 1px solid var(--border-color);
     background: var(--background-color);
