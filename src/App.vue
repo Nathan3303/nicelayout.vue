@@ -1,6 +1,8 @@
 <template>
     <div id="app">
-        <nl-input-test></nl-input-test>
+        <!-- <nl-input-test></nl-input-test> -->
+        <!-- <nl-textarea-test></nl-textarea-test> -->
+        <nl-button-test></nl-button-test>
     </div>
 </template>
 
@@ -11,11 +13,9 @@ import { ref } from "vue";
  * Import components
  */
 import NlInputTest from "./views/NlInputTest.vue";
+import NlTextareaTest from "./views/NlTextareaTest.vue";
+import NlButtonTest from "./views/NlButtonTest.vue";
 
-/**
- * Define refs
- */
-const inputValue = ref('');
 </script>
 
 <style scoped>
