@@ -1,23 +1,27 @@
 <template>
     <div class="nl-progress">
-        <div v-if="type === 'line'" class="nl-progress--line">
-            <div class="nl-progress__outer-bar">
-                <div class="nl-progress__inner-bar">
-                    <span v-if="showInnerText">{{ percentage }}</span>
+        <template v-if="type === 'line'">
+            <div class="nl-progress--line">
+                <div class="nl-progress__outer-bar">
+                    <div class="nl-progress__inner-bar">
+                        <span v-if="showInnerText">{{ percentage }}</span>
+                    </div>
                 </div>
             </div>
-        </div>
-        <svg v-else-if="type === 'circle'" class="nl-progress--circle" viewBox="0 0 100 100">
-            <defs>
-                <radialGradient id="barGradient" cx="0.5" cy="0.5" r="1" fx="0.6" fy="0">
-                    <stop offset="0%" stop-color="rgb(122, 221, 122)" />
-                    <stop offset="30%" stop-color="rgb(122, 221, 122)" />
-                    <stop offset="100%" stop-color="blue" />
-                </radialGradient>
-            </defs>
-            <circle class="nl-progress__outer-path" :r="radius" cx="50" cy="50"></circle>
-            <circle class="nl-progress__inner-path" :r="radius" cx="50" cy="50"></circle>
-        </svg>
+        </template>
+        <template v-else-if="type === 'circle'">
+            <svg class="nl-progress--circle" viewBox="0 0 100 100">
+                <defs>
+                    <radialGradient id="barGradient" cx="0.5" cy="0.5" r="1" fx="0.6" fy="0">
+                        <stop offset="0%" stop-color="rgb(122, 221, 122)" />
+                        <stop offset="30%" stop-color="rgb(122, 221, 122)" />
+                        <stop offset="100%" stop-color="blue" />
+                    </radialGradient>
+                </defs>
+                <circle class="nl-progress__outer-path" :r="radius" cx="50" cy="50"></circle>
+                <circle class="nl-progress__inner-path" :r="radius" cx="50" cy="50"></circle>
+            </svg>
+        </template>
         <slot v-if="!showInnerText">
             <span class="nl-progress__text">{{ formatter(percentage) }}</span>
         </slot>
@@ -126,6 +130,12 @@ const innerTextLeft = computed(() => (props.percentage <= 3 ? `calc(${strokeWidt
     justify-content: start;
     /* gap: 6px; */
 
+    position: relative;
+
+    & > .nl-progress__text {
+        user-select: none;
+    }
+
     & > .nl-progress--line {
         flex: auto;
 
@@ -155,9 +165,14 @@ const innerTextLeft = computed(() => (props.percentage <= 3 ? `calc(${strokeWidt
                     left: v-bind(innerTextLeft);
                     right: calc(v-bind(strokeWidth) / 2);
                     color: white;
-                    font-size: calc(v-bind(strokeWidth) / 2);
+                    font-size: calc(v-bind(strokeWidth) - 3px);
                 }
             }
+        }
+
+        & + .nl-progress__text {
+            text-align: center;
+            min-width: 48px;
         }
     }
 
@@ -183,11 +198,18 @@ const innerTextLeft = computed(() => (props.percentage <= 3 ? `calc(${strokeWidt
             stroke-dashoffset: v-bind(strokeDashOffset);
             stroke-linecap: round;
         }
-    }
 
-    & > .nl-progress__text {
-        text-align: center;
-        min-width: 48px;
+        & + .nl-progress__text {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            width: 1px;
+            height: 1px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+        }
     }
 }
 </style>
