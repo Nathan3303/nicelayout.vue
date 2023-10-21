@@ -7,7 +7,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { validateSize, validateFit } from "./validators";
 import { parseSize } from "./parsers";
 
@@ -20,6 +20,10 @@ defineOptions({ name: "NlAvatar" });
  * Define props
  */
 const props = defineProps({
+    /**
+     * @description avatar image source
+     */
+    src: String,
     /**
      * @description Avatar icon (Only iconfont)
      */
@@ -44,9 +48,12 @@ const props = defineProps({
         validator: (v) => ["square", "round"].includes(v),
     },
     /**
-     * @description avatar image source
+     * @description avatar whtie border width
      */
-    src: String,
+    borderWidth: {
+        type: Number,
+        default: 0,
+    },
     /**
      * @description avatar image alternate
      */
@@ -62,13 +69,6 @@ const props = defineProps({
         type: String,
         default: "cover",
         validator: (v) => validateFit(v),
-    },
-    /**
-     * @description avatar whtie border width
-     */
-    whiteBorder: {
-        type: Number,
-        default: 0,
     },
 });
 
@@ -90,8 +90,12 @@ const emit = defineEmits([
  * Define refs
  */
 const hasError = ref(false); // Error flag
-const sizeStyle = ref(parseSize(props.size));
-const whtieBorderStyle = ref(props.whiteBorder + "px");
+
+/**
+ * Define computed
+ */
+const size = computed(() => parseSize(props.size));
+const borderWidth = computed(() => `${props.borderWidth}px`);
 
 /**
  * Avatar image error handler
@@ -108,11 +112,11 @@ function errorHandler(e) {
     aspect-ratio: 1;
 
     flex: none;
-    width: v-bind(sizeStyle);
-    /* height: v-bind(sizeStyle); */
+    width: v-bind(size);
+    /* height: v-bind(size); */
     overflow: hidden;
 
-    border: v-bind(whtieBorderStyle) solid white;
+    border: v-bind(borderWidth) solid transparent;
     background-color: #c4c4c4;
 
     color: rgb(255, 255, 255);
