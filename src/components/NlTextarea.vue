@@ -135,7 +135,6 @@ const textLength = ref(props.modelValue?.length || 0);
 /**
  * Define computed
  */
-const minHeight = computed(() => props.rows * 22 + "px");
 const overflow = computed(() => (props.autosize ? "hidden" : "auto"));
 const resize = computed(() => (props.resize ? "vertical" : "none"));
 const NlTextareaClasses = computed(() => {
@@ -233,7 +232,7 @@ function changeHandler(e) {
 
     & > textarea {
         width: 100%;
-        min-height: calc(var(--font-size) + 3px);
+        min-height: calc(v-bind(rows) * (var(--font-size) + 3px));
         margin: 0;
         padding: 0;
         resize: v-bind(resize);
