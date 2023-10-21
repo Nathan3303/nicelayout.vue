@@ -1,27 +1,20 @@
 <template>
     <div :class="`nl-avatar nl-avatar--${shape}`">
-        <img
-            v-if="src && !hasError"
-            :src="src"
-            :alt="alt"
-            :title="title"
-            :style="{ objectFit: fit }"
-            @error="errorHandler"
-        />
+        <img v-if="src && !hasError" :src="src" :alt="alt" :title="title" :style="{ objectFit: fit }" @error="errorHandler" />
         <i v-else-if="icon" class="iconfont" :class="icon"></i>
         <slot v-else></slot>
     </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { validateSize, validateShape, validateFit } from './validators'
-import { parseSize } from './parsers'
+import { ref } from "vue";
+import { validateSize, validateFit } from "./validators";
+import { parseSize } from "./parsers";
 
 /**
  * Defien options
  */
-defineOptions({ name: 'NlAvatar' })
+defineOptions({ name: "NlAvatar" });
 
 /**
  * Define props
@@ -30,22 +23,25 @@ const props = defineProps({
     /**
      * @description Avatar icon (Only iconfont)
      */
-    icon: String,
+    icon: {
+        type: String,
+        default: "icon-tupian",
+    },
     /**
      * @description Avatar size
      */
     size: {
         type: [String, Number],
-        default: 'normal',
-        validator: (v) => validateSize(v)
+        default: "normal",
+        validator: (v) => validateSize(v),
     },
     /**
      * @description Avatar shape
      */
     shape: {
         type: String,
-        default: 'circle',
-        validator: (v) => validateShape(v)
+        default: "square",
+        validator: (v) => ["square", "round"].includes(v),
     },
     /**
      * @description avatar image source
@@ -64,17 +60,17 @@ const props = defineProps({
      */
     fit: {
         type: String,
-        default: 'cover',
-        validator: (v) => validateFit(v)
+        default: "cover",
+        validator: (v) => validateFit(v),
     },
     /**
      * @description avatar whtie border width
      */
     whiteBorder: {
         type: Number,
-        default: 0
-    }
-})
+        default: 0,
+    },
+});
 
 /**
  * Define emit
@@ -83,54 +79,69 @@ const emit = defineEmits([
     /**
      * @description when image load failed
      */
-    'onError'
+    "error",
     /**
      * @description when avatar clicked
      */
-    // 'onClicked'
-])
+    "clicned",
+]);
 
 /**
  * Define refs
  */
-const hasError = ref(false) // Error flag
-const sizeStyle = ref(parseSize(props.size))
-const whtieBorderStyle = ref(props.whiteBorder + 'px')
+const hasError = ref(false); // Error flag
+const sizeStyle = ref(parseSize(props.size));
+const whtieBorderStyle = ref(props.whiteBorder + "px");
 
 /**
  * Avatar image error handler
  * @param { object } e error event object
  */
 function errorHandler(e) {
-    hasError.value = true
-    emit('onError', e)
+    hasError.value = true;
+    emit("error", e);
 }
 </script>
 
 <style scoped>
 .nl-avatar {
-    width: v-bind(sizeStyle);
-    height: v-bind(sizeStyle);
-    border: v-bind(whtieBorderStyle) solid white;
-    overflow: hidden;
+    aspect-ratio: 1;
+
     flex: none;
+    width: v-bind(sizeStyle);
+    /* height: v-bind(sizeStyle); */
+    overflow: hidden;
+
+    border: v-bind(whtieBorderStyle) solid white;
+    background-color: #c4c4c4;
+
+    color: rgb(255, 255, 255);
 
     & > img {
         display: block;
         width: 100%;
         height: 100%;
-
-        &:hover {
-            filter: brightness(1.2);
-        }
     }
 
-    &.nl-avatar--round {
-        border-radius: 50%;
+    & > .iconfont {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        width: 100%;
+        height: 100%;
+
+        color: inherit;
+        font-size: inherit;
+        font-weight: inherit;
     }
 
     &.nl-avatar--square {
         border-radius: 4px;
+    }
+
+    &.nl-avatar--round {
+        border-radius: 50%;
     }
 }
 </style>
