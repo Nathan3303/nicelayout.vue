@@ -17,7 +17,7 @@
             class="backend-textarea"
             ref="backendTextarea"
             :value="modelValue"></textarea>
-        <div v-if="wordCounterText" class="nl-textarea__word-counter">{{ wordCounterText }}</div>
+        <div v-if="counter !== 'off'" class="nl-textarea__word-counter">{{ wordCounterText }}</div>
     </div>
 </template>
 
