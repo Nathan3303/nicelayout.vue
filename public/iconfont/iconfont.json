@@ -6,6 +6,55 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "11372711",
+      "name": "图片",
+      "font_class": "tupian",
+      "unicode": "e8c2",
+      "unicode_decimal": 59586
+    },
+    {
+      "icon_id": "11372646",
+      "name": "播放记录",
+      "font_class": "bofangjilu",
+      "unicode": "e8b2",
+      "unicode_decimal": 59570
+    },
+    {
+      "icon_id": "11372708",
+      "name": "讨论区",
+      "font_class": "taolunqu",
+      "unicode": "e8c1",
+      "unicode_decimal": 59585
+    },
+    {
+      "icon_id": "11372651",
+      "name": "点赞",
+      "font_class": "dianzan",
+      "unicode": "e8b1",
+      "unicode_decimal": 59569
+    },
+    {
+      "icon_id": "11372705",
+      "name": "刷新",
+      "font_class": "shuaxin",
+      "unicode": "e8bc",
+      "unicode_decimal": 59580
+    },
+    {
+      "icon_id": "11372707",
+      "name": "叹号",
+      "font_class": "tanhao",
+      "unicode": "e8bd",
+      "unicode_decimal": 59581
+    },
+    {
+      "icon_id": "12525680",
+      "name": "setting",
+      "font_class": "setting",
+      "unicode": "e607",
+      "unicode_decimal": 58887
+    },
+    {
       "icon_id": "15218214",
       "name": "loading",
       "font_class": "loading",
@@ -118,13 +167,6 @@
       "unicode_decimal": 59575
     },
     {
-      "icon_id": "11372694",
-      "name": "设置",
-      "font_class": "setting",
-      "unicode": "e8b8",
-      "unicode_decimal": 59576
-    },
-    {
       "icon_id": "11372706",
       "name": "搜索",
       "font_class": "search",
@@ -230,20 +272,6 @@
       "unicode_decimal": 59733
     },
     {
-      "icon_id": "23784125",
-      "name": "19-point",
-      "font_class": "point-small",
-      "unicode": "e614",
-      "unicode_decimal": 58900
-    },
-    {
-      "icon_id": "1080592",
-      "name": "point",
-      "font_class": "point",
-      "unicode": "e642",
-      "unicode_decimal": 58946
-    },
-    {
       "icon_id": "18226394",
       "name": "project",
       "font_class": "project",
@@ -279,20 +307,6 @@
       "unicode_decimal": 58927
     },
     {
-      "icon_id": "13381190",
-      "name": "giveUp",
-      "font_class": "give-up",
-      "unicode": "e63a",
-      "unicode_decimal": 58938
-    },
-    {
-      "icon_id": "36534249",
-      "name": "可见",
-      "font_class": "view",
-      "unicode": "e628",
-      "unicode_decimal": 58920
-    },
-    {
       "icon_id": "36534250",
       "name": "不可见",
       "font_class": "view-off",
@@ -314,13 +328,6 @@
       "unicode_decimal": 58944
     },
     {
-      "icon_id": "5354466",
-      "name": "26-Todo-List",
-      "font_class": "todo-list",
-      "unicode": "e638",
-      "unicode_decimal": 58936
-    },
-    {
       "icon_id": "36643081",
       "name": "arrow-left-copy",
       "font_class": "arrow-right",
@@ -333,13 +340,6 @@
       "font_class": "arrow-left",
       "unicode": "e64c",
       "unicode_decimal": 58956
-    },
-    {
-      "icon_id": "4765734",
-      "name": "plus-circle",
-      "font_class": "add-circle",
-      "unicode": "e781",
-      "unicode_decimal": 59265
     },
     {
       "icon_id": "19725674",
@@ -361,20 +361,6 @@
       "font_class": "arrow-down",
       "unicode": "e9cc",
       "unicode_decimal": 59852
-    },
-    {
-      "icon_id": "10561809",
-      "name": "Check, double check",
-      "font_class": "double-check-fill",
-      "unicode": "e67b",
-      "unicode_decimal": 59003
-    },
-    {
-      "icon_id": "36204180",
-      "name": "Check box",
-      "font_class": "check-fill",
-      "unicode": "e67c",
-      "unicode_decimal": 59004
     }
   ]
 }
