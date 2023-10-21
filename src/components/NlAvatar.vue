@@ -1,6 +1,6 @@
 <template>
-    <div :class="`nl-avatar nl-avatar--${shape}`">
-        <img v-if="src && !hasError" :src="src" :alt="alt" :title="title" :style="{ objectFit: fit }" @error="errorHandler" />
+    <div :class="`nl-avatar nl-avatar--${shape}`" @click="clickHandler">
+        <img v-if="src && !hasError" :src="src" :alt="alt" :title="title" @error="errorHandler" />
         <i v-else-if="icon" class="iconfont" :class="icon"></i>
         <slot v-else></slot>
     </div>
@@ -105,6 +105,14 @@ function errorHandler(e) {
     hasError.value = true;
     emit("error", e);
 }
+
+/**
+ * Avatar image click handler
+ * @param { object } e error event object
+ */
+function clickHandler(e) {
+    emit("clicked", e);
+}
 </script>
 
 <style scoped>
@@ -113,7 +121,7 @@ function errorHandler(e) {
 
     flex: none;
     width: v-bind(size);
-    /* height: v-bind(size); */
+    height: v-bind(size);
     overflow: hidden;
 
     border: v-bind(borderWidth) solid transparent;
@@ -125,6 +133,7 @@ function errorHandler(e) {
         display: block;
         width: 100%;
         height: 100%;
+        object-fit: v-bind(fit);
     }
 
     & > .iconfont {
