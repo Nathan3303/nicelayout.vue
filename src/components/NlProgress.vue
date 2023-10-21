@@ -127,12 +127,16 @@ const innerTextLeft = computed(() => (props.percentage <= 3 ? `calc(${strokeWidt
     display: flex;
     align-items: center;
     justify-content: start;
-    /* gap: 6px; */
 
     position: relative;
 
     & > .nl-progress__text {
         user-select: none;
+
+        color: inherit;
+        font-size: 14px;
+        font-weight: inherit;
+        font-family: inherit;
     }
 
     & > .nl-progress--line {
@@ -163,15 +167,16 @@ const innerTextLeft = computed(() => (props.percentage <= 3 ? `calc(${strokeWidt
                     position: absolute;
                     left: v-bind(innerTextLeft);
                     right: calc(v-bind(strokeWidth) / 2);
+
                     color: white;
-                    font-size: calc(v-bind(strokeWidth) - 3px);
+                    font-size: calc((v-bind(strokeWidth) - 3px));
                 }
             }
         }
 
         & + .nl-progress__text {
-            text-align: center;
-            min-width: 48px;
+            width: 36px;
+            text-align: right;
         }
     }
 
@@ -208,6 +213,8 @@ const innerTextLeft = computed(() => (props.percentage <= 3 ? `calc(${strokeWidt
             position: absolute;
             top: 50%;
             left: 50%;
+
+            font-size: calc(v-bind(scale) * 14px);
         }
     }
 }
