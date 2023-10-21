@@ -53,7 +53,7 @@ const props = defineProps({
     type: {
         type: String,
         default: "text",
-        validator: (v) => ["text", "password", "file", "number"].includes(v),
+        validator: (v) => ["text", "password", "number"].includes(v),
     },
     /**
      * @description Model-value of input (two-way value mapping)
@@ -201,8 +201,8 @@ const textLength = ref(props.modelValue?.length || 0);
 /**
  * Define computed
  */
-const widthStyle = computed(() => parseWidthAndHeight(props.width));
-const heightStyle = computed(() => parseWidthAndHeight(props.height));
+const width = computed(() => parseWidthAndHeight(props.width));
+const height = computed(() => parseWidthAndHeight(props.height));
 const NlInputClasses = computed(() => {
     let classArray = [];
     classArray = [...parseTheme(props.theme, "nl-input")];
@@ -297,35 +297,46 @@ watch(
     --background-color: transparent;
     --border-color: #cccccc;
 
-    --icon-size: 16px;
-    --icon-color: #cccccc;
-    --icon-weight: normal;
-
-    --focused-background-color: transparent;
-    --focused-border-color: #6d94dd;
-    --focused-shadow-color: #6d94dd;
-
-    --disabled-background-color: #f0f0f0;
+    --icon-size: inherit;
+    --icon-color: inherit;
+    --icon-weight: inherit;
 
     --button-size: 22px;
     --button-color: #8d8d8d;
     --button-border-color: #cccccc;
 
-    --hovered-button-color: #ff2727b3;
-    --hovered-button-border-color: #ff2727b3;
+    --focus-background-color: transparent;
+    --focus-border-color: #6d94dd;
+    --focus-shadow-color: #6d94dd;
+
+    --disable-background-color: #f0f0f0;
+
+    --hover-button-color: #ff2727b3;
+    --hover-button-border-color: #ff2727b3;
 
     transition: all 0.16s ease;
     box-sizing: border-box;
+    user-select: none;
 
     display: flex;
     align-items: center;
-    justify-content: start;
     gap: 8px;
 
+    min-width: 96px;
+    width: v-bind(width);
+    height: v-bind(height);
+    line-height: v-bind(height);
+    padding: 6px calc(v-bind(height) / 3);
     position: relative;
-
-    user-select: none;
     overflow: hidden;
+
+    border: 1px solid var(--border-color);
+    background: var(--background-color);
+
+    color: black;
+    font-size: 16px;
+    font-family: "Consolas";
+    font-weight: normal;
 
     & > .nl-input__icon {
         color: var(--icon-color);
@@ -338,6 +349,7 @@ watch(
         min-width: 24px;
         height: 100%;
         padding: 0;
+        margin: 0;
 
         outline: none;
         border: none;
@@ -365,55 +377,35 @@ watch(
     & > .nl-input__button-group {
         display: flex;
         align-items: center;
-        justify-content: start;
         gap: 4px;
 
-        & > i {
+        & > .iconfont {
             transition: all 0.16s ease;
             box-sizing: border-box;
-
-            scale: 0.78;
-            min-width: var(--button-size);
-            height: var(--button-size);
-            line-height: calc(var(--button-size) - 1px);
-
-            border-radius: var(--button-size);
-            font-size: 13px;
-            text-align: center;
+            aspect-ratio: 1;
             cursor: pointer;
+
+            scale: 0.84;
+            height: var(--button-size);
+            line-height: var(--button-size);
+
+            border-radius: 50%;
+            border: 1px solid var(--button-border-color);
+
+            color: var(--button-color);
+            font-size: 12px;
+            text-align: center;
+
+            &:hover {
+                color: var(--hover-button-color);
+                border-color: var(--hover-button-border-color);
+            }
         }
     }
 
     & > .nl-input__word-counter {
         flex: none;
-
-        font-size: 12px;
-        color: #8f8f8f;
-        user-select: none;
-    }
-}
-
-.nl-input--default {
-    min-width: 96px;
-    width: v-bind(widthStyle);
-    height: v-bind(heightStyle);
-    line-height: v-bind(heightStyle);
-    padding: 6px 12px;
-
-    border: 1px solid var(--border-color);
-    background: var(--background-color);
-
-    font-size: 16px;
-    font-family: "Consolas";
-
-    & > .nl-input__button-group > i {
-        border: 1px solid var(--button-border-color);
-        color: var(--button-color);
-
-        &:hover {
-            color: var(--hovered-button-color);
-            border-color: var(--hovered-button-border-color);
-        }
+        opacity: 0.48;
     }
 
     &.nl-input--square {
@@ -421,25 +413,30 @@ watch(
     }
 
     &.nl-input--round {
-        padding: 0 calc(v-bind(heightStyle) / 3);
-        border-radius: v-bind(heightStyle);
+        border-radius: v-bind(height);
     }
 
     &.nl-input--no-border {
-        border: none !important;
+        border: none;
+        border-radius: 6px;
+    }
+
+    &.nl-input--round-no-border {
+        border: none;
+        border-radius: v-bind(height);
     }
 
     &.nl-input--focused {
-        background-color: var(--focused-background-color);
-        border: 1px solid var(--focused-border-color);
-        box-shadow: 0 0 4px 1px var(--focused-shadow-color);
+        border: 1px solid var(--focus-border-color);
+        box-shadow: 0 0 4px 1px var(--focus-shadow-color);
+        background-color: var(--focus-background-color);
     }
 
     &.nl-input--disabled {
-        background-color: var(--disabled-background-color);
-
         cursor: not-allowed;
-
+        user-select: none;
+        background-color: var(--disabl-background-color);
+        
         &:deep(*) {
             color: #969696;
             cursor: not-allowed;
