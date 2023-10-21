@@ -39,13 +39,6 @@ const props = defineProps({
      */
     modelValue: [String, Number],
     /**
-     * @description text formatter
-     */
-    formatter: {
-        type: Function,
-        default: (v) => v,
-    },
-    /**
      * @description input placeholder
      */
     placeholder: String,
