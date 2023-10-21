@@ -1,8 +1,10 @@
 <template>
     <div :class="`nl-avatar nl-avatar--${shape}`" @click="clickHandler">
-        <img v-if="src && !hasError" :src="src" :alt="alt" :title="title" @error="errorHandler" />
-        <i v-else-if="icon" class="iconfont" :class="icon"></i>
-        <slot v-else></slot>
+        <img v-if="src && !hasError" class="nl-avatar__image" :src="src" :alt="alt" :title="title" @error="errorHandler" />
+        <div v-else-if="$slots.default" class="nl-avatar__text">
+            <slot></slot>
+        </div>
+        <i v-else-if="icon" class="nl-avatar__icon iconfont" :class="icon"></i>
     </div>
 </template>
 
@@ -129,14 +131,27 @@ function clickHandler(e) {
 
     color: rgb(255, 255, 255);
 
-    & > img {
+    & > .nl-avatar__image {
         display: block;
         width: 100%;
         height: 100%;
         object-fit: v-bind(fit);
     }
 
-    & > .iconfont {
+    & > .nl-avatar__text {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        flex: 1 1 auto;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+
+        font-size: 16px;
+    }
+
+    & > .nl-avatar__icon {
         display: flex;
         align-items: center;
         justify-content: center;
