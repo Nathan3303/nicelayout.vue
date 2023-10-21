@@ -18,8 +18,8 @@
                         <stop offset="100%" stop-color="blue" />
                     </radialGradient>
                 </defs>
-                <circle class="nl-progress__outer-path" :r="radius" cx="50" cy="50"></circle>
-                <circle class="nl-progress__inner-path" :r="radius" cx="50" cy="50"></circle>
+                <circle class="nl-progress__outer-path" r="50" cx="50" cy="50"></circle>
+                <circle class="nl-progress__inner-path" r="50" cx="50" cy="50"></circle>
             </svg>
         </template>
         <slot v-if="!showInnerText">
@@ -116,9 +116,8 @@ const percentage = computed(() => {
     return props.percentage + "%";
 });
 const size = computed(() => `${props.scale * 100}px`);
-const radius = computed(() => 50 - parseInt(props.strokeWidth));
 const strokeWidth = computed(() => parseWidthAndHeight(parseInt(props.strokeWidth) / props.scale));
-const strokeDashArray = computed(() => Math.ceil(2 * Math.PI * radius.value));
+const strokeDashArray = computed(() => Math.ceil(2 * Math.PI * 50));
 const strokeDashOffset = computed(() => Math.ceil((1 - parseInt(percentage.value) / 100) * strokeDashArray.value));
 const innerTextLeft = computed(() => (props.percentage <= 3 ? `calc(${strokeWidth.value} / 2)` : "none"));
 </script>
@@ -184,7 +183,7 @@ const innerTextLeft = computed(() => (props.percentage <= 3 ? `calc(${strokeWidt
             stroke-width: v-bind(strokeWidth);
             fill: transparent;
             transform-origin: center;
-            transform: rotate(-90deg);
+            transform: scale(0.9) rotate(-90deg);
             transition: stroke-dashoffset 0.24s linear;
         }
 
