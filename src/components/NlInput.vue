@@ -29,7 +29,7 @@
                 v-show="modelValue"
                 @click.stop="showPasswordHandler"></i>
         </div>
-        <div v-if="wordCounterText" class="nl-input__word-counter">{{ wordCounterText }}</div>
+        <div v-if="counter !== 'off'" class="nl-input__word-counter">{{ wordCounterText }}</div>
     </div>
 </template>
 
@@ -131,9 +131,9 @@ const props = defineProps({
      */
     clearable: Boolean,
     /**
-     * @description Show password state (Effective when input type is password)
+     * @description Allow show password state (Effective when input type is password)
      */
-    showPassword: Boolean,
+    allowShowPassword: Boolean,
     /**
      * @description Word counter controller (show word limit)
      */
@@ -406,6 +406,7 @@ watch(
     & > .nl-input__word-counter {
         flex: none;
         opacity: 0.48;
+        font-size: 12px;
     }
 
     &.nl-input--square {
@@ -436,7 +437,7 @@ watch(
         cursor: not-allowed;
         user-select: none;
         background-color: var(--disabl-background-color);
-        
+
         &:deep(*) {
             color: #969696;
             cursor: not-allowed;
