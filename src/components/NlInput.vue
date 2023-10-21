@@ -14,8 +14,7 @@
             @focus="focusHandler"
             @blur="blurHandler"
             @input="inputHandler"
-            @change="changeHandler"
-            @keydown.enter="() => input.blur()" />
+            @change="changeHandler" />
         <slot name="suffix">{{ suffix }}</slot>
         <div class="nl-input__button-group">
             <i
