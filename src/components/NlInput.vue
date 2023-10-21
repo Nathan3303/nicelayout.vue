@@ -4,7 +4,7 @@
         <slot name="prefix">{{ prefix }}</slot>
         <input
             ref="input"
-            :type="type"
+            :type="isPasswordVisible ? 'text' : type"
             :value="formatter(modelValue)"
             :placeholder="placeholder"
             :maxlength="maxlength"
@@ -18,15 +18,16 @@
         <slot name="suffix">{{ suffix }}</slot>
         <div class="nl-input__button-group">
             <i
+                class="iconfont"
+                :class="isPasswordVisible ? 'icon-view' : 'icon-view-off'"
+                v-if="type === 'password' && allowShowPassword"
+                v-show="modelValue"
+                @click.stop="showPasswordHandler"></i>
+            <i
                 class="iconfont icon-clear2"
                 v-if="type !== 'file' && clearable"
                 v-show="modelValue"
                 @click.stop="clearHandler"></i>
-            <i
-                class="iconfont icon-eye"
-                v-if="type === 'password' && showPassword"
-                v-show="modelValue"
-                @click.stop="showPasswordHandler"></i>
         </div>
         <div v-if="counter !== 'off'" class="nl-input__word-counter">{{ wordCounterText }}</div>
     </div>
@@ -194,6 +195,7 @@ const emit = defineEmits([
  */
 const input = ref();
 const isFocused = ref(false);
+const isPasswordVisible = ref(false);
 const textLength = ref(props.modelValue?.length || 0);
 // console.log(input)
 
@@ -275,8 +277,7 @@ function clearHandler() {
  * @description Click event handler of show password button
  */
 function showPasswordHandler() {
-    const isShowed = input.value.type === "text";
-    input.value.type = isShowed ? "password" : "text";
+    isPasswordVisible.value = !isPasswordVisible.value;
 }
 
 /**
@@ -384,15 +385,15 @@ watch(
             aspect-ratio: 1;
             cursor: pointer;
 
-            scale: 0.84;
+            /* scale: 0.84; */
             height: var(--button-size);
             line-height: var(--button-size);
 
             border-radius: 50%;
-            border: 1px solid var(--button-border-color);
+            /* border: 1px solid var(--button-border-color); */
 
             color: var(--button-color);
-            font-size: 12px;
+            /* font-size: 18px; */
             text-align: center;
 
             &:hover {
