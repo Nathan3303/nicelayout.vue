@@ -38,7 +38,7 @@ const textareaValues = reactive({
     tv5: "readonly",
     tv6: "resize",
     tv7: "autosize",
-    tv8: "rows=4, autosize",
+    tv8: "rows=2, autosize",
     tv9: "autosize, counter=both, maxlength=240",
     tv0: "theme=[default, custom]",
 });

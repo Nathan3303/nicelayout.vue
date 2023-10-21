@@ -1,8 +1,9 @@
 <template>
     <div id="app">
-        <nl-input-test></nl-input-test>
-        <!-- <nl-textarea-test></nl-textarea-test> -->
-        <!-- <nl-button-test></nl-button-test> -->
+        <!-- <nl-input-test /> -->
+        <!-- <nl-textarea-test /> -->
+        <!-- <nl-button-test /> -->
+        <nl-progress-test />
     </div>
 </template>
 
@@ -15,7 +16,7 @@ import { ref } from "vue";
 import NlInputTest from "./views/NlInputTest.vue";
 import NlTextareaTest from "./views/NlTextareaTest.vue";
 import NlButtonTest from "./views/NlButtonTest.vue";
-
+import NlProgressTest from "./views/NlProgressTest.vue";
 </script>
 
 <style scoped>

@@ -1,7 +1,7 @@
 <template>
     <div class="nl-input-test-wrapper">
         <h1>nl-input</h1>
-        <!-- <nl-input v-model="inputValues.iv1" /> -->
+        <nl-input v-model="inputValues.iv1" shape="round"/>
         <nl-input v-model="inputValues.iv2" placeholder="Input something" />
         <nl-input v-model="inputValues.iv3" icon="icon-search" placeholder="Search" />
         <nl-input v-model="inputValues.iv4" prefix="Http://" suffix="/" />
@@ -9,7 +9,8 @@
             v-model="inputValues.iv5"
             type="password"
             maxlength="16"
-            show-password
+            allow-show-password
+            clearable
             placeholder="Your password (maxlength 16)" />
         <nl-input v-model="inputValues.iv6" disabled />
         <nl-input v-model="inputValues.iv7" readonly />
