@@ -50,7 +50,7 @@ const props = defineProps({
      */
     placeholder: String,
     /**
-     * @description Textarea rows (Native attribute mappint)
+     * @description Textarea rows (Native attribute mapping)
      */
     rows: {
         type: [String, Number],
@@ -72,11 +72,11 @@ const props = defineProps({
         validator: (v) => ["square", "no-border"].includes(v),
     },
     /**
-     * @description Textarea diable state (Native attribute mappint)
+     * @description Textarea diable state (Native attribute mapping)
      */
     disabled: Boolean,
     /**
-     * @description Textarea readonly state (Native attribute mappint)
+     * @description Textarea readonly state (Native attribute mapping)
      */
     readonly: Boolean,
     /**
@@ -142,8 +142,8 @@ const textLength = ref(props.modelValue?.length || 0);
 /**
  * Define computed
  */
-const overflow = computed(() => (props.autosize ? "hidden" : "auto"));
 const minHeight = computed(() => props.rows * 22 + "px");
+const overflow = computed(() => (props.autosize ? "hidden" : "auto"));
 const resize = computed(() => (props.resize ? "vertical" : "none"));
 const NlTextareaClasses = computed(() => {
     let classArray = [];
@@ -203,85 +203,91 @@ function changeHandler(e) {
 
 <style scoped>
 .nl-textarea {
-    --background-color: transparent;
     --border-color: #cccccc;
+    --background-color: transparent;
 
-    --focused-background-color: transparent;
-    --focused-border-color: #6d94dd;
-    --focused-shadow-color: #6d94dd;
+    --font-size: 16px;
 
-    --disabled-background-color: #f0f0f0;
+    --focus-background-color: transparent;
+    --focus-border-color: #6d94dd;
+    --focus-shadow-color: #6d94dd;
+
+    --hover-border-color: #6d94dd;
+
+    --disable-background-color: #f0f0f0;
 
     transition: all 0.16s ease-in;
+    box-sizing: border-box;
 
     display: flex;
     flex-direction: column;
 
+    min-height: 36px;
+    padding: 9px;
     position: relative;
+
+    border: 1px solid #ccc;
+    border-radius: 6px;
+
+    color: black;
+    font-size: var(--font-size);
+    font-weight: normal;
+    font-family: "Consolas";
+
+    &:hover {
+        border-color: var(--hover-border-color);
+    }
 
     & > textarea {
         width: 100%;
-        min-height: v-bind(minHeight);
-        line-height: 22px;
+        min-height: calc(var(--font-size) + 3px);
         margin: 0;
         padding: 0;
         resize: v-bind(resize);
-
         overflow: v-bind(overflow);
+
         outline: none;
         border: none;
         background-color: transparent;
 
         color: inherit;
         font-size: inherit;
+        font-weight: inherit;
         font-family: inherit;
         word-break: break-all;
     }
 
     & > .backend-textarea {
         opacity: 0;
-        height: 0px !important;
-        min-height: 0px !important;
+        min-height: 0px;
+        height: 0px;
     }
 
     & > .nl-textarea__word-counter {
         flex: none;
         position: absolute;
         right: 18px;
-        bottom: 10px;
+        bottom: 11px;
 
         background: white;
+        opacity: 0.48;
         font-size: 12px;
-        color: #8f8f8f;
-        user-select: none;
     }
-}
-
-.nl-textarea--default {
-    box-sizing: border-box;
-    padding: 6px 8px;
-
-    border: 1px solid #ccc;
-    border-radius: 6px;
-
-    font-size: 16px;
-    font-family: "Consolas";
 
     &.nl-textarea--no-border {
-        border: none !important;
+        border: none;
     }
 
     &.nl-textarea--focused {
-        background-color: var(--focused-background-color);
-        border: 1px solid var(--focused-border-color);
-        box-shadow: 0 0 4px 1px var(--focused-shadow-color);
+        background-color: var(--focus-background-color);
+        border: 1px solid var(--focus-border-color);
+        box-shadow: 0 0 4px 1px var(--focus-shadow-color);
     }
 
     &.nl-textarea--disabled {
-        background-color: var(--disabled-background-color);
-
         cursor: not-allowed;
-        user-select: none !important;
+        user-select: none;
+        background-color: var(--disable-background-color);
 
         &:deep(*) {
             color: #969696;
