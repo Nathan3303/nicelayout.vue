@@ -1,8 +1,8 @@
 <template>
-    <div :class="`nl-avatar nl-avatar--${shape}`" @click="clickHandler">
-        <img v-if="src && !hasError" class="nl-avatar__image" :src="src" :alt="alt" :title="title" @error="errorHandler" />
-        <div v-else-if="$slots.default" class="nl-avatar__text">
-            <slot></slot>
+    <div class="nl-avatar" :class="`nl-avatar--${shape}`" @click="clickHandler" :title="title">
+        <img v-if="src && !hasError" class="nl-avatar__image" :src="src" :alt="alt" @error="errorHandler" />
+        <div v-else-if="alt || $slots.default" class="nl-avatar__text">
+            <slot>{{ alt }}</slot>
         </div>
         <i v-else-if="icon" class="nl-avatar__icon iconfont" :class="icon"></i>
     </div>
@@ -23,7 +23,7 @@ defineOptions({ name: "NlAvatar" });
  */
 const props = defineProps({
     /**
-     * @description avatar image source
+     * @description Image source address of avatar
      */
     src: String,
     /**
@@ -34,7 +34,7 @@ const props = defineProps({
         default: "icon-tupian",
     },
     /**
-     * @description Avatar size
+     * @description Size of avatar
      */
     size: {
         type: [String, Number],
@@ -42,7 +42,7 @@ const props = defineProps({
         validator: (v) => validateSize(v),
     },
     /**
-     * @description Avatar shape
+     * @description Shape of avatar
      */
     shape: {
         type: String,
@@ -50,22 +50,32 @@ const props = defineProps({
         validator: (v) => ["square", "round"].includes(v),
     },
     /**
-     * @description avatar whtie border width
+     * @description Border width of avatar
      */
     borderWidth: {
         type: Number,
         default: 0,
     },
     /**
-     * @description avatar image alternate
+     * @description Border color of avatar
+     */
+    borderColor: {
+        type: String,
+        default: "white",
+    },
+    /**
+     * @description Alternating text of Avatar's image
      */
     alt: String,
     /**
-     * @description avatar image title
+     * @description Title of avata
      */
-    title: String,
+    title: {
+        type: String,
+        default: "nl-avatar",
+    },
     /**
-     * @description avatar image fit mode
+     * @description Fit mode of avatar (Effetivating when avatar is image type)
      */
     fit: {
         type: String,
@@ -85,7 +95,7 @@ const emit = defineEmits([
     /**
      * @description when avatar clicked
      */
-    "clicned",
+    "clicked",
 ]);
 
 /**
@@ -126,8 +136,7 @@ function clickHandler(e) {
     height: v-bind(size);
     overflow: hidden;
 
-    border: v-bind(borderWidth) solid transparent;
-    background-color: #c4c4c4;
+    border: v-bind(borderWidth) solid v-bind(borderColor);
 
     color: rgb(255, 255, 255);
 
@@ -147,8 +156,11 @@ function clickHandler(e) {
         width: 100%;
         height: 100%;
         overflow: hidden;
+        background-color: #c4c4c4;
 
-        font-size: 16px;
+        color: inherit;
+        font-size: calc(v-bind(size) / 2);
+        font-weight: inherit;
     }
 
     & > .nl-avatar__icon {
@@ -158,9 +170,10 @@ function clickHandler(e) {
 
         width: 100%;
         height: 100%;
+        background-color: #c4c4c4;
 
         color: inherit;
-        font-size: inherit;
+        font-size: calc(v-bind(size) / 2);
         font-weight: inherit;
     }
 

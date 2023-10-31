@@ -1,18 +1,18 @@
 <template>
-    <div class="nl-avatar-group">
+    <div class="nl-avatar-group" :class="`nl-avatar-group--${direction}`">
         <template v-for="(item, idx) in data">
             <nl-avatar
                 v-if="item"
                 :icon="item.icon"
-                :size="size"
+                :size="parseInt(size)"
                 :shape="shape"
                 :src="item.src"
                 :alt="item.alt"
                 :title="item.title"
                 :fit="item.fit"
-                :white-border="2"
-                :style="{ zIndex: data.length - idx }"
-            ></nl-avatar>
+                :border-width="borderWidth"
+                :border-color="borderColor"
+                :style="{ zIndex: data.length - idx }" />
         </template>
         <button v-if="addable" class="nl-avatar-group__add-button" @click="addButtonClickHandler">
             <i class="iconfont icon-plus"></i>
@@ -21,49 +21,71 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { validateSize, validateShape } from './validators'
-import { parseSize } from './parsers'
+import { ref, computed } from "vue";
+import { validateSize, validateShape } from "./validators";
+import { parseSize } from "./parsers";
 
 /**
  * Import nl-avatar
  */
-import NlAvatar from './NlAvatar.vue'
+import NlAvatar from "./NlAvatar.vue";
 
 /**
  * Define options
  */
-defineOptions({ name: 'AvatarGroup' })
+defineOptions({ name: "AvatarGroup" });
 
 /**
  * Define props
  */
 const props = defineProps({
     /**
+     * @description avatar group data (avatars)
+     */
+    data: Array,
+    /**
      * @description avatar size
      */
     size: {
         type: [String, Number],
-        default: 'normal',
-        validator: (v) => validateSize(v)
+        default: "normal",
+        validator: (v) => validateSize(v),
     },
     /**
      * @description avatar shape
      */
     shape: {
         type: String,
-        default: 'circle',
-        validator: (v) => validateShape(v)
+        default: "round",
+        validator: (v) => validateShape(v),
+    },
+    /**
+     * @description Border width of avatar (Avatar prop mapping)
+     */
+    borderWidth: {
+        type: Number,
+        default: 3,
+    },
+    /**
+     * @description Border color of avatar (Avatar prop mapping)
+     */
+    borderColor: {
+        type: String,
+        default: "white",
+    },
+    /**
+     * @description Direction of avatar group
+     */
+    direction: {
+        type: String,
+        default: "horizontal",
+        validator: (v) => ["horizontal", "vertical"].includes(v),
     },
     /**
      * @description avatar group is addable or not
      */
     addable: Boolean,
-    /**
-     * @description avatar group data (avatars)
-     */
-    data: Array
-})
+});
 
 /**
  * Define emit
@@ -72,29 +94,33 @@ const emit = defineEmits([
     /**
      * @description when add button clicked
      */
-    'onAdd',
+    "add",
     /**
      * @description when data edited
      */
-    'onEdited'
-])
+    "edited",
+]);
 
 /**
  * Define refs
  */
-const timer = ref(null) // Throttle flag
-const sizeStyle = ref(parseSize(props.size))
+const timer = ref(null); // Throttle flag
+
+/**
+ * Define computed
+ */
+const size = computed(() => parseSize(props.size));
 
 /**
  * Add button click handler
  * @param {object} e click event object
  */
 function addButtonClickHandler(e) {
-    if (timer.value) return
-    emit('onAdd', e)
+    if (timer.value) return;
+    emit("add", e);
     timer.value = setTimeout(function () {
-        timer.value = null
-    }, 1000)
+        timer.value = null;
+    }, 1000);
 }
 </script>
 
@@ -103,40 +129,64 @@ function addButtonClickHandler(e) {
     display: flex;
     align-items: center;
 
+    &.nl-avatar-group--horizontal {
+        flex-direction: row;
+
+        &:deep(.nl-avatar) {
+            margin: 0;
+            margin-right: -12px !important;
+
+            &:first-of-type {
+                margin-left: -2px;
+            }
+
+            &:nth-last-child(1) {
+                margin-right: 0px !important;
+            }
+        }
+    }
+
+    &.nl-avatar-group--vertical {
+        flex-direction: column;
+
+        &:deep(.nl-avatar) {
+            margin: 0;
+            margin-bottom: -12px;
+
+            &:first-of-type {
+                margin-top: -2px;
+            }
+
+            &:nth-last-child(1) {
+                margin-bottom: 0px;
+            }
+        }
+    }
+
     & > .nl-avatar-group__add-button {
+        aspect-ratio: 1;
+        box-sizing: border-box;
+        cursor: pointer;
+
         display: flex;
         align-items: center;
         justify-content: center;
 
-        box-sizing: border-box;
-        width: v-bind(sizeStyle);
-        height: v-bind(sizeStyle);
+        width: v-bind(size);
+        height: v-bind(size);
 
-        border: 1px dashed #c3c4d0;
+        border: 2px solid #e1e1e1;
         border-radius: 50%;
         background-color: transparent;
-        color: #8e8e96;
-        cursor: pointer;
 
         &:hover {
             filter: brightness(0.8);
         }
 
-        & > i {
-            font-size: 14px;
+        & > .iconfont {
+            color: #8e8e96;
+            font-size: calc(v-bind(size) / 2);
             font-weight: bold;
-        }
-    }
-
-    &:deep(.nl-avatar) {
-        margin-right: -12px !important;
-
-        &:first-of-type {
-            margin-left: -2px;
-        }
-
-        &:nth-last-child(1) {
-            margin-right: 0px !important;
         }
     }
 }

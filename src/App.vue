@@ -3,7 +3,9 @@
         <!-- <nl-input-test /> -->
         <!-- <nl-textarea-test /> -->
         <!-- <nl-button-test /> -->
-        <nl-progress-test />
+        <!-- <nl-progress-test /> -->
+        <!-- <nl-avatar-test /> -->
+        <timeline-test />
     </div>
 </template>
 
@@ -17,12 +19,20 @@ import NlInputTest from "./views/NlInputTest.vue";
 import NlTextareaTest from "./views/NlTextareaTest.vue";
 import NlButtonTest from "./views/NlButtonTest.vue";
 import NlProgressTest from "./views/NlProgressTest.vue";
+import NlAvatarTest from "./views/NlAvatarTest.vue";
+import TimelineTest from "./views/TimelineTest.vue";
 </script>
 
 <style scoped>
 #app {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+    box-sizing: border-box;
+
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+
+    width: 100vw;
+    height: 100vh;
+    padding: 12px;
 }
 </style>

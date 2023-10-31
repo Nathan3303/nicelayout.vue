@@ -7,12 +7,12 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref } from "vue";
 
 /**
  * Defien options
  */
-defineOptions({ name: 'NlBreadcrumb' })
+defineOptions({ name: "NlBreadcrumb" });
 
 /**
  * Define props
@@ -23,38 +23,43 @@ const props = defineProps({
      */
     data: {
         type: Array,
-        default: []
+        default: [],
     },
     /**
      * @description breadcrumb seperator
      */
     seperator: {
         type: String,
-        default: '/'
-    }
-})
+        default: "/",
+    },
+});
 
 /**
  * Define refs
  */
-const seperatorStyle = ref("'" + props.seperator + "'")
+const seperatorStyle = ref("'" + props.seperator + "'");
 </script>
 
 <style scoped>
 .nl-breadcrumb {
-    --link-font-color: var(--primary-font-color);
-    --current-font-color: var(--secondary-font-color);
+    --link-font-color: black;
+    --current-font-color: gray;
+
+    --color: black;
+    --font-size: 14px;
+    --font-weight: normal;
+    --font-family: "Consolas";
+
+    user-select: none;
+    list-style: none;
 
     display: flex;
     flex-wrap: wrap;
 
-    list-style: none;
-    font-size: 14px;
-    user-select: none;
-
     & > li {
         display: flex;
         align-items: center;
+
         font-weight: bold;
 
         & > a {
@@ -69,18 +74,18 @@ const seperatorStyle = ref("'" + props.seperator + "'")
         &:not(:last-child)::after {
             margin: 0 6px;
             content: v-bind(seperatorStyle);
-            font-family: 'Consolas';
+            font-family: "Consolas";
         }
     }
-}
 
-.nl-breadcrumb > li:last-of-type {
-    & > a {
-        color: var(--current-font-color);
+    & > li:last-of-type {
+        & > a {
+            color: var(--current-font-color);
 
-        &:hover {
-            text-decoration: none;
-            cursor: default;
+            &:hover {
+                text-decoration: none;
+                cursor: default;
+            }
         }
     }
 }

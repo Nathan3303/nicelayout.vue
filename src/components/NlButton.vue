@@ -234,6 +234,15 @@ watch(
         border-radius: v-bind(height);
     }
 
+    &.nl-button--no-shape {
+        --hover-background-color: transparent;
+        --active-background-color: transparent;
+
+        border: none;
+        border-radius: v-bind(height);
+        padding: 0;
+    }
+
     &.nl-button--disabled {
         --font-color: #8e8e8e;
         --background-color: var(--hover-background-color);
@@ -250,9 +259,13 @@ watch(
 
 .nl-button--icon-only {
     --icon-size: 24px;
+    /* --hover-background-color: transparent; */
 
     aspect-ratio: 1;
-    padding: 0;
+
+    width: auto;
+    height: auto;
+    padding: 2px;
 
     & > .nl-button__text {
         display: none;

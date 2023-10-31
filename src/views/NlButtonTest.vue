@@ -25,6 +25,10 @@
             <nl-button theme="text" icon="icon-calendar" disabled>Text button</nl-button>
         </div>
         <div class="flex">
+            <nl-button theme="icon-only" icon="icon-mail" shape="no-border" />
+            <nl-button theme="icon-only" icon="icon-search" shape="no-shape" />
+        </div>
+        <div class="flex">
             <nl-button loading>Loading</nl-button>
             <nl-button loading loading-icon="icon-target">Loading</nl-button>
         </div>
@@ -52,8 +56,19 @@
                 @clicked="likeButtonHandler">
             </nl-button>
         </div>
-        <div class="flex">
-            <nl-button theme="icon-only" icon="icon-mail" shape="no-border"></nl-button>
+        <div class="flex" style="align-items: end">
+            <nl-badge :value="2">
+                <nl-button icon="icon-filter">Filter</nl-button>
+            </nl-badge>
+            <nl-badge :value="1000" :max="999">
+                <nl-button icon="icon-filter">Filter</nl-button>
+            </nl-badge>
+            <nl-badge dot>
+                <nl-button icon="icon-filter">Filter</nl-button>
+            </nl-badge>
+            <nl-badge :value="2">
+                <nl-button theme="icon-only" icon="icon-mail" shape="no-shape" />
+            </nl-badge>
         </div>
     </div>
 </template>
@@ -62,9 +77,10 @@
 import { reactive } from "vue";
 
 /**
- * Import NlButton.vue
+ * Import components
  */
 import NlButton from "../components/NlButton.vue";
+import NlBadge from "../components/NlBadge.vue";
 
 /**
  * Define options
