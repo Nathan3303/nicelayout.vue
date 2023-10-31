@@ -1,0 +1,58 @@
+<template>
+    <div :class="classes" @click="clickHandler" :style="{ ...sizeStyle, ...fontSizeStyle }">
+        <img v-if="src && !loadError" :src="src" :alt="alt" @error="errorHandler" :style="fitStyle" />
+        <i v-else-if="icon" class="iconfont" :class="icon" :style="fontSizeStyle"></i>
+        <slot v-else />
+    </div>
+</template>
+
+<script setup>
+import { ref, computed } from "vue";
+import { avatarProps, avatarEmits } from "./avatar";
+import { parseSize, parseTheme } from "@/utils/parsers";
+import "../styles/avatar.css";
+
+/**
+ * Define options, props and emit
+ */
+defineOptions({ name: "NlAvatar" });
+const props = defineProps(avatarProps);
+const emit = defineEmits(avatarEmits);
+
+/**
+ * Define reactive variables
+ */
+const loadError = ref(false);
+const sizeValue = computed(() => parseSize(props.size));
+
+/**
+ * Define styles
+ */
+const fitStyle = computed(() => ({ objectFit: props.fit }));
+const sizeStyle = computed(() => ({ width: sizeValue.value, height: sizeValue.value, lineHeight: sizeValue.value }));
+const fontSizeStyle = computed(() => ({ fontSize: `calc(${sizeValue.value} / 2)` }));
+
+/**
+ * Define classes
+ */
+const classes = computed(() => {
+    const { theme, shape } = props;
+    let classArray = ["nl-avatar"];
+    if (theme) {
+        const parseResult = parseTheme(theme, "nl-button");
+        classArray = [...classArray, ...parseResult];
+    }
+    classArray.push("nl-avatar--" + shape);
+    // console.log(classArray);
+    return classArray;
+});
+
+/**
+ * Avatar image error handler
+ * @param { object } e error event object
+ */
+function errorHandler(e) {
+    loadError.value = true;
+    emit("error", e);
+}
+</script>

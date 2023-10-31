@@ -2,46 +2,26 @@
     <div class="nl-avatar-test-wrapper">
         <h1>nl-avatar</h1>
         <div class="flex">
-            <nl-avatar size="small" />
-            <nl-avatar size="normal" />
-            <nl-avatar size="medium" />
-            <nl-avatar size="large" />
-            <nl-avatar shape="round" size="small" />
-            <nl-avatar shape="round" size="normal" />
-            <nl-avatar shape="round" size="medium" />
-            <nl-avatar shape="round" size="large" />
+            <p>Shape</p>
+            <nl-avatar icon="icon-tupian" />
+            <nl-avatar icon="icon-tupian" shape="round" />
         </div>
         <div class="flex">
-            <nl-avatar size="small">N</nl-avatar>
-            <nl-avatar size="normal">N</nl-avatar>
-            <nl-avatar size="medium" alt="N"></nl-avatar>
-            <nl-avatar size="large" alt="N"></nl-avatar>
-            <nl-avatar shape="round" size="small">A</nl-avatar>
-            <nl-avatar shape="round" size="normal">A</nl-avatar>
-            <nl-avatar shape="round" size="medium" alt="A"></nl-avatar>
-            <nl-avatar shape="round" size="large" alt="A"></nl-avatar>
+            <p>Size</p>
+            <nl-avatar icon="icon-tupian" shape="round" />
+            <nl-avatar icon="icon-tupian" shape="round" size="medium" />
+            <nl-avatar icon="icon-tupian" shape="round" size="large" />
         </div>
         <div class="flex">
-            <nl-avatar src="/images/users/nathan.png" size="small" />
-            <nl-avatar src="/images/users/nathan.png" size="normal" />
-            <nl-avatar src="/images/users/nathan.png" size="medium" />
-            <nl-avatar src="/images/users/nathan.png" size="large" />
-            <nl-avatar src="/images/users/aleksander.png" shape="round" size="small" />
-            <nl-avatar src="/images/users/aleksander.png" shape="round" size="normal" />
-            <nl-avatar src="/images/users/aleksander.png" shape="round" size="medium" />
-            <nl-avatar src="/images/users/aleksander.png" shape="round" size="large" />
+            <p>Icon / Text / Image</p>
+            <nl-avatar icon="icon-theme" shape="round" />
+            <nl-avatar shape="round">A</nl-avatar>
+            <nl-avatar src="/images/users/nathan.png" shape="round" />
         </div>
         <div class="flex">
-            <nl-avatar-group :data="avatars" size="small" addable />
-            <nl-avatar-group :data="avatars" size="normal" addable />
-            <nl-avatar-group :data="avatars" size="medium" addable />
-            <nl-avatar-group :data="avatars" size="large" addable />
-        </div>
-        <div class="flex">
-            <nl-avatar-group :data="avatars" direction="vertical" size="small" addable />
-            <nl-avatar-group :data="avatars" direction="vertical" size="normal" addable />
-            <nl-avatar-group :data="avatars" direction="vertical" size="medium" addable />
-            <nl-avatar-group :data="avatars" direction="vertical" size="large" addable />
+            <p>Group</p>
+            <nl-avatar-group :avatars="avatars" addable />
+            <nl-avatar-group :avatars="avatars" size="medium" addable />
         </div>
     </div>
 </template>
@@ -52,8 +32,8 @@ import { ref } from "vue";
 /**
  * Import component
  */
-import NlAvatar from "../components/NlAvatar.vue";
-import NlAvatarGroup from "../components/NlAvatarGroup.vue";
+import NlAvatar from "../components/avatar/src/avatar.vue";
+import NlAvatarGroup from "../components/avatar/src/avatar-group.vue";
 
 /**
  * Define options

@@ -1,0 +1,22 @@
+.nl-avatar-group {
+    flex: none;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    & > .nl-avatar {
+        margin: 0;
+        margin-right: -12px !important;
+
+        border: 2px solid white;
+
+        &:first-of-type {
+            margin-left: -2px;
+        }
+
+        &:last-of-type {
+            margin-right: 0px !important;
+        }
+    }
+}
