@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 4165854 */
-  src: url('iconfont.woff2?t=1697901456008') format('woff2'),
-       url('iconfont.woff?t=1697901456008') format('woff'),
-       url('iconfont.ttf?t=1697901456008') format('truetype');
+  src: url('iconfont.woff2?t=1698414340627') format('woff2'),
+       url('iconfont.woff?t=1698414340627') format('woff'),
+       url('iconfont.ttf?t=1698414340627') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,26 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-todo:before {
+  content: "\e981";
+}
+
+.icon-chuangzuo:before {
+  content: "\e8b3";
+}
+
+.icon-dingwei:before {
+  content: "\e8b8";
+}
+
+.icon-xiazai:before {
+  content: "\e8c5";
+}
+
+.icon-shangchuan:before {
+  content: "\e8c6";
 }
 
 .icon-tupian:before {
@@ -49,11 +69,11 @@
   content: "\e8bf";
 }
 
-.icon-clear2:before {
+.icon-clear:before {
   content: "\e64e";
 }
 
-.icon-clear:before {
+.icon-shibai:before {
   content: "\e8ba";
 }
 
@@ -109,7 +129,7 @@
   content: "\e8b9";
 }
 
-.icon-unchecked:before {
+.icon-uncheck:before {
   content: "\e8bb";
 }
 
@@ -133,10 +153,6 @@
   content: "\e601";
 }
 
-.icon-file:before {
-  content: "\e739";
-}
-
 .icon-invoices:before {
   content: "\e657";
 }
@@ -145,7 +161,7 @@
   content: "\e62a";
 }
 
-.icon-detail:before {
+.icon-more2:before {
   content: "\e64f";
 }
 
@@ -153,32 +169,12 @@
   content: "\e6c8";
 }
 
-.icon-tasks:before {
-  content: "\e6ef";
-}
-
 .icon-theme:before {
   content: "\e618";
 }
 
-.icon-logout:before {
-  content: "\e955";
-}
-
 .icon-project:before {
   content: "\e61e";
-}
-
-.icon-fold2:before {
-  content: "\e7a4";
-}
-
-.icon-fold:before {
-  content: "\e6ce";
-}
-
-.icon-delete:before {
-  content: "\e617";
 }
 
 .icon-target:before {
@@ -189,12 +185,8 @@
   content: "\e629";
 }
 
-.icon-priority:before {
-  content: "\e660";
-}
-
-.icon-plus:before {
-  content: "\e640";
+.icon-arrow-up:before {
+  content: "\e9d0";
 }
 
 .icon-arrow-right:before {
