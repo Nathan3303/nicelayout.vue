@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 4165854 */
-  src: url('iconfont.woff2?t=1698414340627') format('woff2'),
-       url('iconfont.woff?t=1698414340627') format('woff'),
-       url('iconfont.ttf?t=1698414340627') format('truetype');
+  src: url('iconfont.woff2?t=1698766365583') format('woff2'),
+       url('iconfont.woff?t=1698766365583') format('woff'),
+       url('iconfont.ttf?t=1698766365583') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,10 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-plus:before {
+  content: "\e694";
 }
 
 .icon-todo:before {
@@ -137,7 +141,7 @@
   content: "\e8be";
 }
 
-.icon-plus-circle:before {
+.icon-add:before {
   content: "\e8c0";
 }
 
@@ -157,7 +161,7 @@
   content: "\e657";
 }
 
-.icon-add:before {
+.icon-add-fill:before {
   content: "\e62a";
 }
 
