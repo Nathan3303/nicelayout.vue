@@ -1,0 +1,99 @@
+.nl-textarea {
+    --rows: 1;
+    --overflow: auto;
+    --resize: none;
+
+    --border-color: #cccccc;
+    --background-color: transparent;
+
+    --font-size: 15px;
+    --line-height: 16px;
+
+    --focus-background-color: transparent;
+    --focus-border-color: #6d94dd;
+    --focus-shadow-color: #6d94dd;
+
+    --hover-border-color: #6d94dd;
+
+    --disable-background-color: #f0f0f0;
+
+    transition: all 0.16s ease-in;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+
+    min-height: 36px;
+    padding: 8px;
+    position: relative;
+
+    border: 1px solid #ccc;
+    border-radius: 6px;
+
+    color: black;
+    font-size: var(--font-size);
+    font-weight: normal;
+    font-family: "Consolas";
+
+    &:hover {
+        border-color: var(--hover-border-color);
+    }
+
+    & textarea {
+        width: 100%;
+        min-height: calc(var(--rows) * (var(--font-size) + 3px));
+        margin: 0;
+        padding: 0;
+        resize: var(--resize);
+        overflow: var(--overflow);
+
+        outline: none;
+        border: none;
+        background-color: transparent;
+
+        color: inherit;
+        font-size: inherit;
+        font-weight: inherit;
+        font-family: inherit;
+        word-break: break-all;
+    }
+
+    & .backend-textarea {
+        opacity: 0;
+        min-height: 0px;
+        height: 0px;
+    }
+
+    & .word-counter {
+        flex: none;
+        position: absolute;
+        right: 18px;
+        bottom: 10px;
+
+        background: white;
+        opacity: 0.48;
+        font-size: 12px;
+    }
+
+    &.nl-textarea--no-border {
+        border: none;
+    }
+
+    &.nl-textarea--focused {
+        background-color: var(--focus-background-color);
+        border: 1px solid var(--focus-border-color);
+        box-shadow: 0 0 4px 1px var(--focus-shadow-color);
+    }
+
+    &.nl-textarea--disabled {
+        cursor: not-allowed;
+        user-select: none;
+        background-color: var(--disable-background-color);
+
+        &:deep(*) {
+            color: #969696;
+            cursor: not-allowed;
+        }
+    }
+}

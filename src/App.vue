@@ -1,10 +1,10 @@
 <template>
     <div id="app">
         <!-- <nl-input-test /> -->
-        <!-- <nl-textarea-test /> -->
+        <nl-textarea-test />
         <!-- <nl-button-test /> -->
         <!-- <nl-progress-test /> -->
-        <nl-avatar-test />
+        <!-- <nl-avatar-test /> -->
         <!-- <timeline-test /> -->
     </div>
 </template>
@@ -16,10 +16,10 @@ import { ref } from "vue";
  * Import components
  */
 // import NlInputTest from "./views/NlInputTest.vue";
-// import NlTextareaTest from "./views/NlTextareaTest.vue";
+import NlTextareaTest from "./views/NlTextareaTest.vue";
 // import NlButtonTest from "./views/NlButtonTest.vue";
 // import NlProgressTest from "./views/NlProgressTest.vue";
-import NlAvatarTest from "./views/NlAvatarTest.vue";
+// import NlAvatarTest from "./views/NlAvatarTest.vue";
 // import TimelineTest from "./views/TimelineTest.vue";
 </script>
 

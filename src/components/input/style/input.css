@@ -1,0 +1,151 @@
+.nl-input {
+    --input-width: auto;
+    --input-height: 36px;
+
+    --background-color: transparent;
+    --border-color: #cccccc;
+
+    --icon-size: inherit;
+    --icon-color: inherit;
+    --icon-weight: inherit;
+
+    --button-size: 22px;
+    --button-color: #8d8d8d;
+    --button-border-color: #cccccc;
+
+    --focus-background-color: transparent;
+    --focus-border-color: #6d94dd;
+    --focus-shadow-color: #6d94dd;
+
+    --disable-background-color: #f0f0f0;
+
+    --hover-button-color: #ff2727b3;
+    --hover-button-border-color: #ff2727b3;
+
+    transition: all 0.16s ease;
+    box-sizing: border-box;
+    user-select: none;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    min-width: 96px;
+    width: var(--input-width);
+    height: var(--input-height);
+    line-height: var(--input-height);
+    padding: 6px calc(var(--input-height) / 3);
+    position: relative;
+    overflow: hidden;
+
+    border: 1px solid var(--border-color);
+    background: var(--background-color);
+
+    color: black;
+    font-size: 16px;
+    font-family: "Consolas";
+    font-weight: normal;
+
+    & .iconfont {
+        color: var(--icon-color);
+        font-size: var(--icon-size);
+        font-weight: var(--icon-weight);
+    }
+
+    & input {
+        flex: auto;
+        min-width: 24px;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+
+        outline: none;
+        border: none;
+        background: none;
+
+        color: inherit;
+        font-size: inherit;
+        font-family: inherit;
+        font-weight: inherit;
+
+        &::-ms-reveal {
+            display: none;
+        }
+
+        &::-ms-clear {
+            display: none;
+        }
+
+        &::placeholder {
+            color: inherit;
+            opacity: 0.48;
+        }
+    }
+
+    & .button-group {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+
+        & .iconfont {
+            transition: all 0.16s ease;
+            box-sizing: border-box;
+            aspect-ratio: 1;
+            cursor: pointer;
+
+            height: var(--button-size);
+            line-height: var(--button-size);
+
+            border-radius: 50%;
+
+            color: var(--button-color);
+            text-align: center;
+
+            &:hover {
+                color: var(--hover-button-color);
+                border-color: var(--hover-button-border-color);
+            }
+        }
+    }
+
+    & .word-counter {
+        flex: none;
+        opacity: 0.48;
+        font-size: 12px;
+    }
+
+    &.nl-input--square {
+        border-radius: 6px;
+    }
+
+    &.nl-input--round {
+        border-radius: var(--input-height);
+    }
+
+    &.nl-input--no-border {
+        border: none;
+        border-radius: 6px;
+    }
+
+    &.nl-input--round-no-border {
+        border: none;
+        border-radius: var(--input-height);
+    }
+
+    &.nl-input--focused {
+        border: 1px solid var(--focus-border-color);
+        box-shadow: 0 0 4px 1px var(--focus-shadow-color);
+        background-color: var(--focus-background-color);
+    }
+
+    &.nl-input--disabled {
+        cursor: not-allowed;
+        user-select: none;
+        background-color: var(--disabl-background-color);
+
+        & * {
+            color: #969696;
+            cursor: not-allowed;
+        }
+    }
+}
