@@ -309,7 +309,7 @@
     {
       "icon_id": "36534250",
       "name": "不可见",
-      "font_class": "view-off",
+      "font_class": "eye-off",
       "unicode": "e629",
       "unicode_decimal": 58921
     },
