@@ -10,7 +10,7 @@
 import { ref, computed } from "vue";
 import { avatarProps, avatarEmits } from "./avatar";
 import { parseSize, parseTheme } from "@/utils/parsers";
-import "../styles/avatar.css";
+import "../style/avatar.css";
 
 /**
  * Define options, props and emit

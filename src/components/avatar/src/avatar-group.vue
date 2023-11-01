@@ -19,7 +19,7 @@
 import { ref } from "vue";
 import { avatarGroupProps, avatarGroupEmits } from "./avatar-group";
 import avatar from "./avatar.vue";
-import "../styles/avatar-group.css";
+import "../style/avatar-group.css";
 
 /**
  * Define options, props and emit
