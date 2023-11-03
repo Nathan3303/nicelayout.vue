@@ -2,13 +2,15 @@ import { isString, isNumber, isArray } from "./utils";
 
 /**
  * Convert prop size from string type to number type
- * @description Turn preset string into a real value (small => 24px)
- * @param {string|number} size value of prop size
- * @return {string}
+ * @description parse the preset size string into a real value (small => 24px)
+ * @param {String|Number} size
+ * @return {string} a css value
  */
-export function parseSize(size, isGetRaw = false) {
-    if (isString(size)) size = { small: 24, normal: 32, medium: 40, large: 48 }[size];
-    return isGetRaw ? size : size + "px";
+export function parseSize(size) {
+    let parseResult = null;
+    parseResult = isString(size) && { small: 24, normal: 32, medium: 40, large: 48 }[size];
+    if (parseResult) size = parseResult;
+    return addUnit(size);
 }
 
 /**
@@ -36,4 +38,13 @@ export function parseTheme(value, prefix = "") {
         value.forEach((item) => isString(item) && item !== "" && parseResult.push(prefix + "--" + item));
     }
     return parseResult;
+}
+
+/**
+ * Add unit 'px' to the end of number
+ * @param {Number} value
+ * @return {String} string with unit
+ */
+export function addUnit(value) {
+    return isNumber(value) ? `${value}px` : value;
 }
