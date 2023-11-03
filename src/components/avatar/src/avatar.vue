@@ -1,7 +1,7 @@
 <template>
-    <div :class="classes" @click="clickHandler" :style="{ ...sizeStyle, ...fontSizeStyle }">
-        <img v-if="src && !loadError" :src="src" :alt="alt" @error="errorHandler" :style="fitStyle" />
-        <i v-else-if="icon" class="iconfont" :class="icon" :style="fontSizeStyle"></i>
+    <div :class="classes" @click="clickHandler" :style="wrapperStyle">
+        <img v-if="src && !loadError" :src="src" :alt="alt" @error="errorHandler" :style="imageStyle" />
+        <i v-else-if="icon" class="iconfont" :class="icon" :style="iconStyle"></i>
         <slot v-else />
     </div>
 </template>
@@ -23,25 +23,22 @@ const emit = defineEmits(avatarEmits);
  * Define reactive variables
  */
 const loadError = ref(false);
-const sizeValue = computed(() => parseSize(props.size));
+const size = computed(() => parseSize(props.size));
 
 /**
  * Define styles
  */
-const fitStyle = computed(() => ({ objectFit: props.fit }));
-const sizeStyle = computed(() => ({ width: sizeValue.value, height: sizeValue.value, lineHeight: sizeValue.value }));
-const fontSizeStyle = computed(() => ({ fontSize: `calc(${sizeValue.value} / 2)` }));
+const wrapperStyle = computed(() => ({ "--size": size.value }));
+const imageStyle = computed(() => ({ objectFit: props.fit }));
+const iconStyle = computed(() => ({ fontSize: `calc(${size.value} / 2.5)` }));
 
 /**
  * Define classes
  */
 const classes = computed(() => {
     const { theme, shape } = props;
-    let classArray = ["nl-avatar"];
-    if (theme) {
-        const parseResult = parseTheme(theme, "nl-button");
-        classArray = [...classArray, ...parseResult];
-    }
+    let classArray = [];
+    classArray = ["nl-avatar", ...parseTheme(theme, "nl-avatar")];
     classArray.push("nl-avatar--" + shape);
     // console.log(classArray);
     return classArray;

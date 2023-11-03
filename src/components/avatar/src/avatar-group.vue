@@ -11,7 +11,7 @@
                 :fit="avatar.fit"
                 :style="{ zIndex: avatars.length - idx }" />
         </template>
-        <avatar :size="size" icon="icon-plus" shape="round" style="cursor: pointer" @click.stop="addAvatarHandler" />
+        <avatar theme="add" :size="size" icon="icon-plus" shape="round" style="cursor: pointer" @click.stop="addAvatarHandler" />
     </div>
 </template>
 
