@@ -1,4 +1,4 @@
-import { isNumber, hasPercentageSign, hasPixelSign } from "./utils";
+import { isNumber, isString, hasPercentageSign, hasPixelSign } from "./utils";
 
 /**
  * Validating function for verifying prop width and height
@@ -26,7 +26,16 @@ export function validateUnit(value) {
  * @return {boolean}
  */
 export function validateSize(size) {
-    return isNumber(size) ? size : ["small", "normal", "medium", "large"].includes(size);
+    // return isNumber(size) ? size : ["small", "normal", "medium", "large"].includes(size);
+    if (isNumber(size)) {
+        return true;
+    } else if (isString(size)) {
+        if (["small", "normal", "medium", "large"].includes(size)) {
+            return true;
+        } else {
+            return validateUnit(size);
+        }
+    }
 }
 
 /**
