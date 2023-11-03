@@ -13,6 +13,8 @@
     --button-color: #8d8d8d;
     --button-border-color: #cccccc;
 
+    --hover-border-color: #6d94dd;
+
     --focus-background-color: transparent;
     --focus-border-color: #6d94dd;
     --focus-shadow-color: #6d94dd;
@@ -45,6 +47,10 @@
     font-size: 16px;
     font-family: "Consolas";
     font-weight: normal;
+
+    &:hover {
+        border-color: var(--hover-border-color);
+    }
 
     & .iconfont {
         color: var(--icon-color);
