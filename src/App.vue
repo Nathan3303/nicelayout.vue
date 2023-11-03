@@ -2,8 +2,8 @@
     <div id="app">
         <!-- <nl-input-test /> -->
         <!-- <nl-textarea-test /> -->
-        <nl-button-test />
-        <!-- <nl-progress-test /> -->
+        <!-- <nl-button-test /> -->
+        <nl-progress-test />
         <!-- <nl-avatar-test /> -->
         <!-- <timeline-test /> -->
     </div>
@@ -12,8 +12,8 @@
 <script setup>
 // import NlInputTest from "./views/NlInputTest.vue";
 // import NlTextareaTest from "./views/NlTextareaTest.vue";
-import NlButtonTest from "./views/nl-button-test.vue";
-// import NlProgressTest from "./views/NlProgressTest.vue";
+// import NlButtonTest from "./views/nl-button-test.vue";
+import NlProgressTest from "./views/nl-progress-test.vue";
 // import NlAvatarTest from "./views/nl-avatar-test.vue";
 // import TimelineTest from "./views/TimelineTest.vue";
 </script>
