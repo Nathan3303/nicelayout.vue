@@ -22,7 +22,6 @@
 
     display: flex;
     flex-direction: column;
-    /* align-items: center; */
 
     min-height: 36px;
     padding: 8px;
@@ -69,10 +68,9 @@
         flex: none;
         position: absolute;
         right: 18px;
-        bottom: 10px;
+        bottom: 9px;
 
-        background: white;
-        opacity: 0.48;
+        background-color: white;
         font-size: 12px;
     }
 
