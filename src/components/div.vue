@@ -6,8 +6,8 @@
 
 <script setup>
 import { ref, computed } from "vue";
-import { validateWidthAndHeight } from "./validators";
-import { parseWidthAndHeight } from "./parsers";
+import { validateWidthAndHeight } from "@/utils/validators";
+import { parseWidthAndHeight } from "@/utils/parsers";
 
 /**
  * Define options
