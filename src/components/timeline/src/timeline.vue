@@ -33,7 +33,6 @@ const props = defineProps(timelineProps);
  */
 const timeline = useTimeline(props.scale);
 const scrollController = useScrollController();
-console.log(timeline);
 
 /**
  * Define refs
