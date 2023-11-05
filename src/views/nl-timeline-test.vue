@@ -12,25 +12,13 @@
             </nl-div>
         </nl-div>
         <div class="timeline-wrapper">
-            <timeline ref="timeline" :lines="lines" show-pointer-text show-scroll-x-bar />
+            <nl-timeline ref="timeline" :lines="lines" show-pointer-text show-scroll-x-bar />
         </div>
     </div>
 </template>
 
 <script setup>
 import { ref } from "vue";
-
-/**
- * Import component
- */
-import NlDiv from "../components/div.vue";
-import Timeline from "../components/timeline/src/timeline.vue";
-import NlButton from "../components/button/src/button.vue";
-
-/**
- * Define options
- */
-defineOptions({ name: "TimelineTest" });
 
 /**
  * Define refs
@@ -86,10 +74,6 @@ const lines = ref([
         ],
     },
 ]);
-
-/**
- *
- */
 </script>
 
 <style scoped>

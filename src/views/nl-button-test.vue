@@ -80,12 +80,6 @@
 import { reactive } from "vue";
 
 /**
- * Import components
- */
-import NlButton from "../components/button/src/button.vue";
-import NlBadge from "../components/button/src/badge.vue";
-
-/**
  * Define options
  */
 defineOptions({ name: "NlButtonTest" });

@@ -85,13 +85,6 @@
 
 <script setup>
 import { reactive } from "vue";
-import NlInput from "../components/input/src/input.vue";
-import NlTextarea from "../components/input/src/textarea.vue";
-
-/**
- * Define options
- */
-defineOptions({ name: "NlInputTest" });
 
 /**
  * Define reactives

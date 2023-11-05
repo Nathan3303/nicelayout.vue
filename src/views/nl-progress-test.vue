@@ -35,16 +35,7 @@
 
 <script setup>
 import { ref } from "vue";
-import NlProgress from "../components/progress/src/progress.vue";
 
-/**
- * Define options
- */
-defineOptions({ name: "NlProgressTest" });
-
-/**
- * Define ref
- */
 const percentage = ref(0);
 setInterval(() => (percentage.value = (percentage.value + 1) % 101), 100);
 </script>

@@ -31,17 +31,6 @@
 import { ref } from "vue";
 
 /**
- * Import component
- */
-import NlAvatar from "../components/avatar/src/avatar.vue";
-import NlAvatarGroup from "../components/avatar/src/avatar-group.vue";
-
-/**
- * Define options
- */
-defineOptions({ name: "NlAvatarTest" });
-
-/**
  * Define refs
  */
 const avatars = ref([
