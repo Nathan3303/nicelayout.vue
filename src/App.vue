@@ -1,39 +1,24 @@
 <template>
     <div id="app">
-        <nl-input v-model="inputValue" placeholder="nl-input" />
-        <nl-textarea v-model="textareaValue" placeholder="nl-textarea" rows="12" maxlength="240" autosize resize counter="both" />
+        <nl-input-test />
+        <nl-button-test />
+        <nl-progress-test />
+        <nl-avatar-test />
+        <nl-timeline-test />
     </div>
 </template>
 
 <script setup>
-import { ref, watch } from "vue";
-
-/**
- * Import components
- */
-// import NlDiv from "./components/NlDiv.vue";
-import NlTextarea from "./components/NlTextarea.vue";
-import NlInput from "./components/NlInput.vue";
-
-/**
- * Define refs
- */
-const inputValue = ref("");
-const textareaValue = ref("123123");
-
-/**
- * Watch input value
- */
-// watch(
-//     () => textareaValue.value,
-//     (newValue) => console.log(newValue)
-// );
+import NlInputTest from "./views/nl-input-test.vue";
+import NlButtonTest from "./views/nl-button-test.vue";
+import NlProgressTest from "./views/nl-progress-test.vue";
+import NlAvatarTest from "./views/nl-avatar-test.vue";
+import NlTimelineTest from "./views/nl-timeline-test.vue";
 </script>
 
 <style scoped>
 #app {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+    box-sizing: border-box;
+    padding: 12px;
 }
 </style>

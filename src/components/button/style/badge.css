@@ -1,0 +1,60 @@
+.nl-badge {
+    --background-color: #e96b36;
+    --border-color: #e35011;
+
+    --color: white;
+    --font-size: 12px;
+    --font-weight: normal;
+    --font-family: "Consolas";
+
+    user-select: none;
+    -webkit-user-select: none;
+    transition: all 0.16s ease-in;
+
+    display: flex;
+    align-items: center;
+    justify-content: start;
+
+    margin-right: 8px;
+    position: relative;
+
+    & > sup {
+        user-select: none;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        scale: 0.9;
+        padding: 2px 6px;
+        position: absolute;
+        right: -8px;
+        top: -10px;
+
+        background-color: var(--background-color);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+
+        color: var(--color);
+        font-size: var(--font-size);
+        font-weight: var(--font-weight);
+        font-family: var(--font-family);
+    }
+
+    &.nl-badge--dot {
+        margin-right: 4px;
+
+        & > sup {
+            scale: 1;
+            width: 10px;
+            height: 10px;
+            padding: 0px;
+
+            right: -4px;
+            top: -4px;
+
+            border-radius: 8px;
+            border: 2px solid white;
+        }
+    }
+}

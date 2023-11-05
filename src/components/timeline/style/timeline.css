@@ -1,0 +1,85 @@
+.timeline {
+    --width: 1440px;
+    --timeline-overflow-x: auto;
+
+    --scale-bar-height: 36px;
+    --scale-bar-gap: 60px;
+    --scale-bar-padding-left: 24px;
+    --scale-bar-pointer-left: 0px;
+    --scale-bar-pointer-height: 0px;
+
+    --line-height: 70px;
+
+    box-sizing: border-box;
+    transition: all 3s ease-in-out;
+    scroll-behavior: smooth;
+    user-select: none;
+
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: var(--timeline-overflow-x);
+
+    position: relative;
+
+    color: #838383;
+    font-size: 14px;
+    font-weight: normal;
+    font-family: "Consolas";
+
+    .timeline__scale-bar {
+        display: flex;
+        align-items: start;
+        justify-content: start;
+        gap: var(--scale-bar-gap);
+
+        width: var(--width);
+        height: var(--scale-bar-height);
+        padding-left: var(--scale-bar-padding-left);
+
+        position: sticky;
+        top: 0px;
+        z-index: 5;
+
+        background-color: white;
+        border-bottom: 2px solid #e5e5e7;
+
+        & > span {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 0px;
+        }
+
+        & > .pointer {
+            --pointer-bottom: calc(0px - var(--scale-bar-pointer-height));
+            --pointer-height: calc(var(--scale-bar-pointer-height) + 18px);
+
+            transition: left 1s ease;
+
+            width: 3px;
+            height: var(--pointer-height);
+            position: absolute;
+            bottom: var(--pointer-bottom);
+            left: var(--scale-bar-pointer-left);
+            z-index: 6;
+
+            background: #7e74ff;
+            border-left: 1px solid white;
+            border-right: 1px solid white;
+            border-radius: 5px;
+
+            & > span {
+                position: absolute;
+                left: 10px;
+
+                color: #7e74ff;
+                font-size: 12px;
+                font-weight: bold;
+            }
+        }
+    }
+
+    .timeline__lines-container {
+        width: var(--width);
+    }
+}

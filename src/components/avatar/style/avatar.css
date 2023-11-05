@@ -1,0 +1,43 @@
+.nl-avatar {
+    --size: 36px;
+    --background-color: #c4c4c4;
+
+    box-sizing: border-box;
+    transition: all 0.16s ease-in-out;
+    aspect-ratio: 1;
+
+    flex: none;
+    width: var(--size);
+    height: var(--size);
+    line-height: var(--size);
+    text-align: center;
+    overflow: hidden;
+
+    border: none;
+    background-color: var(--background-color);
+
+    color: rgb(255, 255, 255);
+
+    & img {
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+
+    & > .iconfont {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        width: 100%;
+        height: 100%;
+    }
+
+    &.nl-avatar--square {
+        border-radius: 4px;
+    }
+
+    &.nl-avatar--round {
+        border-radius: 50%;
+    }
+}

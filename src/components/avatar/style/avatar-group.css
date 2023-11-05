@@ -1,0 +1,36 @@
+.nl-avatar-group {
+    --avatar-border-width: 2px;
+    --avatar-border-color: white;
+
+    flex: none;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    & > .nl-avatar {
+        margin: 0;
+        margin-right: -12px !important;
+
+        border: var(--avatar-border-width) solid var(--avatar-border-color);
+
+        &:first-of-type {
+            margin-left: -2px;
+        }
+
+        &:last-of-type {
+            margin-right: 0px !important;
+        }
+    }
+
+    & .nl-avatar--add {
+        --add-button-size: calc(var(--size) - 2px * 2);
+        --background-color: white;
+
+        width: var(--add-button-size);
+        height: var(--add-button-size);
+        line-height: var(--add-button-size);
+        color: #c4c4c4;
+        border: 2px dotted #c4c4c477;
+    }
+}
