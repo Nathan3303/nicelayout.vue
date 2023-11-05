@@ -31,7 +31,7 @@ export function isArray(value) {
     return (
         value instanceof Array &&
         value.constructor === Array &&
-        value.__proto__ === Array.prototype && 
+        value.__proto__ === Array.prototype &&
         Object.prototype.toString.call(value) === "[object Array]"
     );
 }
@@ -58,4 +58,14 @@ export function hasPercentageSign(value) {
         return value.includes("%");
     }
     return false;
+}
+
+/**
+ * Add install function to the component
+ * @param {Object} component component object
+ * @return new component object
+ */
+export function withInstall(component) {
+    component.install = (app) => app.component(component.name, component);
+    return component;
 }
