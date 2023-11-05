@@ -1,2 +1,7 @@
-const avatar = import("./src/avatar.vue");
-const avatarGroup = import("./src/avatar.vue");
+import { withInstall } from "@/utils/utils";
+
+import Avatar from "./src/avatar.vue";
+import AvatarGroup from "./src/avatar-group.vue";
+
+export const NlAvatar = withInstall(Avatar);
+export const NlAvatarGroup = withInstall(AvatarGroup);
