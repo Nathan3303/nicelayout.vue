@@ -30,7 +30,7 @@ import "../style/progress.css";
 /**
  * Define options
  */
-defineOptions({ name: "NlProgressBar" });
+defineOptions({ name: "NlProgress" });
 const props = defineProps(progressProps);
 const emit = defineEmits(progressEmits);
 
