@@ -1,7 +1,8 @@
 import { createApp } from "vue";
 import App from "./App.vue";
-import installGloableComps from "./install";
+
+import niceLayout from 'nice-layout';
 
 const app = createApp(App);
-installGloableComps(app);
+app.use(niceLayout);
 app.mount("#app");

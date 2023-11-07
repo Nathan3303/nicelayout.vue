@@ -1,0 +1,90 @@
+.nl-link {
+    --font-color: #012c2c;
+    --icon-color: #6d8b80;
+    --background-color: none;
+    --hover-background-color: #b9e6a664;
+
+    transition: all 0.16s ease-in-out;
+    user-select: none;
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    height: 32px;
+    line-height: 32px;
+    padding: 0 12px;
+    position: relative;
+    border-radius: 10px;
+
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: bold;
+
+    &:hover {
+        background-color: var(--hover-background-color);
+    }
+
+    & > .nl-link__icon {
+        font-size: 14px;
+        color: var(--icon-color);
+    }
+
+    & > .nl-link__text {
+        color: var(--font-color);
+    }
+}
+
+.nav-link--actived {
+    --actived-font-color: #012c2c;
+    --actived-icon-color: #1f4641;
+    --actived-background-color: #b9e6a6;
+
+    background: var(--actived-background-color);
+
+    &:hover {
+        background-color: var(--actived-background-color);
+    }
+
+    & > .nl-link__icon {
+        color: var(--actived-icon-color);
+    }
+    & > .nl-link__text {
+        color: var(--actived-font-color);
+    }
+}
+
+.nav-link--disabled {
+    cursor: not-allowed !important;
+
+    &:hover {
+        background-color: transparent !important;
+    }
+
+    & > .nl-link__icon {
+        color: #ccc;
+        cursor: not-allowed !important;
+    }
+
+    & > .nl-link__text {
+        color: #ccc;
+        cursor: not-allowed !important;
+    }
+}
+
+.nav-link--underline {
+    &:hover {
+        /* Create underline element on hover if underline prop was defined */
+        &::after {
+            content: "";
+            display: block;
+            width: calc(100% - 28px);
+            height: 2px;
+            position: absolute;
+            bottom: 4px;
+            border-radius: 50%;
+            background-color: var(--font-color);
+        }
+    }
+}

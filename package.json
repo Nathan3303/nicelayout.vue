@@ -2,7 +2,15 @@
   "name": "nicelayout.vue",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "true",
+    "",
+    "src/packages/components",
+    "src/packages/utils",
+    "src/packages/hooks",
+    "src/packages/nice-layout"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "vite build",
