@@ -1,8 +1,12 @@
 <template>
-    <div id="app"></div>
+    <div id="app">
+        <test></test>
+    </div>
 </template>
 
-<script setup></script>
+<script setup>
+import test from './components/test.vue';
+</script>
 
 <style scoped>
 #app {
