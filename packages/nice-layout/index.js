@@ -1,4 +1,4 @@
-const Components = await import("../../../packages/components");
+const Components = await import("@nice-layout/components");
 
 console.log(Components);
 
