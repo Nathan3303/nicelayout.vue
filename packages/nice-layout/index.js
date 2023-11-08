@@ -1,11 +1,19 @@
-const Components = await import("@nice-layout/components");
+import Components from "./components";
 
-console.log(Components);
+import "@nice-layout/assets/iconfont/iconfont.css";
 
+export * from "@nice-layout/components";
+export * from "@nice-layout/utils";
+export * from "@nice-layout/hooks";
+
+/**
+ * Install components globally
+ */
 export default {
     install(vue) {
-        Object.keys(Components).forEach((name) => {
-            vue.component(name, Components[name]);
+        console.log("Install global components", Components);
+        Components.forEach((component) => {
+            vue.component(component.name, component);
         });
     },
 };

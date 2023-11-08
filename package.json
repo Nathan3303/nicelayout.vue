@@ -14,6 +14,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:nl": "vite build --config nl.config.js",
     "preview": "vite preview"
   },
   "dependencies": {

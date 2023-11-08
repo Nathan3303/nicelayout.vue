@@ -1,12 +1,13 @@
 <template>
     <nl-div>
-        <nl-input type="number" v-model="inputValue"></nl-input>
+        <nl-input type="number" v-model="inputValue" clearable></nl-input>
         <nl-button @click="clickHandler">Go</nl-button>
     </nl-div>
 </template>
 
 <script setup>
 import { ref } from "vue";
+// import { NlDiv, NlInput, NlButton } from "@nice-layout/components";
 
 /**
  * Define refs
