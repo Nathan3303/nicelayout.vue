@@ -30,4 +30,8 @@ export const linkProps = {
      * @description Link icon (only iconfont)
      */
     icon: String,
+    /**
+     * @description Attribute to on link whose tag is router-link
+     */
+    to: [String, Object],
 };
