@@ -9,6 +9,7 @@ export default defineConfig({
         },
         outDir: "./nllib",
         copyPublicDir: false,
+        emptyOutDir: false,
     },
     plugins: [vue()],
 });
