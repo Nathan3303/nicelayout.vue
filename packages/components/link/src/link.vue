@@ -1,8 +1,13 @@
 <template>
-    <component :is="tag" :class="classList" :href="disabled || !href ? undefined : href">
+    <component
+        :is="disabled ? 'a' : tag"
+        :class="classList"
+        :href="disabled || !href ? undefined : href"
+        :to="to || href || undefined"
+        active-class="nl-link--actived">
         <i v-if="icon" class="nl-link__icon" :class="icon && `iconfont ${icon}`"></i>
         <slot v-else name="icon"></slot>
-        <span class="nl-link__text"><slot></slot></span>
+        <slot></slot>
     </component>
 </template>
 
@@ -20,7 +25,7 @@ const props = defineProps(linkProps);
  */
 const classList = computed(() => {
     let classList = [];
-    classList = ["nl-link", ...parseTheme(props.theme)];
+    classList = ["nl-link", ...parseTheme(props.theme, "nl-link")];
     if (props.actived) classList.push("nl-link--actived");
     if (props.disabled) classList.push("nl-link--disabled");
     // console.log(classList)

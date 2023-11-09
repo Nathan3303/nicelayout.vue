@@ -1,90 +1,62 @@
 .nl-link {
-    --font-color: #012c2c;
-    --icon-color: #6d8b80;
-    --background-color: none;
-    --hover-background-color: #b9e6a664;
-
-    transition: all 0.16s ease-in-out;
+    transition: all 0.12s ease-in-out;
     user-select: none;
     box-sizing: border-box;
+    cursor: pointer;
+    position: relative;
+    text-decoration: none;
+}
+
+.nl-link--button {
+    --background-color: rgb(255, 204, 110);
+
+    --font-size: 14px;
+
+    --icon-color: black;
+    --icon-size: calc(var(--font-size) + 1px);
+    --icon-weight: normal;
+
+    --hover-color: black;
+    --hover-icon-color: var(--hover-color);
+    --hover-background-color: rgb(255, 166, 0);
+
+    --active-color: black;
+    --active-icon-color: var(--active-color);
+    --active-background-color: rgb(231, 158, 21);
+
+    --disable-color: #464646;
+    --disable-background-color: rgb(255, 216, 143);
 
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
 
-    height: 32px;
-    line-height: 32px;
-    padding: 0 12px;
-    position: relative;
-    border-radius: 10px;
+    min-height: 32px;
+    padding: 0px 12px;
 
-    text-decoration: none;
-    font-size: 12px;
-    font-weight: bold;
+    border-radius: 4px;
+    background-color: var(--background-color);
+
+    color: black;
+    font-size: var(--font-size);
+    font-weight: normal;
+
+    .nl-link__icon {
+        color: var(--icon-color);
+        font-size: var(--icon-size);
+        font-weight: var(--icon-weight);
+    }
 
     &:hover {
         background-color: var(--hover-background-color);
     }
-
-    & > .nl-link__icon {
-        font-size: 14px;
-        color: var(--icon-color);
+    
+    &:active {
+        background-color: var(--active-background-color);
     }
 
-    & > .nl-link__text {
-        color: var(--font-color);
-    }
-}
-
-.nav-link--actived {
-    --actived-font-color: #012c2c;
-    --actived-icon-color: #1f4641;
-    --actived-background-color: #b9e6a6;
-
-    background: var(--actived-background-color);
-
-    &:hover {
-        background-color: var(--actived-background-color);
-    }
-
-    & > .nl-link__icon {
-        color: var(--actived-icon-color);
-    }
-    & > .nl-link__text {
-        color: var(--actived-font-color);
-    }
-}
-
-.nav-link--disabled {
-    cursor: not-allowed !important;
-
-    &:hover {
-        background-color: transparent !important;
-    }
-
-    & > .nl-link__icon {
-        color: #ccc;
-        cursor: not-allowed !important;
-    }
-
-    & > .nl-link__text {
-        color: #ccc;
-        cursor: not-allowed !important;
-    }
-}
-
-.nav-link--underline {
-    &:hover {
-        /* Create underline element on hover if underline prop was defined */
-        &::after {
-            content: "";
-            display: block;
-            width: calc(100% - 28px);
-            height: 2px;
-            position: absolute;
-            bottom: 4px;
-            border-radius: 50%;
-            background-color: var(--font-color);
-        }
+    &.nl-link--disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
     }
 }

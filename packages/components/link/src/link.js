@@ -30,7 +30,4 @@ export const linkProps = {
      * @description Link icon (only iconfont)
      */
     icon: String,
-    /**
-     * @description 
-     */
 };
