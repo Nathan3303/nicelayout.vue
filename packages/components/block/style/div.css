@@ -1,0 +1,22 @@
+.nl-div {
+    --flex-direction: row;
+    --align-items: start;
+    --justify-content: start;
+    --flex-wrap: no-wrap;
+    --gap: 8px;
+
+    --flex: auto;
+    --width: auto;
+    --height: auto;
+
+    display: flex;
+    flex-direction: var(--flex-direction);
+    align-items: var(--align-items);
+    justify-content: var(--justify-content);
+    flex-wrap: var(--flex-wrap);
+    gap: var(--gap);
+
+    flex: var(--flex);
+    width: var(--width);
+    height: var(--height);
+}
