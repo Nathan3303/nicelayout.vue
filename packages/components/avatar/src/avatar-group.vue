@@ -1,6 +1,6 @@
 <template>
     <div class="nl-avatar-group">
-        <template v-for="(avatar, idx) in avatars">
+        <template v-for="avatar in avatars">
             <avatar
                 v-if="avatar"
                 shape="round"
@@ -11,7 +11,13 @@
                 :fit="avatar.fit"
                 :style="{ zIndex: avatars.length - idx }" />
         </template>
-        <avatar theme="add" :size="size" icon="icon-plus" shape="round" style="cursor: pointer" @click.stop="addAvatarHandler" />
+        <avatar
+            v-if="addable"
+            theme="add"
+            :size="size"
+            icon="icon-plus"
+            shape="round"
+            @click.stop="addAvatarHandler" />
     </div>
 </template>
 

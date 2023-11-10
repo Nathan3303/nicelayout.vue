@@ -32,5 +32,6 @@
         line-height: var(--add-button-size);
         color: #c4c4c4;
         border: 2px dotted #c4c4c477;
+        cursor: pointer;
     }
 }
