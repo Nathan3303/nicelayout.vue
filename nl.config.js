@@ -8,7 +8,7 @@ export default defineConfig({
             entry: "./packages/nice-layout/index.js",
             name: "nice-layout",
         },
-        outDir: "./nllib",
+        outDir: "./dist",
         copyPublicDir: false,
         emptyOutDir: false,
         rollupOptions: {
