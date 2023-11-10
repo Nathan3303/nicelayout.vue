@@ -2,9 +2,9 @@ import { validateSize, validateShape } from "@nice-layout/utils/validators";
 
 export const avatarGroupProps = {
     /**
-     * @description avatar group data (avatars)
+     * @description avatar group data
      */
-    avatars: Array,
+    data: Array,
     /**
      * @description avatar size
      */
@@ -34,14 +34,6 @@ export const avatarGroupProps = {
     borderColor: {
         type: String,
         default: "white",
-    },
-    /**
-     * @description Direction of avatar group
-     */
-    direction: {
-        type: String,
-        default: "horizontal",
-        validator: (v) => ["horizontal", "vertical"].includes(v),
     },
     /**
      * @description avatar group is addable or not

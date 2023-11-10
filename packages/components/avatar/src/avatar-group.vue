@@ -1,15 +1,15 @@
 <template>
     <div class="nl-avatar-group">
-        <template v-for="(avatar, idx) in avatars">
+        <template v-for="(item, idx) in data">
             <nl-avatar
-                v-if="avatar"
+                v-if="item"
                 shape="round"
                 :size="size"
-                :icon="avatar.icon"
-                :src="avatar.src"
-                :alt="avatar.alt"
-                :fit="avatar.fit"
-                :style="{ zIndex: avatars.length - idx }" />
+                :icon="item.icon"
+                :src="item.src"
+                :alt="item.alt"
+                :fit="item.fit"
+                :style="{ zIndex: data.length - idx }" />
         </template>
         <nl-avatar v-if="addable" theme="add" :size="size" icon="icon-plus" shape="round" @click.stop="addAvatarHandler" />
     </div>
