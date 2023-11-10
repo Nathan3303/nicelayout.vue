@@ -1,11 +1,13 @@
 <template>
     <div id="app">
-        <test></test>
+        <!-- <test></test> -->
+        <demo2></demo2>
     </div>
 </template>
 
 <script setup>
 import test from "./components/test.vue";
+import demo2 from "./components/demo2.vue";
 </script>
 
 <style scoped>

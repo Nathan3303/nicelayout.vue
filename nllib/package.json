@@ -1,6 +1,6 @@
 {
   "name": "nice-layout",
-  "version": "1.0.3",
+  "version": "1.0.55",
   "description": "",
   "main": "nicelayout.vue.umd.js",
   "scripts": {

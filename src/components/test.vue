@@ -1,6 +1,10 @@
+<script setup>
+// import { NlButton } from "../../packages/components/button";
+</script>
+
 <template>
     <div class="test">
-        <nl-div justify-content="space-between">
+        <!-- <nl-div justify-content="space-between">
             <nl-link href="/">
                 <nl-avatar src="/images/users/nathan.png"></nl-avatar>
             </nl-link>
@@ -10,8 +14,8 @@
             <nl-link href="/">
                 <nl-avatar src="/images/users/nathan.png"></nl-avatar>
             </nl-link>
-            <nl-link href="http://www.baidu.com" theme="button" icon="icon-arrow-right"> www.baidu.com </nl-link>
-        </nl-div>
+        </nl-div> -->
+        <nl-button>Go</nl-button>
     </div>
 </template>
 

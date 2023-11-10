@@ -9,7 +9,7 @@
 </template>
 
 <script setup>
-import { computed, watch } from "vue";
+import { computed } from "vue";
 import { buttonProps } from "./button";
 import { parseTheme } from "@nice-layout/utils/parsers";
 import "../style/button.css";

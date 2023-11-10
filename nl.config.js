@@ -1,5 +1,6 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
+import cssInjectedByJsPlugin from ''
 
 export default defineConfig({
     build: {
@@ -10,6 +11,17 @@ export default defineConfig({
         outDir: "./nllib",
         copyPublicDir: false,
         emptyOutDir: false,
+        rollupOptions: {
+            external: ["vue"],
+            output: {
+                globals: {
+                    vue: "Vue",
+                },
+            },
+        },
     },
-    plugins: [vue()],
+    plugins: [
+        vue(),
+        cssInjectedByJsPlugin(),
+    ],
 });

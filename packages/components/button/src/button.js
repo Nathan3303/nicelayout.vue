@@ -38,4 +38,11 @@ export const buttonProps = {
         type: String,
         default: "icon-loading",
     },
+    /**
+     * @description Button title (Native attribute mapping)
+     */
+    title: {
+        type: String,
+        default: "Title of nl-button",
+    },
 };
