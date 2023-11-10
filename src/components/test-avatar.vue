@@ -1,6 +1,6 @@
 <template>
     <nl-div>
-        <nl-avatar-group :avatars="avatars"></nl-avatar-group>
+        <nl-avatar-group :data="avatars" addable></nl-avatar-group>
     </nl-div>
 </template>
 
