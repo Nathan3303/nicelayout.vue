@@ -13,7 +13,6 @@ import { computed } from "vue";
 import { buttonProps } from "./button";
 import { parseTheme } from "@nice-layout/utils/parsers";
 import "../style/button.css";
-import "../style/button-extra.css";
 
 /**
  * Define options
