@@ -1,5 +1,5 @@
 <template>
-    <button :class="classList" :disabled="disabled">
+    <button :class="classList" :disabled="disabled" :title="title">
         <i v-if="loading" class="nl-button__loading-icon iconfont" :class="loadingIcon"></i>
         <i v-else-if="icon" class="iconfont" :class="icon"></i>
         <span v-if="$slots.default" class="nl-button__text">

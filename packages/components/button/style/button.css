@@ -117,3 +117,32 @@
         }
     }
 }
+
+/* Build-in styles */
+
+.nl-button--icon-only {
+    --icon-size: 30px;
+
+    aspect-ratio: 1;
+
+    width: auto;
+    height: auto;
+    padding: 3px;
+
+    .nl-button__text {
+        display: none;
+    }
+}
+
+.nl-button--text {
+    width: auto;
+    height: auto;
+    padding: 4px 10px;
+    border: none;
+
+    &.nl-button--no-shape {
+        padding: 0;
+        border-radius: none;
+        line-height: none;
+    }
+}
