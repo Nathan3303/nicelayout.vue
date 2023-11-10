@@ -1,7 +1,7 @@
 <template>
     <div class="nl-avatar-group">
-        <template v-for="avatar in avatars">
-            <avatar
+        <template v-for="(avatar, idx) in avatars">
+            <nl-avatar
                 v-if="avatar"
                 shape="round"
                 :size="size"
@@ -11,20 +11,13 @@
                 :fit="avatar.fit"
                 :style="{ zIndex: avatars.length - idx }" />
         </template>
-        <avatar
-            v-if="addable"
-            theme="add"
-            :size="size"
-            icon="icon-plus"
-            shape="round"
-            @click.stop="addAvatarHandler" />
+        <nl-avatar v-if="addable" theme="add" :size="size" icon="icon-plus" shape="round" @click.stop="addAvatarHandler" />
     </div>
 </template>
 
 <script setup>
 import { ref } from "vue";
 import { avatarGroupProps, avatarGroupEmits } from "./avatar-group";
-import avatar from "./avatar.vue";
 import "../style/avatar-group.css";
 
 /**
