@@ -22,6 +22,18 @@ export default defineConfig({
     },
     plugins: [
         vue(),
-        cssInjectedByJsPlugin(),
+        cssInjectedByJsPlugin({
+            injectCodeFunction: function injectCodeCustomRunTimeFunction(cssCode) {
+                try {
+                    if (typeof document != "undefined") {
+                        var elementStyle = document.createElement("style");
+                        elementStyle.appendChild(document.createTextNode(`${cssCode}`));
+                        document.head.appendChild(elementStyle);
+                    }
+                } catch (e) {
+                    console.error("vite-plugin-css-injected-by-js", e);
+                }
+            },
+        }),
     ],
 });
