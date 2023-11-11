@@ -5,7 +5,7 @@
     --color: white;
     --font-size: 12px;
     --font-weight: normal;
-    --font-family: "Consolas";
+    --font-family: inherit;
 
     user-select: none;
     -webkit-user-select: none;

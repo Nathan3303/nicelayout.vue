@@ -8,7 +8,7 @@
 }
 
 .nl-link--button {
-    --background-color: rgb(255, 204, 110);
+    --background-color: transparent;
 
     --font-size: 14px;
 
@@ -29,6 +29,7 @@
 
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 6px;
 
     min-height: 32px;
@@ -40,6 +41,7 @@
     color: black;
     font-size: var(--font-size);
     font-weight: normal;
+    font-family: inherit;
 
     .nl-link__icon {
         color: var(--icon-color);
@@ -50,13 +52,29 @@
     &:hover {
         background-color: var(--hover-background-color);
     }
-    
+
     &:active {
         background-color: var(--active-background-color);
+    }
+
+    &.nl-link--actived {
+        color: var(--active-icon-color);
+        background-color: var(--active-background-color);
+
+        .nl-link__icon {
+            color: var(--active-icon-color);
+        }
     }
 
     &.nl-link--disabled {
         opacity: 0.5;
         cursor: not-allowed;
+
+        &:hover,
+        &:active {
+            color: inherit;
+            font-size: var(--font-size);
+            background-color: var(--background-color);
+        }
     }
 }

@@ -24,7 +24,7 @@
     color: #838383;
     font-size: 14px;
     font-weight: normal;
-    font-family: "Consolas";
+    font-family: inherit;
 
     .timeline__scale-bar {
         display: flex;

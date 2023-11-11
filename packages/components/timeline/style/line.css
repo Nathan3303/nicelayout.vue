@@ -2,7 +2,7 @@
     --title-color: #8683ad;
     --title-font-size: 13px;
     --title-font-weight: bold;
-    --title-font-family: "Consolas";
+    --title-font-family: inherit;
 
     user-select: none;
 
