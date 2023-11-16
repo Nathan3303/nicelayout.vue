@@ -1,38 +1,64 @@
 .card {
-    box-sizing: border-box;
+    --card-height: calc(var(--line-height) - 10px);
+
+    --card-title-color: #282556;
+    --card-title-font-size: 14px;
+    --card-title-font-weight: bold;
+    --card-title-font-family: inherit;
+
+    --card-date-color: #5c5a75;
+    --card-date-font-size: 12px;
+    --card-date-font-weight: bold;
+    --card-date-font-family: inherit;
 
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 12px;
 
-    height: calc(var(--line-height) - 12px);
-    padding: 0 14px;
-    overflow: hidden;
-
+    box-sizing: border-box;
+    height: var(--card-height);
+    padding: 0 calc(var(--card-height) / 3.5);
     position: absolute;
-    left: 0px;
 
-    border-radius: calc(var(--line-height) - 12px);
+    border-radius: var(--card-height);
 
     .card__info {
+        flex: auto;
         display: flex;
         flex-direction: column;
         justify-content: center;
-
-        flex: auto;
-        height: 100%;
+        gap: 2px;
 
         & h2 {
-            padding: 0;
             margin: 0;
-            font-size: 18px;
+            color: var(--card-title-color);
+            font-size: var(--card-title-font-size);
+            font-weight: var(--card-title-font-weight);
+            font-family: var(--card-title-font-family);
         }
 
         & p {
-            padding: 0;
+            transform-origin: 0;
+            scale: 0.84;
+            --webkit-scale: 0.84;
             margin: 0;
-            font-size: 14px;
+            color: var(--card-date-color);
+            font-size: var(--card-date-font-size);
+            font-weight: var(--card-date-font-weight);
+            font-family: var(--card-date-font-family);
         }
+    }
+}
+
+.card--simple {
+    justify-content: space-between;
+
+    .card__avatar-group {
+        display: none;
+    }
+
+    .card__info {
+        flex: none;
     }
 }

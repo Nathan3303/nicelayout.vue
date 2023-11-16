@@ -1,30 +1,40 @@
 .timeline {
     --width: 1440px;
-    --timeline-overflow-x: auto;
+    --overflow-x: auto;
 
     --scale-bar-height: 36px;
     --scale-bar-gap: 60px;
     --scale-bar-padding-left: 24px;
-    --scale-bar-pointer-left: 0px;
-    --scale-bar-pointer-height: 0px;
+    --scale-bar-color: #797979;
+    --scale-bar-font-size: 12px;
+    --scale-bar-font-weight: bold;
+    --scale-bar-font-family: "Consolas";
+    
+    --line-wrapper-height: 0px;
 
-    --line-height: 70px;
+    --pointer-left: 0px;
+    --pointer-bottom: calc(-1px - var(--line-wrapper-height));
+    --pointer-height: calc(var(--line-wrapper-height) + 18px);
+    --pointer-background-color: #7e74ff;
+    --pointer-color: var(--pointer-background-color);
+    --pointer-font-size: 12px;
+    --pointer-font-weight: bold;
+    --pointer-font-family: "Consolas";
 
-    box-sizing: border-box;
+    --line-height: 84px;
+    --line-title-color: #8683ad;
+    --line-title-font-size: 12px;
+    --line-title-font-weight: bold;
+    --line-title-font-family: "Consolas";
+
     transition: all 3s ease-in-out;
     scroll-behavior: smooth;
     user-select: none;
 
-    height: 100%;
     overflow-y: auto;
-    overflow-x: var(--timeline-overflow-x);
+    overflow-x: var(--overflow-x);
 
     position: relative;
-
-    color: #838383;
-    font-size: 14px;
-    font-weight: normal;
-    font-family: inherit;
 
     .timeline__scale-bar {
         display: flex;
@@ -48,22 +58,23 @@
             align-items: center;
             justify-content: center;
             width: 0px;
+            color: var(--scale-bar-color);
+            font-size: var(--scale-bar-font-size);
+            font-weight: var(--scale-bar-font-weight);
+            font-family: var(--scale-bar-font-family);
         }
 
         & > .pointer {
-            --pointer-bottom: calc(0px - var(--scale-bar-pointer-height));
-            --pointer-height: calc(var(--scale-bar-pointer-height) + 18px);
-
             transition: left 1s ease;
 
             width: 3px;
             height: var(--pointer-height);
             position: absolute;
             bottom: var(--pointer-bottom);
-            left: var(--scale-bar-pointer-left);
+            left: var(--pointer-left);
             z-index: 6;
 
-            background: #7e74ff;
+            background: var(--pointer-background-color);
             border-left: 1px solid white;
             border-right: 1px solid white;
             border-radius: 5px;
@@ -71,15 +82,65 @@
             & > span {
                 position: absolute;
                 left: 10px;
-
-                color: #7e74ff;
-                font-size: 12px;
-                font-weight: bold;
+                color: var(--pointer-color);
+                font-size: var(--pointer-font-size);
+                font-weight: var(--pointer-font-weight);
+                font-family: var(--pointer-font-family);
             }
         }
     }
 
     .timeline__lines-container {
         width: var(--width);
+
+        .line {
+            user-select: none;
+
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            gap: 0;
+
+            width: calc(var(--width) + 24px);
+            height: var(--line-height);
+            position: relative;
+
+            border-bottom: 1px solid #e5e5e7;
+
+            .line__title {
+                transform: rotate(-90deg);
+
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                width: 24px;
+
+                position: sticky;
+                left: 0px;
+                z-index: 4;
+
+                & > p {
+                    flex: none;
+                    width: calc(var(--line-height) - 10px);
+                    height: var(--scale-bar-padding-left);
+                    line-height: var(--scale-bar-padding-left);
+                    text-align: center;
+                    margin: 0;
+
+                    background-color: white;
+
+                    color: var(--line-title-color);
+                    font-size: var(--line-title-font-size);
+                    font-weight: var(--line-title-font-weight);
+                    font-family: var(--line-title-font-family);
+                }
+            }
+
+            .line__cards {
+                display: flex;
+                align-items: center;
+            }
+        }
     }
 }

@@ -1,13 +1,10 @@
 import { ref, reactive } from "vue";
 
-/**
- * Define props
- */
 export const timelineProps = {
     /**
      * @description Data of timeline
      */
-    lines: Array,
+    data: Array,
     /**
      * @description Scale of timeline
      */
@@ -28,13 +25,17 @@ export const timelineProps = {
      * @description Pointer text display state
      */
     showPointerText: Boolean,
+    /**
+     * @description Line height of timeline
+     */
+    lineHeight: {
+        type: Number,
+        default: 72,
+        validator: (v) => v >= 66 && v <= 96,
+    },
 };
 
-/**
- * Use timeline hook
- * @returns {Object} actions
- */
-export const useTimeline = (scale = 1) => {
+export function useTimeline(scale = 1, options = {}) {
     const hoursGap = ref(scale * 60);
     const width = ref(hoursGap.value * 24);
     const scaleLevel = ref(parseInt(scale / 3) + 1);
@@ -42,6 +43,7 @@ export const useTimeline = (scale = 1) => {
     const secondsPerPixel = ref(parseInt(60 / scale));
     const updateTime = ref(1000 * secondsPerPixel.value);
     const pointer = reactive({ left: 0, text: "0:00" });
+    const lineHeight = ref(options?.lineHeight || 72);
 
     /**
      * Calculate css left value by time string
@@ -82,8 +84,9 @@ export const useTimeline = (scale = 1) => {
         timeScaleGap,
         updateTime,
         pointer,
+        lineHeight,
         calcLeftValueByTimeString,
         updatePointerLeft,
         updatePointerText,
     };
-};
+}

@@ -1,0 +1,73 @@
+[
+    {
+        "title": "MEETS",
+        "cards": [
+            {
+                "name": "Project overview",
+                "dueTime": [
+                    "9: 30",
+                    "10: 30"
+                ],
+                "avatars": [
+                    {
+                        "src": "/images/users/nathan.png"
+                    },
+                    {
+                        "src": "/images/users/aleksander.png"
+                    }
+                ],
+                "backgroundColor": "#fef4ec"
+            }
+        ]
+    },
+    {
+        "title": "UX",
+        "cards": [
+            {
+                "name": "Dashboard feedback",
+                "dueTime": [
+                    "11: 00",
+                    "14: 00"
+                ],
+                "avatars": [
+                    {
+                        "src": "/images/users/nathan.png"
+                    },
+                    {
+                        "src": "/images/users/aleksander.png"
+                    }
+                ],
+                "backgroundColor": "#f1f0ff"
+            }
+        ]
+    },
+    {
+        "title": "UI",
+        "cards": []
+    },
+    {
+        "title": "BIZ",
+        "cards": [
+            {
+                "name": "Project design",
+                "dueTime": [
+                    "16: 45",
+                    "21: 00"
+                ],
+                "avatars": [
+                    {
+                        "src": "/images/users/nathan.png"
+                    },
+                    {
+                        "src": "/images/users/aleksander.png"
+                    }
+                ],
+                "backgroundColor": "#ddf5fe"
+            }
+        ]
+    },
+    {
+        "title": "FOCUS",
+        "cards": []
+    }
+]

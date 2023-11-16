@@ -1,5 +1,5 @@
 <template>
-    <div class="timeline" ref="timelineElement" :style="timeScaleStyles">
+    <div class="timeline" ref="timelineElement" :style="timelineStyles">
         <div class="timeline__scale-bar">
             <template v-for="num in 25">
                 <span v-if="num === 1 || num === 25">|</span>
@@ -13,58 +13,47 @@
             </div>
         </div>
         <div class="timeline__lines-container">
-            <Line v-for="(item, idx) in lines" :key="idx" :lines="item" />
+            <div class="line" v-for="(l, idx) in data" :key="idx">
+                <div class="line__title">
+                    <p>{{ l.title }}</p>
+                </div>
+                <div class="line__cards">
+                    <Card
+                        v-for="(c, idx) in l.cards"
+                        :key="idx"
+                        :data="c"
+                        :left-calculator="timeline.calcLeftValueByTimeString" />
+                </div>
+            </div>
         </div>
     </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted, provide } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { timelineProps, useTimeline } from "./timeline";
-import { useScrollController } from "./scroll-controller";
-import Line from "./line.vue";
+import useScrollController from "@nice-layout/hooks/use-scroll-controller";
+import Card from "./card.vue";
 import "../style/timeline.css";
 
 defineOptions({ name: "NlTimeline" });
 const props = defineProps(timelineProps);
 
-/**
- * Use hooks
- */
 const timeline = useTimeline(props.scale);
 const scrollController = useScrollController();
-
-/**
- * Define refs
- */
 const timelineElement = ref();
 const timeString = ref(new Date().toLocaleTimeString());
 
-/**
- * Expose and provide
- */
-provide("timeline", timeline);
-defineExpose({
-    findPointer: () => scrollController.moveTo(timeline.pointer.left),
-    moveRight: scrollController.moveRight,
-    moveLeft: scrollController.moveLeft,
-});
-
-/**
- * Define styles
- */
-const timeScaleStyles = computed(() => {
+const timelineStyles = computed(() => {
     return {
         "--width": timeline.width.value + "px",
         "--scale-bar-gap": timeline.timeScaleGap.value + "px",
-        "--scale-bar-pointer-left": timeline.pointer.left + "px",
-        "--scale-bar-pointer-height": props.lines.length * 71 + "px",
+        "--pointer-left": timeline.pointer.left + "px",
+        "--line-wrapper-height": props.data.length * (timeline.lineHeight.value + 1) + "px",
+        "--line-height": timeline.lineHeight.value + "px",
     };
 });
 
-/**
- * On-mounted handler
- */
 onMounted(() => {
     /**
      * Update element of scroll controller
@@ -86,5 +75,10 @@ onMounted(() => {
         timeString.value = new Date().toLocaleTimeString();
         timeline.pointer.text = timeString.value;
     }, 1000);
+});
+
+defineExpose({
+    findPointer: () => scrollController.moveTo(timeline.pointer.left),
+    ...scrollController,
 });
 </script>

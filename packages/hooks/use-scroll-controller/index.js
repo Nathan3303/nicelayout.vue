@@ -1,6 +1,6 @@
 import { ref } from "vue";
 
-export const useScrollController = () => {
+export default function () {
     const e = ref(null);
     const freeMode = ref(false);
     const onStart = ref(false);
@@ -61,4 +61,4 @@ export const useScrollController = () => {
      * Return
      */
     return { freeMode, onStart, onEnd, setTarget, moveTo, moveLeft, moveRight };
-};
+}
