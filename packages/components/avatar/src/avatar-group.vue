@@ -1,5 +1,5 @@
 <template>
-    <div class="nl-avatar-group">
+    <div class="nl-avatar-group" :style="styles">
         <template v-for="(item, idx) in data">
             <nl-avatar
                 v-if="item"
@@ -17,8 +17,9 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { avatarGroupProps, avatarGroupEmits } from "./avatar-group";
+import { addUnit } from "@nice-layout/utils/parsers";
 import "../style/avatar-group.css";
 
 /**
@@ -32,6 +33,15 @@ const emit = defineEmits(avatarGroupEmits);
  * Define refs
  */
 const timer = ref(null); // Throttle flag
+
+/**
+ * Define styles
+ */
+const styles = computed(() => {
+    return {
+        "--avatar-indentation": addUnit(props.indentation),
+    };
+});
 
 /**
  * Add button click handler
