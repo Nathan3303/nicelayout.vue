@@ -1,6 +1,10 @@
 .nl-avatar-group {
+    --avatar-indentation: 12px;
     --avatar-border-width: 2px;
     --avatar-border-color: white;
+
+    --avatar-margin-right: calc(0px - var(--avatar-indentation));
+    --avatar-margin-left: calc(0px - var(--avatar-border-width));
 
     flex: none;
 
@@ -9,28 +13,30 @@
     align-items: center;
 
     & > .nl-avatar {
+        transition: margin 0.16s ease-in-out;
+
         margin: 0;
-        margin-right: -12px !important;
+        margin-right: var(--avatar-margin-right);
 
         border: var(--avatar-border-width) solid var(--avatar-border-color);
 
         &:first-of-type {
-            margin-left: -2px;
+            margin-left: var(--avatar-margin-left);
         }
 
         &:last-of-type {
-            margin-right: 0px !important;
+            margin-right: 0px;
         }
     }
 
     & .nl-avatar--add {
         --add-button-size: calc(var(--size) - 2px * 2);
         --background-color: white;
+        --color: #c4c4c4;
 
         width: var(--add-button-size);
         height: var(--add-button-size);
         line-height: var(--add-button-size);
-        color: #c4c4c4;
         border: 2px dotted #c4c4c477;
         cursor: pointer;
     }
