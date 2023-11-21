@@ -2,8 +2,16 @@
     --size: 36px;
     --background-color: #c4c4c4;
 
+    --color: white;
+    --font-size: 14px;
+    --font-weight: normal;
+    --font-family: inherit;
+
+    --icon-color: inherit;
+    --icon-size: 14px;
+    --icon-weight: normal;
+
     box-sizing: border-box;
-    transition: all 0.16s ease-in-out;
     aspect-ratio: 1;
 
     flex: none;
@@ -16,7 +24,10 @@
     border: none;
     background-color: var(--background-color);
 
-    color: rgb(255, 255, 255);
+    color: var(--color);
+    font-size: var(--font-size);
+    font-weight: var(--font-weight);
+    font-family: var(--font-family);
 
     & img {
         display: block;
@@ -31,6 +42,10 @@
 
         width: 100%;
         height: 100%;
+
+        color: var(--icon-color);
+        font-size: var(--icon-size);
+        font-weight: var(--icon-weight);
     }
 
     &.nl-avatar--square {
