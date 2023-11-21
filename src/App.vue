@@ -1,11 +1,11 @@
 <template>
     <div id="app">
-        <TestTimeline />
+        <TestAvatar />
     </div>
 </template>
 
 <script setup>
-import TestTimeline from './components/test-timeline.vue';
+import TestAvatar from "./components/test-avatar.vue";
 </script>
 
 <style scoped>
