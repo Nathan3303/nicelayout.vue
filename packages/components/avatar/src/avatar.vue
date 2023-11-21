@@ -1,5 +1,5 @@
 <template>
-    <div :class="classes" @click="clickHandler" :style="wrapperStyle">
+    <div :class="classList" @click="clickHandler" :style="wrapperStyle" :title="alt">
         <img v-if="src && !loadError" :src="src" :alt="alt" @error="errorHandler" :style="imageStyle" />
         <i v-else-if="icon" class="iconfont" :class="icon" :style="iconStyle"></i>
         <slot v-else />
@@ -33,9 +33,9 @@ const imageStyle = computed(() => ({ objectFit: props.fit }));
 const iconStyle = computed(() => ({ fontSize: `calc(${size.value} / 2.5)` }));
 
 /**
- * Define classes
+ * Define classList
  */
-const classes = computed(() => {
+const classList = computed(() => {
     const { theme, shape } = props;
     let classArray = [];
     classArray = ["nl-avatar", ...parseTheme(theme, "nl-avatar")];
