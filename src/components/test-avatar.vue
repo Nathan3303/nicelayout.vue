@@ -1,6 +1,8 @@
 <template>
-    <nl-div>
-        <nl-avatar-group :data="avatars" addable></nl-avatar-group>
+    <nl-div align-items="center">
+        <nl-avatar-group :data="avatars" :indentation="10" :size="48" addable />
+        <nl-avatar shape="round" icon="icon-search" />
+        <nl-avatar shape="round">N</nl-avatar>
     </nl-div>
 </template>
 
