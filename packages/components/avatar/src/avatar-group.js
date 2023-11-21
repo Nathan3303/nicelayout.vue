@@ -39,6 +39,10 @@ export const avatarGroupProps = {
      * @description avatar group is addable or not
      */
     addable: Boolean,
+    /**
+     * @description indentation of avatars
+     */
+    indentation: Number,
 };
 
 export const avatarGroupEmits = [
