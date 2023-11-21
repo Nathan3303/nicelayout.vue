@@ -11,6 +11,7 @@
                 :fit="item.fit"
                 :style="{ zIndex: data.length - idx }" />
         </template>
+        <slot />
         <nl-avatar v-if="addable" theme="add" :size="size" icon="icon-plus" shape="round" @click.stop="addAvatarHandler" />
     </div>
 </template>
