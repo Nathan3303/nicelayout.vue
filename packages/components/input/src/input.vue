@@ -57,6 +57,11 @@ const isPasswordVisible = ref(false);
 const textLength = ref(props.modelValue?.length || 0);
 
 /**
+ * Define exposed properties
+ */
+defineExpose({ inputRef: input });
+
+/**
  * Define classes list
  */
 const classList = computed(() => {
