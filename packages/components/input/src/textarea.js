@@ -4,6 +4,10 @@ export const textareaProps = {
      */
     modelValue: [String, Number],
     /**
+     * @description Textarea id (Native attribute mapping)
+     */
+    textareaId: String,
+    /**
      * @description input placeholder
      */
     placeholder: String,
