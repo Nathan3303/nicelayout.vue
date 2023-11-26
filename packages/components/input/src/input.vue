@@ -4,6 +4,7 @@
         <slot name="prefix">{{ prefix }}</slot>
         <input
             ref="input"
+            :id="inputId"
             :type="isPasswordVisible ? 'text' : type"
             :value="formatter(modelValue)"
             :placeholder="placeholder"
