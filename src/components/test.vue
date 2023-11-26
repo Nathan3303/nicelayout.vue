@@ -1,23 +1,22 @@
-<script setup>
-// import { NlButton } from "../../packages/components/button";
-</script>
-
 <template>
     <div class="test">
-        <!-- <nl-div justify-content="space-between">
-            <nl-link href="/">
-                <nl-avatar src="/images/users/nathan.png"></nl-avatar>
-            </nl-link>
-            <nl-link href="http://www.baidu.com" theme="button" icon="icon-arrow-right"> www.baidu.com </nl-link>
-        </nl-div>
-        <nl-div vertical>
-            <nl-link href="/">
-                <nl-avatar src="/images/users/nathan.png"></nl-avatar>
-            </nl-link>
-        </nl-div> -->
-        <nl-button>Go</nl-button>
+        <nl-button icon="icon-plus" @click="goEditing">Add to do</nl-button>
+        <nl-textarea ref="descInputer" v-model="description" autosize></nl-textarea>
     </div>
 </template>
+
+<script setup>
+import { ref, nextTick } from "vue";
+
+const isEditing = ref(false);
+const description = ref("");
+const descInputer = ref();
+
+function goEditing() {
+    isEditing.value = true;
+    nextTick(() => descInputer.value.$refs.textarea.focus());
+}
+</script>
 
 <style scoped>
 .test {
