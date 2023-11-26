@@ -14,6 +14,10 @@ export const inputProps = {
      */
     modelValue: [String, Number],
     /**
+     * @description input id (Native attribute mapping)
+     */
+    inputId: String,
+    /**
      * @description Input value formatter (Format value when updated)
      */
     formatter: {
