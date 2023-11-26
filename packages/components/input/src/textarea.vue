@@ -59,20 +59,25 @@ const classList = computed(() => {
 /**
  * Define styles
  */
-const textareaStyles = computed(() => {
-    const { autosize, resize, rows } = props;
-    return {
-        "--rows": rows,
-        "--overflow": autosize ? "hidden" : "auto",
-        "--resize": resize ? "vertical" : "none",
-    };
-});
+const textareaStyles = computed(() => ({
+    "--rows": props.rows,
+    "--overflow": props.autosize ? "hidden" : "auto",
+    "--resize": props.resize ? "vertical" : "none",
+}));
+
+/**
+ * Calculate the height of frontend textarea by backend textarea
+ */
+function calculateHeight() {
+    textarea.value.style.height = backendTextarea.value.scrollHeight + "px";
+}
 
 /**
  * Textarea on focus event handler
  * @param {object} e Focus event object
  */
 function focusHandler(e) {
+    calculateHeight();
     isFocused.value = !props.disabled && !props.readonly;
     emit("focused", e);
 }
@@ -93,10 +98,7 @@ function blurHandler(e) {
 function inputHandler(e) {
     emit("update:modelValue", e.target.value);
     textLength.value = e.target.textLength;
-    if (props.autosize)
-        nextTick(() => {
-            textarea.value.style.height = backendTextarea.value.scrollHeight + "px";
-        });
+    if (props.autosize) nextTick(() => calculateHeight());
     emit("inputted", e);
 }
 
