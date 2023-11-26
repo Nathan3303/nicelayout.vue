@@ -2,6 +2,7 @@
     <div :class="classList" :style="textareaStyles">
         <textarea
             ref="textarea"
+            :id="textareaId"
             :rows="rows"
             :value="modelValue"
             :placeholder="placeholder"
@@ -43,6 +44,11 @@ const backendTextarea = ref();
 const isFocused = ref(false);
 const textLength = ref(props.modelValue?.length || 0);
 // console.log(rawLineHeight.value)
+
+/**
+ * Define exposed properties
+ */
+defineExpose({ textareaRef: textarea });
 
 /**
  * Define class list
