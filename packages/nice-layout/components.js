@@ -5,6 +5,7 @@ import { NlInput, NlTextarea } from "@nice-layout/components/input";
 import { NlLink } from "@nice-layout/components/link";
 import { NlProgress } from "@nice-layout/components/progress";
 import { NlTimeline } from "@nice-layout/components/timeline";
+import { NlTitle, NlEditableTitle } from "@nice-layout/components/title";
 
 export default [
     NlAvatar,
@@ -16,5 +17,7 @@ export default [
     NlTextarea,
     NlLink,
     NlProgress,
-    NlTimeline
+    NlTimeline,
+    NlTitle,
+    NlEditableTitle,
 ];
