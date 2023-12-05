@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 4165854 */
-  src: url('iconfont.woff2?t=1698803000306') format('woff2'),
-       url('iconfont.woff?t=1698803000306') format('woff'),
-       url('iconfont.ttf?t=1698803000306') format('truetype');
+  src: url('iconfont.woff2?t=1701000867469') format('woff2'),
+       url('iconfont.woff?t=1701000867469') format('woff'),
+       url('iconfont.ttf?t=1701000867469') format('truetype');
 }
 
 .iconfont {
@@ -13,11 +13,39 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-mima:before {
+  content: "\e8c7";
+}
+
+.icon-files:before {
+  content: "\e645";
+}
+
+.icon-menu:before {
+  content: "\e60e";
+}
+
+.icon-more-right:before {
+  content: "\e630";
+}
+
+.icon-header-projects:before {
+  content: "\e600";
+}
+
+.icon-header-dashboard:before {
+  content: "\e7dd";
+}
+
+.icon-header-drive:before {
+  content: "\e9f4";
+}
+
 .icon-plus:before {
   content: "\e694";
 }
 
-.icon-todo:before {
+.icon-header-todo:before {
   content: "\e981";
 }
 
@@ -177,20 +205,12 @@
   content: "\e618";
 }
 
-.icon-project:before {
-  content: "\e61e";
-}
-
 .icon-target:before {
   content: "\e62f";
 }
 
 .icon-eye-off:before {
   content: "\e629";
-}
-
-.icon-arrow-up:before {
-  content: "\e9d0";
 }
 
 .icon-arrow-right:before {
@@ -201,15 +221,15 @@
   content: "\e64c";
 }
 
-.icon-overview:before {
-  content: "\e62e";
-}
-
 .icon-todo-logo:before {
   content: "\e9cb";
 }
 
 .icon-arrow-down:before {
   content: "\e9cc";
+}
+
+.icon-arrow-up:before {
+  content: "\e9f5";
 }
 
