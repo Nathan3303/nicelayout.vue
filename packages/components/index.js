@@ -5,3 +5,4 @@ export * from "@nice-layout/components/input";
 export * from "@nice-layout/components/link";
 export * from "@nice-layout/components/progress";
 export * from "@nice-layout/components/timeline";
+export * from "@nice-layout/components/title";
