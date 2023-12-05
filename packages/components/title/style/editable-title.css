@@ -1,0 +1,60 @@
+.nl-editable-title {
+    width: 100%;
+
+    .nl-title__title {
+        width: 100%;
+
+        &:hover {
+            .edit-button {
+                display: block;
+            }
+        }
+        .editor {
+            --hover-background-color: transparent;
+            --focus-background-color: transparent;
+            --focus-shadow-color: transparent;
+            padding: 0;
+            width: 100%;
+            height: var(--title-font-size);
+            border: none;
+            border-radius: 0px;
+            color: inherit;
+            font-size: inherit;
+            font-weight: bold;
+        }
+        .edit-button {
+            --icon-size: 16px;
+            --icon-color: inherit;
+            display: none;
+            padding: 2px;
+        }
+    }
+
+    .nl-title__sub-title {
+        width: 100%;
+
+        &:hover {
+            .edit-button {
+                display: block;
+            }
+        }
+        .editor {
+            --hover-background-color: transparent;
+            --focus-background-color: transparent;
+            --focus-shadow-color: transparent;
+            padding: 0;
+            width: 100%;
+            height: var(--sub-title-font-size);
+            border: none;
+            border-radius: 0px;
+            color: inherit;
+            font-size: inherit;
+            font-weight: bold;
+        }
+        .edit-button {
+            --icon-size: 14px;
+            --icon-color: inherit;
+            display: none;
+        }
+    }
+}

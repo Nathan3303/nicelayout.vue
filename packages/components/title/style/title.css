@@ -1,0 +1,45 @@
+.nl-title {
+    --gap: 2px;
+    --font-family: "Consolas";
+    --font-weight: bold;
+    --title-color: #090048;
+    --title-font-family: var(--font-family);
+    --title-font-size: 28px;
+    --title-font-weight: var(--font-weight);
+    --sub-title-color: #9998b1;
+    --sub-title-font-family: var(--font-family);
+    --sub-title-font-size: 12px;
+    --sub-title-font-weight: var(--font-weight);
+
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    gap: var(--gap);
+    width: 100%;
+    font-size: v-bind(fontSize);
+    font-weight: bold;
+    user-select: none;
+
+    .nl-title__title {
+        display: flex;
+        align-items: end;
+        gap: 4px;
+        color: var(--title-color);
+        font-family: var(--title-font-family);
+        font-size: var(--title-font-size);
+        font-weight: var(--title-font-weight);
+        line-height: var(--title-font-size);
+    }
+
+    .nl-title__sub-title {
+        display: flex;
+        align-items: end;
+        gap: 4px;
+        color: var(--sub-title-color);
+        font-family: var(--sub-title-font-family);
+        font-size: var(--sub-title-font-size);
+        font-weight: var(--sub-title-font-weight);
+        line-height: var(--sub-title-font-size);
+    }
+}
