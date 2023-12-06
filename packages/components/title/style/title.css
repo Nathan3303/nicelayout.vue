@@ -1,6 +1,6 @@
 .nl-title {
     --gap: 2px;
-    --font-family: "Consolas";
+    --font-family: inherit;
     --font-weight: bold;
     --title-color: #090048;
     --title-font-family: var(--font-family);
