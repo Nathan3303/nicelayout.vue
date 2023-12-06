@@ -19,7 +19,7 @@ const isFunction = (fn) => typeof fn === "function";
  *   onEditorBlur: Function
  * }
  */
-export default function useEditController(
+function useEditController(
     initialValue,
     { vmInitialValue, vmHandler, vmValidator, editorElementId, editorRef } = options
 ) {
