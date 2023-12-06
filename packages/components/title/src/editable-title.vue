@@ -1,5 +1,5 @@
 <template>
-    <NlTitle class="nl-editable-title" :size="size">
+    <Title class="nl-editable-title" :size="size">
         <template v-slot:title>
             <NlInput
                 v-if="isEditingTitle"
@@ -34,12 +34,13 @@
                 title="Edit sub-title"
                 @click.stop="goEditSubTitle" />
         </template>
-    </NlTitle>
+    </Title>
 </template>
 
 <script setup>
 import { ref, computed } from "vue";
-import useEditController from "@nice-layout/hooks/use-edit-controller";
+import { useEditController } from "@nice-layout/hooks/use-edit-controller";
+import Title from "./title.vue";
 import "../style/editable-title.css";
 
 defineOptions({ name: "NlEditableTitle" });
