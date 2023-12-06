@@ -4,12 +4,16 @@
             <template v-for="num in 25">
                 <span v-if="num === 1 || num === 25">|</span>
                 <span v-else>{{ num - 1 }}:00</span>
-                <span v-if="num !== 25" v-for="num0 in timeline.scaleLevel.value - 1">
+                <span
+                    v-if="num !== 25"
+                    v-for="num0 in timeline.scaleLevel.value - 1">
                     {{ num - 1 }}:{{ (60 / timeline.scaleLevel.value) * num0 }}
                 </span>
             </template>
             <div class="pointer">
-                <span v-if="showPointerText"> &lt;&nbsp;{{ timeline.pointer.text }} </span>
+                <span v-if="showPointerText">
+                    &lt;&nbsp;{{ timeline.pointer.text }}
+                </span>
             </div>
         </div>
         <div class="timeline__lines-container">
@@ -32,7 +36,7 @@
 <script setup>
 import { ref, computed, onMounted } from "vue";
 import { timelineProps, useTimeline } from "./timeline";
-import useScrollController from "@nice-layout/hooks/use-scroll-controller";
+import { useScrollController } from "@nice-layout/hooks/use-scroll-controller";
 import Card from "./card.vue";
 import "../style/timeline.css";
 
@@ -49,7 +53,8 @@ const timelineStyles = computed(() => {
         "--width": timeline.width.value + "px",
         "--scale-bar-gap": timeline.timeScaleGap.value + "px",
         "--pointer-left": timeline.pointer.left + "px",
-        "--line-wrapper-height": props.data.length * (timeline.lineHeight.value + 1) + "px",
+        "--line-wrapper-height":
+            props.data.length * (timeline.lineHeight.value + 1) + "px",
         "--line-height": timeline.lineHeight.value + "px",
     };
 });
